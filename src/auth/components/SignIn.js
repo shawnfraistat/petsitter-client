@@ -12,6 +12,7 @@ class SignIn extends Component {
     this.state = {
       email: '',
       password: '',
+      accountType: 'client'
     }
   }
 
@@ -22,6 +23,7 @@ class SignIn extends Component {
   signIn = event => {
     event.preventDefault()
 
+    console.log(this.state)
     const { email, password } = this.state
     const { flash, history, setUser } = this.props
 
@@ -58,6 +60,22 @@ class SignIn extends Component {
           placeholder="Password"
           onChange={this.handleChange}
         />
+        <label htmlFor="accountType">Sign In As</label>
+        <div onChange={this.handleChange}>
+          <input
+            defaultChecked
+            className="account-radio"
+            name="accountType"
+            value="client"
+            type="radio"
+          />Client
+          <input
+            className="account-radio"
+            name="accountType"
+            value="sitter"
+            type="radio"
+          />Sitter
+        </div>
         <button type="submit">Sign In</button>
       </form>
     )
