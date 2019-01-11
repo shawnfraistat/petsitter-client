@@ -40,10 +40,11 @@
 
 ### Stretch Goals ####
 
-1. Add ability to for sitters to define availability, and clients to search by date range.
-2. Add ability for clients to favorite sitters.
-3. Add ability for clients and sitters to "match" and chat.
-4. Add ability for sitters to view profiles of clients who request them.
-5. Add ability for clients to create more substantial profiles. (Pics of pets,  etc.)
-6. As corollary of goal #4, add pets as a separate resource.
-7. Add ability for clients to review sitters.
+1. Add location search filter
+2. Add ability to for sitters to define availability, and clients to search by date range.
+3. Add ability for clients to favorite sitters.
+4. Add ability for clients and sitters to "match" and chat.
+5. Add ability for sitters to view profiles of clients who request them.
+6. Add ability for clients to create more substantial profiles. (Pics of pets,  etc.)
+7. As corollary of goal #7, add pets as a separate resource.
+8. Add ability for clients to review sitters.
