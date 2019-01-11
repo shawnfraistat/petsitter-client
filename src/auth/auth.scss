@@ -1,3 +1,13 @@
-.account-radio {
+input {
+  &.account-radio {
+    margin: 10px;
+  }
+
+  &.animal-checkbox {
+    margin: 10px;
+  }
+}
+
+label {
   margin: 10px;
 }

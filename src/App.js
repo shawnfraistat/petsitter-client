@@ -9,6 +9,9 @@ import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
 import ChangePassword from './auth/components/ChangePassword'
 
+import CreateClientAcc from './auth/components/CreateClientAcc'
+import CreateSitterAcc from './auth/components/CreateSitterAcc'
+
 import LandingPage from './LandingPage'
 
 class App extends Component {
@@ -44,14 +47,19 @@ class App extends Component {
         {flashMessage && <h3 className={flashType}>{flashMessage}</h3>}
 
         <main className="container">
-          { !user && <LandingPage /> }
-
           {/* Routes */}
+          <Route exact path='/' component={LandingPage} />
           <Route path='/sign-up' render={() => (
             <SignUp flash={this.flash} setUser={this.setUser} />
           )} />
           <Route path='/sign-in' render={() => (
             <SignIn flash={this.flash} setUser={this.setUser} />
+          )} />
+          <Route path='/create-client-account' render={() => (
+            <CreateClientAcc flash={this.flash} setUser={this.setUser} />
+          )} />
+          <Route path='/create-server-account' render={() => (
+            <CreateSitterAcc flash={this.flash} setUser={this.setUser} />
           )} />
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
             <SignOut flash={this.flash} clearUser={this.clearUser} user={user} />

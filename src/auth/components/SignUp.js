@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
+import CreateClientAcc from './CreateClientAcc'
+import CreateSitterAcc from './CreateSitterAcc'
+
 import { handleErrors, signUp, signIn } from '../api'
 import messages from '../messages'
 import apiUrl from '../../apiConfig'
@@ -16,22 +19,42 @@ class SignUp extends Component {
       password: '',
       passwordConfirmation: '',
       accountType: 'client',
-      zipCode: ''
+      zipCode: '',
+      about: '',
+      price: 0,
+      distance: 0,
+      animalTypes: ''
     }
   }
 
   handleChange = event => {
-    // console.log(event)
     this.setState({
       [event.target.name]: event.target.value
     })
-    // console.log(this.state)
+  }
+
+  // handleCheckBoxChange() is called when checkboxes are checked or unchecked
+  // for the animalTypes in the CreateSitterAcc component
+  // it keeps them stored as a space-separated string,
+  // purging and adding as appropriate
+  handleCheckBoxChange = event => {
+    const animalArray = this.state.animalTypes.split(' ')
+    const animalName = event.target.value
+    if (event.target.checked) {
+      animalArray.push(animalName)
+    } else {
+      const index = animalArray.indexOf(animalName)
+      animalArray.splice(index, 1)
+    }
+    this.setState({
+      [event.target.name]: animalArray.join(' ').trim()
+    })
   }
 
   signUp = event => {
     event.preventDefault()
 
-    const { email, password, passwordConfirmation, accountType, zipCode }  = this.state
+    const { email, password, passwordConfirmation, accountType, zipCode, about }  = this.state
     const { flash, history, setUser } = this.props
     console.log(this.state)
 
@@ -42,12 +65,11 @@ class SignUp extends Component {
       .then(res => res.json())
       .then(res => setUser(res.user))
       .then(() => flash(messages.signUpSuccess, 'flash-success'))
-      .then(() => history.push('/'))
       .catch(() => flash(messages.signUpFailure, 'flash-error'))
   }
 
   render () {
-    const { email, password, passwordConfirmation, accountType, zipCode } = this.state
+    const { email, password, passwordConfirmation, accountType, zipCode, about } = this.state
 
     return (
       <form className='auth-form' onSubmit={this.signUp}>
@@ -105,8 +127,12 @@ class SignUp extends Component {
             type="radio"
           />Sitter
         </div>
+        { accountType === 'client'
+          ? <CreateClientAcc handleChange={this.handleChange} />
+          : <CreateSitterAcc handleChange={this.handleChange} handleCheckBoxChange={this.handleCheckBoxChange} /> }
         <button type="submit">Sign Up</button>
       </form>
+
     )
   }
 }

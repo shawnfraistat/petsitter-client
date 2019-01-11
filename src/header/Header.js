@@ -36,7 +36,7 @@ const Header = ({ user }) => (
       { (user && user.isClient && user.hasSitterAcc) && <Link to='/sitter'>Switch to Sitter View </Link>  }
       {/* if user doesn't have a client or sitter account, let user create it */}
       { (user && !(user.hasClientAcc)) && <Link to='/create-client-account'>Create Client Account</Link> }
-      { (user && !(user.hasSitterAcc)) && <Link to='/create-client-account'>Create Sitter Account</Link> }
+      { (user && !(user.hasSitterAcc)) && <Link to='/create-sitter-account'>Create Sitter Account</Link> }
       { alwaysOptions }
     </nav>
   </header>
