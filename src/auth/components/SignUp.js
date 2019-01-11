@@ -5,6 +5,8 @@ import { handleErrors, signUp, signIn } from '../api'
 import messages from '../messages'
 import apiUrl from '../../apiConfig'
 
+import '../auth.scss'
+
 class SignUp extends Component {
   constructor () {
     super()
@@ -12,19 +14,26 @@ class SignUp extends Component {
     this.state = {
       email: '',
       password: '',
-      passwordConfirmation: ''
+      passwordConfirmation: '',
+      accountType: 'client',
+      zipCode: ''
     }
   }
 
-  handleChange = event => this.setState({
-    [event.target.name]: event.target.value
-  })
+  handleChange = event => {
+    // console.log(event)
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+    // console.log(this.state)
+  }
 
   signUp = event => {
     event.preventDefault()
 
-    const { email, password, passwordConfirmation} = this.state
+    const { email, password, passwordConfirmation, accountType, zipCode }  = this.state
     const { flash, history, setUser } = this.props
+    console.log(this.state)
 
     signUp(this.state)
       .then(handleErrors)
@@ -38,7 +47,7 @@ class SignUp extends Component {
   }
 
   render () {
-    const { email, password, passwordConfirmation} = this.state
+    const { email, password, passwordConfirmation, accountType, zipCode } = this.state
 
     return (
       <form className='auth-form' onSubmit={this.signUp}>
@@ -71,6 +80,31 @@ class SignUp extends Component {
           placeholder="Confirm Password"
           onChange={this.handleChange}
         />
+        <label htmlFor="zipCode">Enter Zip Code</label>
+        <input
+          required
+          name="zipCode"
+          value={zipCode}
+          type="number"
+          placeholder="Zip Code"
+          onChange={this.handleChange}
+        />
+        <label htmlFor="accountType">Choose Account Type</label>
+        <div onChange={this.handleChange}>
+          <input
+            defaultChecked
+            className="account-radio"
+            name="accountType"
+            value="client"
+            type="radio"
+          />Client
+          <input
+            className="account-radio"
+            name="accountType"
+            value="sitter"
+            type="radio"
+          />Sitter
+        </div>
         <button type="submit">Sign Up</button>
       </form>
     )
