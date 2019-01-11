@@ -64,6 +64,9 @@ class SignUp extends Component {
       .then(handleErrors)
       .then(res => res.json())
       .then(res => setUser(res.user))
+      .then(() => {
+        this.state.accountType === 'client' ? history.push('/client') : history.push('/sitter')
+      })
       .then(() => flash(messages.signUpSuccess, 'flash-success'))
       .catch(() => flash(messages.signUpFailure, 'flash-error'))
   }

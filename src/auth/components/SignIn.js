@@ -23,7 +23,6 @@ class SignIn extends Component {
   signIn = event => {
     event.preventDefault()
 
-    console.log(this.state)
     const { email, password } = this.state
     const { flash, history, setUser } = this.props
 
@@ -32,7 +31,11 @@ class SignIn extends Component {
       .then(res => res.json())
       .then(res => setUser(res.user))
       .then(() => flash(messages.signInSuccess, 'flash-success'))
-      .then(() => history.push('/'))
+      .then(() => {
+        this.state.accountType === 'client' ? history.push('/client') : history.push('/sitter')
+      })
+      //previous line used to be:
+      // history.push('/'))
       .catch(() => flash(messages.signInFailure, 'flash-error'))
   }
 

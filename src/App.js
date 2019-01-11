@@ -12,6 +12,9 @@ import ChangePassword from './auth/components/ChangePassword'
 import CreateClientAcc from './auth/components/CreateClientAcc'
 import CreateSitterAcc from './auth/components/CreateSitterAcc'
 
+import Client from './Client'
+import Sitter from './Sitter'
+
 import LandingPage from './LandingPage'
 
 class App extends Component {
@@ -55,10 +58,16 @@ class App extends Component {
           <Route path='/sign-in' render={() => (
             <SignIn flash={this.flash} setUser={this.setUser} />
           )} />
+          <Route path='/client' render={() => (
+            <Client flash={this.flash} setUser={this.setUser} />
+          )} />
+          <Route path='/sitter' render={() => (
+            <Sitter flash={this.flash} setUser={this.setUser} />
+          )} />
           <Route path='/create-client-account' render={() => (
             <CreateClientAcc flash={this.flash} setUser={this.setUser} />
           )} />
-          <Route path='/create-server-account' render={() => (
+          <Route path='/create-sitter-account' render={() => (
             <CreateSitterAcc flash={this.flash} setUser={this.setUser} />
           )} />
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
