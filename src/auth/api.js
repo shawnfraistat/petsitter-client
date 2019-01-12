@@ -64,3 +64,38 @@ export const changePassword = (passwords, user) => {
     })
   })
 }
+
+export const createClientAccount = data => {
+  console.log(data)
+  return fetch(apiUrl + '/client', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization':`Token token=${data.token}`
+    },
+    body: JSON.stringify({
+      data: {
+        about: data.about
+      }
+    })
+  })
+}
+
+export const createSitterAccount = data => {
+  console.log(data)
+  return fetch(apiUrl + '/sitter', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization':`Token token=${data.token}`
+    },
+    body: JSON.stringify({
+      data: {
+        about: data.about,
+        price: data.price,
+        distance: data.distance,
+        animalTypes: data.animalTypes
+      }
+    })
+  })
+}

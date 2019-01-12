@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
-import CreateClientAcc from './CreateClientAcc'
-import CreateSitterAcc from './CreateSitterAcc'
+import CreateClientForm from './CreateClientForm'
+import CreateSitterForm from './CreateSitterForm'
 
 import { handleErrors, signUp, signIn } from '../api'
 import messages from '../messages'
@@ -131,8 +131,8 @@ class SignUp extends Component {
           />Sitter
         </div>
         { accountType === 'client'
-          ? <CreateClientAcc handleChange={this.handleChange} />
-          : <CreateSitterAcc handleChange={this.handleChange} handleCheckBoxChange={this.handleCheckBoxChange} /> }
+          ? <CreateClientForm handleChange={this.handleChange} />
+          : <CreateSitterForm handleChange={this.handleChange} handleCheckBoxChange={this.handleCheckBoxChange} /> }
         <button type="submit">Sign Up</button>
       </form>
 

@@ -12,8 +12,8 @@ import ChangePassword from './auth/components/ChangePassword'
 import CreateClientAcc from './auth/components/CreateClientAcc'
 import CreateSitterAcc from './auth/components/CreateSitterAcc'
 
-import Client from './Client'
-import Sitter from './Sitter'
+import ClientLanding from './client-view/ClientLanding'
+import SitterLanding from './sitter-view/SitterLanding'
 
 import LandingPage from './LandingPage'
 
@@ -28,6 +28,10 @@ class App extends Component {
     }
   }
 
+  // complicate setUser to determine what user is logged in as
+  // and whether user has client/sitter accounts
+  // specifically, need to set booleans isSitter/isClient
+  // and hasSitterAcc/hasClientAcc
   setUser = user => this.setState({ user })
 
   clearUser = () => this.setState({ user: null })
@@ -59,16 +63,17 @@ class App extends Component {
             <SignIn flash={this.flash} setUser={this.setUser} />
           )} />
           <Route path='/client' render={() => (
-            <Client flash={this.flash} setUser={this.setUser} />
+            <ClientLanding flash={this.flash} setUser={this.setUser} />
           )} />
           <Route path='/sitter' render={() => (
-            <Sitter flash={this.flash} setUser={this.setUser} />
+            <SitterLanding flash={this.flash} setUser={this.setUser} />
           )} />
+          {/* For some reason, changing CreateClientAcc and CreateSitterAccount Route to AuthenticatedRoute currently breaks them */}
           <Route path='/create-client-account' render={() => (
-            <CreateClientAcc flash={this.flash} setUser={this.setUser} />
+            <CreateClientAcc flash={this.flash} token={this.state.user.token} setUser={this.setUser} />
           )} />
           <Route path='/create-sitter-account' render={() => (
-            <CreateSitterAcc flash={this.flash} setUser={this.setUser} />
+            <CreateSitterAcc flash={this.flash} token={this.state.user.token} setUser={this.setUser} />
           )} />
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
             <SignOut flash={this.flash} clearUser={this.clearUser} user={user} />

@@ -1,74 +1,75 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
+
+import CreateSitterForm from './CreateSitterForm'
+import { handleErrors, createSitterAccount } from '../api'
+
+import messages from '../messages'
+import apiUrl from '../../apiConfig'
+
+import '../auth.scss'
 
 class CreateSitterAcc extends Component {
-  constructor(props) {
-    super()
-    this.handleChange = props.handleChange
-    this.handleCheckBoxChange = props.handleCheckBoxChange
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      token: props.token,
+      about: '',
+      animalTypes: '',
+      distance: '',
+      price: '',
+    }
+  }
+
+  handleChange = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
+  // handleCheckBoxChange() is called when checkboxes are checked or unchecked
+  // for the animalTypes in the CreateSitterAcc component
+  // it keeps them stored as a space-separated string,
+  // purging and adding as appropriate
+  handleCheckBoxChange = event => {
+    const animalArray = this.state.animalTypes.split(' ')
+    const animalName = event.target.value
+    if (event.target.checked) {
+      animalArray.push(animalName)
+    } else {
+      const index = animalArray.indexOf(animalName)
+      animalArray.splice(index, 1)
+    }
+    this.setState({
+      [event.target.name]: animalArray.join(' ').trim()
+    })
+  }
+
+  createSitterAccount = event => {
+    event.preventDefault()
+
+    const { flash, history, setUser } = this.props
+    console.log(this.state)
+
+    createSitterAccount(this.state)
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(res => setUser(res.user))
+      .then(() => history.push('/sitter'))
+      .then(() => flash(messages.signUpSuccess, 'flash-success'))
+      .catch(() => flash(messages.signUpFailure, 'flash-error'))
   }
 
   render () {
     return (
-      <div>
-        <label htmlFor="about">About You</label>
-        <br />
-        <textarea
-          required
-          name="about"
-          placeholder="Description"
-          onChange={this.handleChange}
-          cols="65"
-          rows="3"
-        />
-        <label htmlFor="price">Enter Your Typical Petsitting Price Per Day</label>
-        <br />
-        <input
-          required
-          name="price"
-          type="number"
-          placeholder="Price"
-          onChange={this.handleChange}
-        /> dollars per day
-        <label htmlFor="distance">Enter Maximum Distance You Will Travel</label>
-        <br />
-        <input
-          required
-          name="distance"
-          type="number"
-          placeholder="Distance"
-          onChange={this.handleChange}
-        /> miles
-        <br />
-        <label htmlFor="price">Check The Types of Animals You Will Pet Sit</label>
-        <br />
-        <div onChange={this.handleCheckBoxChange}>
-          <input
-            className="animal-checkbox"
-            name="animalTypes"
-            value="cats"
-            type="checkbox"
-          />Cats
-          <input
-            className="animal-checkbox"
-            name="animalTypes"
-            value="dogs"
-            type="checkbox"
-          />Dogs
-          <input
-            className="animal-checkbox"
-            name="animalTypes"
-            value="reptiles"
-            type="checkbox"
-          />Reptiles
-          <input
-            className="animal-checkbox"
-            name="animalTypes"
-            value="birds"
-            type="checkbox"
-          />Birds
-        </div>
-      </div>
+      <form className='auth-form' onSubmit={this.createSitterAccount}>
+        <h3>Create Sitter Account</h3>
+        <CreateSitterForm handleChange={this.handleChange} handleCheckBoxChange={this.handleCheckBoxChange} />
+        <button type="submit">Create Sitter Account</button>
+      </form>
     )
   }
 }
-export default CreateSitterAcc
+
+export default withRouter(CreateSitterAcc)

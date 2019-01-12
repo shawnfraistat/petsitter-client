@@ -32,11 +32,11 @@ const Header = ({ user }) => (
       { user && <span>Welcome, {user.email}</span>}
       { user ? authenticatedOptions : unauthenticatedOptions }
       {/* if user has both a client and sitter account, let user switch between them */}
-      { (user && user.isSitter && user.hasClientAcc) && <Link to='/client'>Switch to Client View </Link>  }
-      { (user && user.isClient && user.hasSitterAcc) && <Link to='/sitter'>Switch to Sitter View </Link>  }
+      { (user && user.isSitter && user.hasClientAcc) && <Link to="/client">Switch to Client View </Link>  }
+      { (user && user.isClient && user.hasSitterAcc) && <Link to="/sitter">Switch to Sitter View </Link>  }
       {/* if user doesn't have a client or sitter account, let user create it */}
-      { (user && !(user.hasClientAcc)) && <Link to='/create-client-account'>Create Client Account</Link> }
-      { (user && !(user.hasSitterAcc)) && <Link to='/create-sitter-account'>Create Sitter Account</Link> }
+      { (user && !(user.hasClientAcc)) && <Link to="/create-client-account">Create Client Account</Link> }
+      { (user && !(user.hasSitterAcc)) && <Link to="/create-sitter-account">Create Sitter Account</Link> }
       { alwaysOptions }
     </nav>
   </header>
