@@ -99,3 +99,25 @@ export const createSitterAccount = data => {
     })
   })
 }
+
+export const editProfile = data => {
+  console.log(data)
+  return fetch(apiUrl + '/edit-profile', {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization':`Token token=${data.token}`
+    },
+    body: JSON.stringify({
+      data: {
+        email: data.email,
+        password: data.password,
+        name: data.name,
+        about: data.about,
+        price: data.price,
+        distance: data.distance,
+        animalTypes: data.animalTypes
+      }
+    })
+  })
+}

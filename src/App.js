@@ -8,6 +8,7 @@ import SignUp from './auth/components/SignUp'
 import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
 import ChangePassword from './auth/components/ChangePassword'
+import EditProfile from './auth/components/EditProfile'
 
 import CreateClientAcc from './auth/components/CreateClientAcc'
 import CreateSitterAcc from './auth/components/CreateSitterAcc'
@@ -74,6 +75,9 @@ class App extends Component {
           )} />
           <Route path='/create-sitter-account' render={() => (
             <CreateSitterAcc flash={this.flash} token={this.state.user.token} setUser={this.setUser} />
+          )} />
+          <AuthenticatedRoute user={user} path='/edit-profile' render={() => (
+            <EditProfile flash={this.flash} clearUser={this.clearUser} user={user} />
           )} />
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
             <SignOut flash={this.flash} clearUser={this.clearUser} user={user} />
