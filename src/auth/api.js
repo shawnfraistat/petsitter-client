@@ -18,7 +18,9 @@ export const signUp = credentials => {
       credentials: {
         email: credentials.email,
         password: credentials.password,
-        password_confirmation: credentials.passwordConfirmation
+        password_confirmation: credentials.passwordConfirmation,
+        name: credentials.name,
+        zip_code: credentials.zipCode
       }
     })
   })
@@ -66,15 +68,16 @@ export const changePassword = (passwords, user) => {
 }
 
 export const createClientAccount = data => {
-  console.log(data)
-  return fetch(apiUrl + '/client', {
+  console.log('made it inside createClientAcc')
+  console.log('data is', data)
+  return fetch(apiUrl + '/clients', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization':`Token token=${data.token}`
     },
     body: JSON.stringify({
-      data: {
+      client: {
         about: data.about
       }
     })
@@ -82,15 +85,16 @@ export const createClientAccount = data => {
 }
 
 export const createSitterAccount = data => {
-  console.log(data)
-  return fetch(apiUrl + '/sitter', {
+  console.log('made it inside createSitterAcc')
+  console.log('data is', data)
+  return fetch(apiUrl + '/sitters', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization':`Token token=${data.token}`
     },
     body: JSON.stringify({
-      data: {
+      sitter: {
         about: data.about,
         price: data.price,
         distance: data.distance,

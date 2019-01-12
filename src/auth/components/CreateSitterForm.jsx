@@ -66,6 +66,25 @@ class CreateSitterAcc extends Component {
             value="birds"
             type="checkbox"
           />Birds
+          <input
+            className="animal-checkbox"
+            name="animalTypes"
+            value="plants"
+            type="checkbox"
+          />Plants
+          {/* Extra options for giggles.
+          <input
+            className="animal-checkbox"
+            name="animalTypes"
+            value="nakedMoleRats"
+            type="checkbox"
+          />Naked Mole Rats
+          <input
+            className="animal-checkbox"
+            name="animalTypes"
+            value="petRocks"
+            type="checkbox"
+          />Pet Rocks */}
         </div>
       </div>
     )

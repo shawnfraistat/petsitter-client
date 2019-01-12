@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import CreateClientForm from './CreateClientForm'
 import CreateSitterForm from './CreateSitterForm'
 
-import { handleErrors, signUp, signIn } from '../api'
+import { handleErrors, signUp, signIn, createClientAccount, createSitterAccount } from '../api'
 import messages from '../messages'
 import apiUrl from '../../apiConfig'
 
@@ -23,7 +23,8 @@ class SignUp extends Component {
       about: '',
       price: 0,
       distance: 0,
-      animalTypes: ''
+      animalTypes: '',
+      token: ''
     }
   }
 
@@ -54,7 +55,7 @@ class SignUp extends Component {
   signUp = event => {
     event.preventDefault()
 
-    const { email, password, passwordConfirmation, accountType, zipCode, about }  = this.state
+    // const { email, password, passwordConfirmation, accountType, zipCode, about }  = this.state
     const { flash, history, setUser } = this.props
     console.log(this.state)
 
@@ -63,7 +64,13 @@ class SignUp extends Component {
       .then(() => signIn(this.state))
       .then(handleErrors)
       .then(res => res.json())
-      .then(res => setUser(res.user))
+      .then(res => {
+        setUser(res.user)
+        this.setState({ token : res.user.token })
+      })
+      .then(() => {
+        this.state.accountType === 'client' ? createClientAccount(this.state) : createSitterAccount(this.state)
+      })
       .then(() => {
         this.state.accountType === 'client' ? history.push('/client') : history.push('/sitter')
       })
