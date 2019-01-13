@@ -82,9 +82,7 @@ class App extends Component {
 
   render () {
     const { flashMessage, flashType, user } = this.state
-
-
-
+    console.log('user is', user)
     return (
       <React.Fragment>
         <Header user={user} />
@@ -116,7 +114,7 @@ class App extends Component {
             <EditProfile flash={this.flash} clearUser={this.clearUser} getUser={this.getUser} />
           )} />
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
-            <SignOut flash={this.flash} clearUser={this.clearUser} getUser={this.getUser} />
+            <SignOut flash={this.flash} clearUser={this.clearUser} getUser={this.getUser} user={user} />
           )} />
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword flash={this.flash} user={user} />
