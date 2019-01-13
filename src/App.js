@@ -67,25 +67,12 @@ class App extends Component {
     }), 2000)
   }
 
-  // <Route path='/client' render={() => {
-  //   const user = this.state.user
-  //   user.accountType = 'client'
-  //   this.setState({ user: user })
-  //   return (<ClientLanding flash={this.flash} setUser={this.setUser} />)
-  // }} />
-  // <Route path='/sitter' render={() => {
-  //   const user = this.state.user
-  //   user.accountType = 'sitter'
-  //   this.setState({ user: user })
-  //   return (<SitterLanding flash={this.flash} setUser={this.setUser} />)
-  // }} />
-
   render () {
     const { flashMessage, flashType, user } = this.state
     console.log('user is', user)
     return (
       <React.Fragment>
-        <Header user={user} />
+        <Header user={user} getUser={this.getUser} setUser={this.setUser}/>
         {flashMessage && <h3 className={flashType}>{flashMessage}</h3>}
 
         <main className="container">
