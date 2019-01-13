@@ -19,11 +19,11 @@ class SignUp extends Component {
       password: '',
       passwordConfirmation: '',
       accountType: 'client',
-      zipCode: '',
+      zip_code: '',
       about: '',
       price: 0,
-      distance: 0,
-      animalTypes: '',
+      service_range: 0,
+      animal_types: '',
       token: ''
     }
   }
@@ -35,11 +35,11 @@ class SignUp extends Component {
   }
 
   // handleCheckBoxChange() is called when checkboxes are checked or unchecked
-  // for the animalTypes in the CreateSitterAcc component
+  // for the animal_types in the CreateSitterAcc component
   // it keeps them stored as a space-separated string,
   // purging and adding as appropriate
   handleCheckBoxChange = event => {
-    const animalArray = this.state.animalTypes.split(' ')
+    const animalArray = this.state.animal_types.split(' ')
     const animalName = event.target.value
     if (event.target.checked) {
       animalArray.push(animalName)
@@ -90,7 +90,7 @@ class SignUp extends Component {
   }
 
   render () {
-    const { email, password, passwordConfirmation, accountType, zipCode, about } = this.state
+    const { email, password, passwordConfirmation, accountType, zip_code, about } = this.state
 
     return (
       <form className='auth-form' onSubmit={this.signUp}>
@@ -123,12 +123,12 @@ class SignUp extends Component {
           placeholder="Confirm Password"
           onChange={this.handleChange}
         />
-        <label htmlFor="zipCode">Enter Zip Code</label>
+        <label htmlFor="zip_code">Enter Zip Code</label>
         <input
           required
-          name="zipCode"
-          value={zipCode}
-          type="number"
+          name="zip_code"
+          value={zip_code}
+          type="text"
           placeholder="Zip Code"
           onChange={this.handleChange}
         />

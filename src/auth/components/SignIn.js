@@ -31,6 +31,8 @@ class SignIn extends Component {
       .then(res => res.json())
       .then(res => {
         console.log('inside signIn, res is', res)
+        this.translateRailsUser(res)
+        console.log('after translateRailsResponse, res is', res)
         return res
       })
       .then(res => {

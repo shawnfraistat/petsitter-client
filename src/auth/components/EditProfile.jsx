@@ -15,18 +15,7 @@ class EditProfile extends Component {
     super(props)
 
     this.state = props.user
-    console.log(this.state)
-    // this.state = {
-    //   email: '',
-    //   password: '',
-    //   passwordConfirmation: '',
-    //   accountType: 'client',
-    //   zipCode: '',
-    //   about: '',
-    //   price: 0,
-    //   distance: 0,
-    //   animalTypes: ''
-    // }
+    console.log('inside edit profile, this.state is', this.state)
   }
 
   handleChange = event => {
@@ -36,11 +25,11 @@ class EditProfile extends Component {
   }
 
   // handleCheckBoxChange() is called when checkboxes are checked or unchecked
-  // for the animalTypes in the CreateSitterForm component
+  // for the animal_types in the CreateSitterForm component
   // it keeps them stored as a space-separated string,
   // purging and adding as appropriate
   handleCheckBoxChange = event => {
-    const animalArray = this.state.animalTypes.split(' ')
+    const animalArray = this.state.animal_types.split(' ')
     const animalName = event.target.value
     if (event.target.checked) {
       animalArray.push(animalName)
@@ -56,13 +45,11 @@ class EditProfile extends Component {
   editProfile = event => {
     event.preventDefault()
 
-    // const { email, password, passwordConfirmation, accountType, zipCode, about }  = this.state
+    // const { email, password, passwordConfirmation, accountType, zip_code, about }  = this.state
     const { flash, history, setUser } = this.props
     console.log(this.state)
 
     editProfile(this.state)
-      .then(handleErrors)
-      .then(() => signIn(this.state))
       .then(handleErrors)
       .then(res => res.json())
       .then(res => setUser(res.user))
@@ -74,10 +61,10 @@ class EditProfile extends Component {
   }
 
   render () {
-    const { email, password, passwordConfirmation, accountType, zipCode, about } = this.state
+    const { email, password, passwordConfirmation, accountType, zip_code, about } = this.state
 
     return (
-      <form className='auth-form' onSubmit={this.signUp}>
+      <form className='auth-form' onSubmit={this.editProfile}>
         <h3>Edit Profile</h3>
 
         <label htmlFor="email">Change Email</label>
@@ -107,12 +94,12 @@ class EditProfile extends Component {
           placeholder="Confirm Password"
           onChange={this.handleChange}
         />
-        <label htmlFor="zipCode">Enter Zip Code</label>
+        <label htmlFor="zip_code">Enter Zip Code</label>
         <input
           required
-          name="zipCode"
-          value={zipCode}
-          type="number"
+          name="zip_code"
+          value={zip_code}
+          type="text"
           placeholder="Zip Code"
           onChange={this.handleChange}
         />

@@ -16,8 +16,8 @@ class CreateSitterAcc extends Component {
     this.state = {
       token: props.token,
       about: '',
-      animalTypes: '',
-      distance: '',
+      animal_types: '',
+      service_range: '',
       price: '',
     }
   }
@@ -29,11 +29,11 @@ class CreateSitterAcc extends Component {
   }
 
   // handleCheckBoxChange() is called when checkboxes are checked or unchecked
-  // for the animalTypes in the CreateSitterAcc component
+  // for the animal_types in the CreateSitterAcc component
   // it keeps them stored as a space-separated string,
   // purging and adding as appropriate
   handleCheckBoxChange = event => {
-    const animalArray = this.state.animalTypes.split(' ')
+    const animalArray = this.state.animal_types.split(' ')
     const animalName = event.target.value
     if (event.target.checked) {
       animalArray.push(animalName)

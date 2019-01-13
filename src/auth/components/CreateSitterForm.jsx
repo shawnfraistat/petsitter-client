@@ -29,83 +29,83 @@ class CreateSitterAcc extends Component {
           placeholder="Price"
           onChange={this.handleChange}
         /> dollars per day
-        <label htmlFor="distance">Enter Maximum Distance You Will Travel</label>
+        <label htmlFor="service_range">Enter Maximum Distance You Will Travel</label>
         <br />
         <input
           required
-          name="distance"
+          name="service_range"
           type="number"
           placeholder="Distance"
           onChange={this.handleChange}
         /> miles
         <br />
-        <label htmlFor="animalTypes">Check The Types of Animals You Will Pet Sit</label>
+        <label htmlFor="animal_types">Check The Types of Animals You Will Pet Sit</label>
         <br />
         <div onChange={this.handleCheckBoxChange}>
           <input
             className="animal-checkbox"
-            name="animalTypes"
+            name="animal_types"
             value="cats"
             type="checkbox"
           />Cats
           <input
             className="animal-checkbox"
-            name="animalTypes"
+            name="animal_types"
             value="dogs"
             type="checkbox"
           />Dogs
           <input
             className="animal-checkbox"
-            name="animalTypes"
+            name="animal_types"
             value="reptiles"
             type="checkbox"
           />Reptiles
           <input
             className="animal-checkbox"
-            name="animalTypes"
+            name="animal_types"
             value="birds"
             type="checkbox"
           />Birds
           <input
             className="animal-checkbox"
-            name="animalTypes"
+            name="animal_types"
             value="fish"
             type="checkbox"
           />Fish
           <input
             className="animal-checkbox"
-            name="animalTypes"
+            name="animal_types"
             value="rabbits"
             type="checkbox"
           />Rabbits
           <input
             className="animal-checkbox"
-            name="animalTypes"
+            name="animal_types"
             value="rodents"
             type="checkbox"
           />Rodents
           <input
             className="animal-checkbox"
-            name="animalTypes"
+            name="animal_types"
             value="equines"
             type="checkbox"
           />Equines
           <input
             className="animal-checkbox"
-            name="animalTypes"
+            name="animal_types"
             value="plants"
             type="checkbox"
           />Plants
           {/* Extra options for giggles.
           <input
             className="animal-checkbox"
-            name="animalTypes"
+            name="animal_types"
             value="nakedMoleRats"
             type="checkbox"
           />Naked Mole Rats
           <input
             className="animal-checkbox"
-            name="animalTypes"
+            name="animal_types"
             value="petRocks"
             type="checkbox"
           />Pet Rocks */}

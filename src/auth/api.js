@@ -4,7 +4,7 @@ export const handleErrors = res => {
   if (res.ok) {
     return res
   } else  {
-    throw new Error('Recieved status in 400 or 500 range.')
+    throw new Error('Received status in 400 or 500 range.')
   }
 }
 
@@ -20,7 +20,7 @@ export const signUp = credentials => {
         password: credentials.password,
         password_confirmation: credentials.passwordConfirmation,
         name: credentials.name,
-        zip_code: credentials.zipCode
+        zip_code: credentials.zip_code
       }
     })
   })
@@ -97,8 +97,8 @@ export const createSitterAccount = data => {
       sitter: {
         about: data.about,
         price: data.price,
-        service_range: data.distance,
-        animal_types: data.animalTypes
+        service_range: data.service_range,
+        animal_types: data.animal_types
       }
     })
   })
@@ -119,8 +119,8 @@ export const editProfile = data => {
         name: data.name,
         about: data.about,
         price: data.price,
-        distance: data.distance,
-        animalTypes: data.animalTypes
+        service_range: data.service_range,
+        animal_types: data.animal_types
       }
     })
   })

@@ -91,14 +91,14 @@ class App extends Component {
             <SitterLanding flash={this.flash} setUser={this.setUser} />
           )} />
           {/* For some reason, changing CreateClientAcc and CreateSitterAccount Route to AuthenticatedRoute currently breaks them */}
-          <Route path='/create-client-account' render={() => (
+          <AuthenticatedRoute user={user} path='/create-client-account' render={() => (
             <CreateClientAcc flash={this.flash} token={this.state.user.token} setUser={this.setUser} getUser={this.getUser} />
           )} />
-          <Route path='/create-sitter-account' render={() => (
+          <AuthenticatedRoute user={user} path='/create-sitter-account' render={() => (
             <CreateSitterAcc flash={this.flash} token={this.state.user.token} setUser={this.setUser} getUser={this.getUser} />
           )} />
           <AuthenticatedRoute user={user} path='/edit-profile' render={() => (
-            <EditProfile flash={this.flash} clearUser={this.clearUser} getUser={this.getUser} />
+            <EditProfile flash={this.flash} clearUser={this.clearUser} user={user} />
           )} />
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
             <SignOut flash={this.flash} clearUser={this.clearUser} getUser={this.getUser} user={user} />
