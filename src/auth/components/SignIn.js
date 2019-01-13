@@ -23,13 +23,20 @@ class SignIn extends Component {
   signIn = event => {
     event.preventDefault()
 
-    const { email, password } = this.state
     const { flash, history, setUser } = this.props
 
+    console.log('inside signIn, this.state is', this.state)
     signIn(this.state)
       .then(res => res.ok ? res : new Error())
       .then(res => res.json())
-      .then(res => setUser(res.user))
+      .then(res => {
+        console.log('inside signIn, res is', res)
+        return res
+      })
+      .then(res => {
+        this.state.accountType === 'client' ? res.user.accountType = 'client' : res.user.accountType = 'sitter'
+        setUser(res.user)
+      })
       .then(() => flash(messages.signInSuccess, 'flash-success'))
       .then(() => {
         this.state.accountType === 'client' ? history.push('/client') : history.push('/sitter')

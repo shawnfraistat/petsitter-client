@@ -29,11 +29,30 @@ class App extends Component {
     }
   }
 
-  // complicate setUser to determine what user is logged in as
+  setUser = user => {
+    user = this.addUserVirtuals(user)
+    console.log('inside setUser--after adding virtuals, user is', user)
+    this.setState({ user })
+  }
+
+  // addUserVirtuals() determines what user is logged in as
   // and whether user has client/sitter accounts
-  // specifically, need to set booleans isSitter/isClient
+  // specifically, sets booleans isSitter/isClient
   // and hasSitterAcc/hasClientAcc
-  setUser = user => this.setState({ user })
+  addUserVirtuals = user => {
+    // console.log('inside add virtuals, user is', user)
+    user.client ? user.hasClientAcc = true : user.hasClientAcc = false
+    user.sitter ? user.hasSitterAcc = true : user.hasSitterAcc = false
+    if (user.accountType === 'client') {
+      user.isClient = true
+      user.isSitter = false
+    }
+    if (user.accountType === 'sitter') {
+      user.isSitter = true
+      user.isClient = false
+    }
+    return user
+  }
 
   clearUser = () => this.setState({ user: null })
 
