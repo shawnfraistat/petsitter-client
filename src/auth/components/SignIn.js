@@ -40,6 +40,7 @@ class SignIn extends Component {
       .then(() => flash(messages.signInSuccess, 'flash-success'))
       .then(() => {
         this.state.accountType === 'client' ? history.push('/client') : history.push('/sitter')
+        return null
       })
       //previous line used to be:
       // history.push('/'))

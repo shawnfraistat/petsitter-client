@@ -68,8 +68,8 @@ export const changePassword = (passwords, user) => {
 }
 
 export const createClientAccount = data => {
-  console.log('made it inside createClientAcc')
-  console.log('data is', data)
+  // console.log('made it inside createClientAcc')
+  // console.log('data is', data)
   return fetch(apiUrl + '/clients', {
     method: 'POST',
     headers: {
@@ -97,8 +97,8 @@ export const createSitterAccount = data => {
       sitter: {
         about: data.about,
         price: data.price,
-        distance: data.distance,
-        animalTypes: data.animalTypes
+        service_range: data.distance,
+        animal_types: data.animalTypes
       }
     })
   })

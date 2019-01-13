@@ -49,13 +49,19 @@ class CreateSitterAcc extends Component {
   createSitterAccount = event => {
     event.preventDefault()
 
-    const { flash, history, setUser } = this.props
+    const { flash, history, setUser, getUser } = this.props
     console.log(this.state)
 
     createSitterAccount(this.state)
       .then(handleErrors)
       .then(res => res.json())
-      .then(res => setUser(res.user))
+      .then(res => {
+        const user = getUser()
+        user.accountType = 'sitter'
+        user.sitter = res.sitter
+        console.log('inside createSitterAccount, user is', user)
+        setUser(user)
+      })
       .then(() => history.push('/sitter'))
       .then(() => flash(messages.signUpSuccess, 'flash-success'))
       .catch(() => flash(messages.signUpFailure, 'flash-error'))

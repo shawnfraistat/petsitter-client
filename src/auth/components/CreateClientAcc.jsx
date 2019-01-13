@@ -28,13 +28,19 @@ class CreateClientAcc extends Component {
   createClientAccount = event => {
     event.preventDefault()
 
-    const { flash, history, setUser } = this.props
+    const { flash, history, setUser, getUser } = this.props
     console.log(this.state)
 
     createClientAccount(this.state)
       .then(handleErrors)
       .then(res => res.json())
-      .then(res => setUser(res.user))
+      .then(res => {
+        const user = getUser()
+        user.accountType = 'client'
+        user.client = res.client
+        console.log('inside createClientAccount, user is', user)
+        setUser(user)
+      })
       .then(() => history.push('/client'))
       .then(() => flash(messages.signUpSuccess, 'flash-success'))
       .catch(() => flash(messages.signUpFailure, 'flash-error'))

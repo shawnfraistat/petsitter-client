@@ -55,23 +55,34 @@ class SignUp extends Component {
   signUp = event => {
     event.preventDefault()
 
-    // const { email, password, passwordConfirmation, accountType, zipCode, about }  = this.state
-    const { flash, history, setUser } = this.props
+    const { flash, history, setUser, getUser } = this.props
     console.log(this.state)
 
     signUp(this.state)
       .then(handleErrors)
+      // after signing up, sign in
       .then(() => signIn(this.state))
       .then(handleErrors)
       .then(res => res.json())
+      // after signing in, save the returned token and create a client or sitter account
+      .then((res) => {
+        console.log('inside signUp, about to try to create a client or sitter account')
+        this.setState({ token: res.user.token })
+        return this.state.accountType === 'client' ? createClientAccount(this.state) : createSitterAccount(this.state)
+      })
+      // after creating a new sitter or client account, update the user so that they're on the right view
+      .then(handleErrors)
+      .then(res => res.json())
       .then(res => {
-        setUser(res.user)
-        this.setState({ token : res.user.token })
+        console.log('inside signup, after creating an account, this.state is', this.state)
+        const user = this.state
+        user.accountType === 'client' ? user.client = res.client : user.sitter = res.sitter
+        console.log('afer trying to user.client to res, user is', user)
+        return user
       })
-      .then(() => {
-        this.state.accountType === 'client' ? createClientAccount(this.state) : createSitterAccount(this.state)
-      })
-      .then(() => {
+      // now actually send the user to the right view
+      .then((user) => {
+        setUser(user)
         this.state.accountType === 'client' ? history.push('/client') : history.push('/sitter')
       })
       .then(() => flash(messages.signUpSuccess, 'flash-success'))

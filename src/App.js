@@ -29,6 +29,8 @@ class App extends Component {
     }
   }
 
+  getUser = () => this.state.user
+
   setUser = user => {
     user = this.addUserVirtuals(user)
     console.log('inside setUser--after adding virtuals, user is', user)
@@ -65,8 +67,23 @@ class App extends Component {
     }), 2000)
   }
 
+  // <Route path='/client' render={() => {
+  //   const user = this.state.user
+  //   user.accountType = 'client'
+  //   this.setState({ user: user })
+  //   return (<ClientLanding flash={this.flash} setUser={this.setUser} />)
+  // }} />
+  // <Route path='/sitter' render={() => {
+  //   const user = this.state.user
+  //   user.accountType = 'sitter'
+  //   this.setState({ user: user })
+  //   return (<SitterLanding flash={this.flash} setUser={this.setUser} />)
+  // }} />
+
   render () {
     const { flashMessage, flashType, user } = this.state
+
+
 
     return (
       <React.Fragment>
@@ -77,7 +94,7 @@ class App extends Component {
           {/* Routes */}
           <Route exact path='/' component={LandingPage} />
           <Route path='/sign-up' render={() => (
-            <SignUp flash={this.flash} setUser={this.setUser} user={this.state.user}/>
+            <SignUp flash={this.flash} setUser={this.setUser} />
           )} />
           <Route path='/sign-in' render={() => (
             <SignIn flash={this.flash} setUser={this.setUser} />
@@ -90,16 +107,16 @@ class App extends Component {
           )} />
           {/* For some reason, changing CreateClientAcc and CreateSitterAccount Route to AuthenticatedRoute currently breaks them */}
           <Route path='/create-client-account' render={() => (
-            <CreateClientAcc flash={this.flash} token={this.state.user.token} setUser={this.setUser} />
+            <CreateClientAcc flash={this.flash} token={this.state.user.token} setUser={this.setUser} getUser={this.getUser} />
           )} />
           <Route path='/create-sitter-account' render={() => (
-            <CreateSitterAcc flash={this.flash} token={this.state.user.token} setUser={this.setUser} />
+            <CreateSitterAcc flash={this.flash} token={this.state.user.token} setUser={this.setUser} getUser={this.getUser} />
           )} />
           <AuthenticatedRoute user={user} path='/edit-profile' render={() => (
-            <EditProfile flash={this.flash} clearUser={this.clearUser} user={user} />
+            <EditProfile flash={this.flash} clearUser={this.clearUser} getUser={this.getUser} />
           )} />
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
-            <SignOut flash={this.flash} clearUser={this.clearUser} user={user} />
+            <SignOut flash={this.flash} clearUser={this.clearUser} getUser={this.getUser} />
           )} />
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword flash={this.flash} user={user} />
