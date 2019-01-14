@@ -1,0 +1,25 @@
+div {
+  &.client-view-main {
+    display: flex;
+    flex-flow: row;
+  }
+
+  &.client-sitter-list {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  &.sitter-preview-div {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50vw;
+    height: 200px;
+    margin: 10px;
+
+  }
+}
