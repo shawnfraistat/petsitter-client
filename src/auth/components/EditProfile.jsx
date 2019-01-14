@@ -95,10 +95,10 @@ class EditProfile extends Component {
       .then(() => this.state.accountType === 'client' ? updateClientAccount(data) : updateSitterAccount(data))
       .then(handleErrors)
       .then(res => res.json())
-      .then(res => {
-        console.log('response from server after updateSitterAccount is', res)
-        return res
-      })
+      // .then(res => {
+      //   console.log('response from server after updateSitterAccount is', res)
+      //   return res
+      // })
       .then(res => {
         res.user.token = this.state.token
         res.user.accountType = this.state.accountType

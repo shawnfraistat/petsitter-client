@@ -126,10 +126,10 @@ class App extends Component {
             <SignIn flash={this.flash} setUser={this.setUser} />
           )} />
           <Route path='/client' render={() => (
-            <ClientLanding flash={this.flash} setUser={this.setUser} />
+            <ClientLanding flash={this.flash} setUser={this.setUser} user={user} />
           )} />
           <Route path='/sitter' render={() => (
-            <SitterLanding flash={this.flash} setUser={this.setUser} />
+            <SitterLanding flash={this.flash} setUser={this.setUser} user={user} />
           )} />
           <AuthenticatedRoute user={user} path='/create-client-account' render={() => (
             <CreateClientAcc flash={this.flash} token={this.state.user.token} setUser={this.setUser} getUser={this.getUser} />
