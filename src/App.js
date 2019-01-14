@@ -76,10 +76,10 @@ class App extends Component {
       user.isSitter = true
       user.isClient = false
     }
-    if (user.client) {
+    if (user.client && user.isClient) {
       user.about = user.client.about
     }
-    if (user.sitter) {
+    if (user.sitter && user.isSitter) {
       user.about = user.sitter.about
       user.price = user.sitter.price
       user.service_range = user.sitter.service_range

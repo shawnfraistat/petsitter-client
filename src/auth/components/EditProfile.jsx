@@ -101,6 +101,7 @@ class EditProfile extends Component {
       })
       .then(res => {
         res.user.token = this.state.token
+        res.user.accountType = this.state.accountType
         setUser(res.user)
       })
       .then(() => {

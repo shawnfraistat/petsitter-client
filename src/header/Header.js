@@ -25,19 +25,19 @@ const alwaysOptions = (
   </React.Fragment>
 )
 
-const switchToClient = (setUser, getUser, history) => {
+const switchToClient = (setUser, getUser) => {
   const user = getUser()
   user.accountType = 'client'
   setUser(user)
 }
 
-const switchToSitter = (setUser, getUser, history) => {
+const switchToSitter = (setUser, getUser) => {
   const user = getUser()
   user.accountType = 'sitter'
   setUser(user)
 }
 
-const Header = ({ user, setUser, getUser, history }) => (
+const Header = ({ user, setUser, getUser }) => (
   <header className="main-header">
     <h1>petsitter.io</h1>
     <nav>
