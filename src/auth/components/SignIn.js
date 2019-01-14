@@ -34,7 +34,13 @@ class SignIn extends Component {
         return res
       })
       .then(res => {
-        this.state.accountType === 'client' ? res.user.accountType = 'client' : res.user.accountType = 'sitter'
+        if (this.state.accountType === 'client' && res.user.client) {
+          res.user.accountType = 'client'
+        } else if (this.state.accountType === 'sitter' && res.user.sitter) {
+          res.user.accountType = 'sitter'
+        } else {
+          throw err
+        }
         setUser(res.user)
       })
       .then(() => flash(messages.signInSuccess, 'flash-success'))
