@@ -8,5 +8,9 @@ export default {
   signOutSuccess: 'Come back soon!',
   changePasswordSuccess: 'Password changed successfully!',
   changePasswordFailure: 'Failed to change passwords. Check your old password' +
-                         ' and try again.'
+                         ' and try again.',
+  editProfileSuccess: 'Succesfully updated profile!',
+  editProfileFailure: 'Update failed. Data may be invalid or Passwords may not' +
+                      ' match.'
+
 }

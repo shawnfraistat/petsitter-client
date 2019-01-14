@@ -84,6 +84,23 @@ export const createClientAccount = data => {
   })
 }
 
+export const updateClientAccount = data => {
+  console.log('made it inside updateClientAcc')
+  console.log('data is', data)
+  return fetch(apiUrl + '/clients/' + data.client.id, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization':`Token token=${data.token}`
+    },
+    body: JSON.stringify({
+      client: {
+        about: data.about
+      }
+    })
+  })
+}
+
 export const createSitterAccount = data => {
   console.log('made it inside createSitterAcc')
   console.log('data is', data)
@@ -104,8 +121,27 @@ export const createSitterAccount = data => {
   })
 }
 
-export const editProfile = data => {
-  console.log('inside editProfile in api.js, data is', data)
+export const updateSitterAccount = data => {
+  console.log('made it inside updateSitterAcc')
+  console.log('data is', data)
+  return fetch(apiUrl + '/sitters/' + data.sitter.id, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization':`Token token=${data.token}`
+    },
+    body: JSON.stringify({
+      sitter: {
+        about: data.about,
+        price: data.price,
+        service_range: data.service_range,
+        animal_types: data.animal_types
+      }
+    })
+  })
+}
+
+export const editUserProfile = data => {
   return fetch(apiUrl + '/edit-profile', {
     method: 'PATCH',
     headers: {
@@ -117,10 +153,8 @@ export const editProfile = data => {
         email: data.email,
         password: data.password,
         name: data.name,
-        about: data.about,
-        price: data.price,
-        service_range: data.service_range,
-        animal_types: data.animal_types
+        pic_url: data.pic_url,
+        zip_code: data.zip_code
       }
     })
   })

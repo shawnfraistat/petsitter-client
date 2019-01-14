@@ -6,38 +6,9 @@ class CreateSitterAcc extends Component {
     this.handleChange = props.handleChange
     this.handleCheckBoxChange = props.handleCheckBoxChange
     console.log('inside CreateSitterAcc, this.props is', this.props)
-    // if (!(this.props.user)) {
-    //   this.props.user = {
-    //     about: null,
-    //     price: null,
-    //     service_range: null,
-    //     animal_types: null
-    //   }
-    //
-    // }
   }
 
   render () {
-    // let about
-    // let price
-    // let service_range
-    // let cats, dogs, reptiles, birds, fish, rabbits, rodents, equines, plants
-    // console.log('in CreateSitterAcc render method, this.data is', this.data)
-    // if (this.data) {
-    //   about = this.data.about
-    //   price = this.data.price
-    //   service_range = this.data.service_range
-    //   cats = this.data.cats
-    //   dogs = this.data.dogs
-    //   reptiles = this.data.reptiles
-    //   birds = this.data.birds
-    //   fish = this.data.fish
-    //   rabbits = this.data.rabbits
-    //   rodents = this.data.rodents
-    //   equines = this.data.equines
-    //   plants = this.data.plants
-    // }
-
     return (
       <div>
         <label htmlFor="about">About You as a Pet Sitter</label>

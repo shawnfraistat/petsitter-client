@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import CreateClientForm from './CreateClientForm'
 import CreateSitterForm from './CreateSitterForm'
 
-import { handleErrors, editProfile } from '../api'
+import { handleErrors, editUserProfile, updateClientAccount, updateSitterAccount } from '../api'
 import messages from '../messages'
 import apiUrl from '../../apiConfig'
 
@@ -14,29 +14,40 @@ class EditProfile extends Component {
   constructor (props) {
     super(props)
 
-    const { user } = props
+    const { user, setUser } = props
     const { client, sitter } = props.user
 
     this.state = user
 
-    if (user.accountType === 'client') {
-      this.state.about = client.about
-    } else if (user.accountType === 'sitter') {
-      this.state.about = sitter.about
-      this.state.price = sitter.price
-      this.state.service_range = sitter.service_range
-      this.state.animal_types = sitter.animal_types
-      this.state.cats = sitter.animal_types.search('cats') !== -1
-      this.state.dogs = sitter.animal_types.search('dogs') !== -1
-      this.state.reptiles = sitter.animal_types.search('reptiles') !== -1
-      this.state.birds = sitter.animal_types.search('birds') !== -1
-      this.state.fish = sitter.animal_types.search('fish') !== -1
-      this.state.rabbits = sitter.animal_types.search('rabbits') !== -1
-      this.state.rodents = sitter.animal_types.search('rodents') !== -1
-      this.state.equines = sitter.animal_types.search('equines') !== -1
-      this.state.plants = sitter.animal_types.search('plants') !== -1
+    // if (user.accountType === 'client') {
+    //   this.state.about = client.about
+    // } else if (user.accountType === 'sitter') {
+    //   this.state.about = sitter.about
+    //   this.state.price = sitter.price
+    //   this.state.service_range = sitter.service_range
+    //   this.state.animal_types = sitter.animal_types
+    //   this.state.cats = sitter.animal_types.search('cats') !== -1
+    //   this.state.dogs = sitter.animal_types.search('dogs') !== -1
+    //   this.state.reptiles = sitter.animal_types.search('reptiles') !== -1
+    //   this.state.birds = sitter.animal_types.search('birds') !== -1
+    //   this.state.fish = sitter.animal_types.search('fish') !== -1
+    //   this.state.rabbits = sitter.animal_types.search('rabbits') !== -1
+    //   this.state.rodents = sitter.animal_types.search('rodents') !== -1
+    //   this.state.equines = sitter.animal_types.search('equines') !== -1
+    //   this.state.plants = sitter.animal_types.search('plants') !== -1
+    // }
+    // console.log('inside edit profile, this.state is', this.state)
+  }
+
+  // cleanObject() is a quick method for purging empty keys from objects,
+  // courtesy of https://stackoverflow.com/questions/286141/remove-blank-attributes-from-an-object-in-javascript
+  cleanObject = obj => {
+    for (const propName in obj) {
+      if (obj[propName] === '' || obj[propName] === undefined || obj[propName] === null) {
+        delete obj[propName]
+      }
     }
-    console.log('inside edit profile, this.state is', this.state)
+    return obj
   }
 
   handleChange = event => {
@@ -70,19 +81,37 @@ class EditProfile extends Component {
     const { flash, history, setUser } = this.props
     console.log(this.state)
 
-    editProfile(this.state)
+    if ((this.state.password || this.state.passwordConfirmation) && (this.state.password !== this.state.passwordConfirmation)) {
+      flash(messages.editProfileFailure, 'flash-error')
+      return null
+    }
+
+    const data = this.cleanObject(this.state)
+    console.log('inside editProfile, clean data is', data)
+
+    editUserProfile(data)
       .then(handleErrors)
       .then(res => res.json())
-      .then(res => setUser(res.user))
+      .then(() => this.state.accountType === 'client' ? updateClientAccount(data) : updateSitterAccount(data))
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(res => {
+        console.log('response from server after updateSitterAccount is', res)
+        return res
+      })
+      .then(res => {
+        res.user.token = this.state.token
+        setUser(res.user)
+      })
       .then(() => {
         this.props.user.accountType === 'client' ? history.push('/client') : history.push('/sitter')
       })
-      .then(() => flash(messages.signUpSuccess, 'flash-success'))
-      .catch(() => flash(messages.signUpFailure, 'flash-error'))
+      .then(() => flash(messages.editProfileSuccess, 'flash-success'))
+      .catch(() => flash(messages.editProfileFailure, 'flash-error'))
   }
 
   render () {
-    const { email, password, passwordConfirmation, accountType, zip_code, about } = this.state
+    const { email, password, passwordConfirmation, accountType, zip_code } = this.state
 
     return (
       <form className='auth-form' onSubmit={this.editProfile}>
@@ -118,7 +147,7 @@ class EditProfile extends Component {
           placeholder="Zip Code"
           onChange={this.handleChange}
         />
-        {/* By commenting this out, user can only edit whichever account they're currently on
+        {/* Since I've commented this out, user can only edit whichever account they're currently on
         <label htmlFor="accountType">Choose Account to Edit</label>
         <div onChange={this.handleChange}>
           <input

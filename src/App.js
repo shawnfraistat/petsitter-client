@@ -37,6 +37,29 @@ class App extends Component {
     this.setState({ user })
   }
 
+  // parseAccountTypeForState = (data) => {
+  //   console.log('inside parseAccountTypeForState -- data is', data)
+  //   const { client, sitter } = data
+  //   if (res.accountType === 'client') {
+  //     setState({ about: client.about })
+  //   } else if (res.accountType === 'sitter') {
+  //     setState({ about: sitter.about })
+  //     setState({ price: sitter.price })
+  //     setState({ service_range: sitter.service_range })
+  //     setState({ animal_types: sitter.animal_types})
+  //     setState({ cats: sitter.animal_types.search('cats') !== -1 })
+  //     setState({ dogs: sitter.animal_types.search('dogs') !== -1 })
+  //     setState({ reptiles: sitter.animal_types.search('reptiles') !== -1 })
+  //     setState({ birds: sitter.animal_types.search('birds') !== -1 })
+  //     setState({ fish: sitter.animal_types.search('fish') !== -1 })
+  //     setState({ rabbits: sitter.animal_types.search('rabbits') !== -1 })
+  //     setState({ rodents: sitter.animal_types.search('rodents') !== -1 })
+  //     setState({ equines: sitter.animal_types.search('equines') !== -1 })
+  //     setState({ plants: sitter.animal_types.search('plants') !== -1 })
+  //   }
+  //   console.log('finished parseAccountTypeForState -- this.state is', this.state)
+  // }
+
   // addUserVirtuals() determines what user is logged in as
   // and whether user has client/sitter accounts
   // specifically, sets booleans isSitter/isClient
@@ -52,6 +75,24 @@ class App extends Component {
     if (user.accountType === 'sitter') {
       user.isSitter = true
       user.isClient = false
+    }
+    if (user.client) {
+      user.about = user.client.about
+    }
+    if (user.sitter) {
+      user.about = user.sitter.about
+      user.price = user.sitter.price
+      user.service_range = user.sitter.service_range
+      user.animal_types = user.sitter.animal_types
+      user.cats = user.sitter.animal_types.search('cats') !== -1
+      user.dogs = user.sitter.animal_types.search('dogs') !== -1
+      user.reptiles = user.sitter.animal_types.search('reptiles') !== -1
+      user.birds = user.sitter.animal_types.search('birds') !== -1
+      user.fish = user.sitter.animal_types.search('fish') !== -1
+      user.rabbits = user.sitter.animal_types.search('rabbits') !== -1
+      user.rodents = user.sitter.animal_types.search('rodents') !== -1
+      user.equines = user.sitter.animal_types.search('equines') !== -1
+      user.plants = user.sitter.animal_types.search('plants') !== -1
     }
     return user
   }
@@ -97,7 +138,7 @@ class App extends Component {
             <CreateSitterAcc flash={this.flash} token={this.state.user.token} setUser={this.setUser} getUser={this.getUser} />
           )} />
           <AuthenticatedRoute user={user} path='/edit-profile' render={() => (
-            <EditProfile flash={this.flash} clearUser={this.clearUser} user={user} />
+            <EditProfile flash={this.flash} clearUser={this.clearUser} setUser={this.setUser} user={user} />
           )} />
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
             <SignOut flash={this.flash} clearUser={this.clearUser} getUser={this.getUser} user={user} />
