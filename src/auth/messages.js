@@ -13,5 +13,4 @@ export default {
   editProfileSuccess: 'Succesfully updated profile!',
   editProfileFailure: 'Update failed. Data may be invalid or Passwords may not' +
                       ' match.'
-
 }
