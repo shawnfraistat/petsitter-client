@@ -2,43 +2,50 @@ import React, { Component } from 'react'
 
 class CreateSitterAcc extends Component {
   constructor(props) {
-    super()
+    super(props)
     this.handleChange = props.handleChange
     this.handleCheckBoxChange = props.handleCheckBoxChange
-    if (props.user) {
-      this.state = props.user
-    }
+    console.log('inside CreateSitterAcc, this.props is', this.props)
+    // if (!(this.props.user)) {
+    //   this.props.user = {
+    //     about: null,
+    //     price: null,
+    //     service_range: null,
+    //     animal_types: null
+    //   }
+    //
+    // }
   }
 
   render () {
-    let about
-    let price
-    let service_range
-    let cats, dogs, reptiles, birds, fish, rabbits, rodents, equines, plants
-    if (this.state) {
-      const { sitter } = this.state
-      about = sitter.about
-      price = sitter.price
-      service_range = sitter.service_range
-      cats = sitter.animal_types.search('cats') !== -1
-      dogs = sitter.animal_types.search('dogs') !== -1
-      reptiles = sitter.animal_types.search('reptiles') !== -1
-      birds = sitter.animal_types.search('birds') !== -1
-      fish = sitter.animal_types.search('fish') !== -1
-      rabbits = sitter.animal_types.search('rabbits') !== -1
-      rodents = sitter.animal_types.search('rodents') !== -1
-      equines = sitter.animal_types.search('equines') !== -1
-      plants = sitter.animal_types.search('plants') !== -1
-    }
+    // let about
+    // let price
+    // let service_range
+    // let cats, dogs, reptiles, birds, fish, rabbits, rodents, equines, plants
+    // console.log('in CreateSitterAcc render method, this.data is', this.data)
+    // if (this.data) {
+    //   about = this.data.about
+    //   price = this.data.price
+    //   service_range = this.data.service_range
+    //   cats = this.data.cats
+    //   dogs = this.data.dogs
+    //   reptiles = this.data.reptiles
+    //   birds = this.data.birds
+    //   fish = this.data.fish
+    //   rabbits = this.data.rabbits
+    //   rodents = this.data.rodents
+    //   equines = this.data.equines
+    //   plants = this.data.plants
+    // }
 
     return (
       <div>
-        <label htmlFor="about">About You</label>
+        <label htmlFor="about">About You as a Pet Sitter</label>
         <br />
         <textarea
           required
           name="about"
-          value={about}
+          value={this.props.user && this.props.user.about}
           placeholder="Description"
           onChange={this.handleChange}
           cols="65"
@@ -49,7 +56,7 @@ class CreateSitterAcc extends Component {
         <input
           required
           name="price"
-          value={price}
+          value={this.props.user && this.props.user.price}
           type="number"
           placeholder="Price"
           onChange={this.handleChange}
@@ -59,7 +66,7 @@ class CreateSitterAcc extends Component {
         <input
           required
           name="service_range"
-          value={service_range}
+          value={this.props.user && this.props.user.service_range}
           type="number"
           placeholder="Distance"
           onChange={this.handleChange}
@@ -69,63 +76,63 @@ class CreateSitterAcc extends Component {
         <br />
         <div onChange={this.handleCheckBoxChange}>
           <input
-            defaultChecked={cats}
+            defaultChecked={this.props.user && this.props.user.cats}
             className="animal-checkbox"
             name="animal_types"
             value="cats"
             type="checkbox"
           />Cats
           <input
-            defaultChecked={dogs}
+            defaultChecked={this.props.user && this.props.user.dogs}
             className="animal-checkbox"
             name="animal_types"
             value="dogs"
             type="checkbox"
           />Dogs
           <input
-            defaultChecked={reptiles}
+            defaultChecked={this.props.user && this.props.user.reptiles}
             className="animal-checkbox"
             name="animal_types"
             value="reptiles"
             type="checkbox"
           />Reptiles
           <input
-            defaultChecked={birds}
+            defaultChecked={this.props.user && this.props.user.birds}
             className="animal-checkbox"
             name="animal_types"
             value="birds"
             type="checkbox"
           />Birds
           <input
-            defaultChecked={fish}
+            defaultChecked={this.props.user && this.props.user.fish}
             className="animal-checkbox"
             name="animal_types"
             value="fish"
             type="checkbox"
           />Fish
           <input
-            defaultChecked={rabbits}
+            defaultChecked={this.props.user && this.props.user.rabbits}
             className="animal-checkbox"
             name="animal_types"
             value="rabbits"
             type="checkbox"
           />Rabbits
           <input
-            defaultChecked={rodents}
+            defaultChecked={this.props.user && this.props.user.rodents}
             className="animal-checkbox"
             name="animal_types"
             value="rodents"
             type="checkbox"
           />Rodents
           <input
-            defaultChecked={equines}
+            defaultChecked={this.props.user && this.props.user.equines}
             className="animal-checkbox"
             name="animal_types"
             value="equines"
             type="checkbox"
           />Equines
           <input
-            defaultChecked={plants}
+            defaultChecked={this.props.user && this.props.user.plants}
             className="animal-checkbox"
             name="animal_types"
             value="plants"

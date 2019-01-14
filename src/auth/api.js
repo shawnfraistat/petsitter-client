@@ -105,7 +105,7 @@ export const createSitterAccount = data => {
 }
 
 export const editProfile = data => {
-  console.log(data)
+  console.log('inside editProfile in api.js, data is', data)
   return fetch(apiUrl + '/edit-profile', {
     method: 'PATCH',
     headers: {

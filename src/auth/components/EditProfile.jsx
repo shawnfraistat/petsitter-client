@@ -14,7 +14,28 @@ class EditProfile extends Component {
   constructor (props) {
     super(props)
 
-    this.state = props.user
+    const { user } = props
+    const { client, sitter } = props.user
+
+    this.state = user
+
+    if (user.accountType === 'client') {
+      this.state.about = client.about
+    } else if (user.accountType === 'sitter') {
+      this.state.about = sitter.about
+      this.state.price = sitter.price
+      this.state.service_range = sitter.service_range
+      this.state.animal_types = sitter.animal_types
+      this.state.cats = sitter.animal_types.search('cats') !== -1
+      this.state.dogs = sitter.animal_types.search('dogs') !== -1
+      this.state.reptiles = sitter.animal_types.search('reptiles') !== -1
+      this.state.birds = sitter.animal_types.search('birds') !== -1
+      this.state.fish = sitter.animal_types.search('fish') !== -1
+      this.state.rabbits = sitter.animal_types.search('rabbits') !== -1
+      this.state.rodents = sitter.animal_types.search('rodents') !== -1
+      this.state.equines = sitter.animal_types.search('equines') !== -1
+      this.state.plants = sitter.animal_types.search('plants') !== -1
+    }
     console.log('inside edit profile, this.state is', this.state)
   }
 

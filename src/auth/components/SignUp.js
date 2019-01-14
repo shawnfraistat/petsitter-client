@@ -19,12 +19,8 @@ class SignUp extends Component {
       password: '',
       passwordConfirmation: '',
       accountType: 'client',
-      zip_code: '',
-      about: '',
-      price: 0,
-      service_range: 0,
       animal_types: '',
-      token: ''
+      zip_code: ''
     }
   }
 
@@ -77,7 +73,7 @@ class SignUp extends Component {
         console.log('inside signup, after creating an account, this.state is', this.state)
         const user = this.state
         user.accountType === 'client' ? user.client = res.client : user.sitter = res.sitter
-        console.log('afer trying to user.client to res, user is', user)
+        console.log('after trying to user.client to res, user is', user)
         return user
       })
       // now actually send the user to the right view

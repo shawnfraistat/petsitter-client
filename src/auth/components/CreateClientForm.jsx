@@ -17,7 +17,7 @@ class CreateClientAcc extends Component {
 
     return (
       <div>
-        <label htmlFor="about">About You</label>
+        <label htmlFor="about">About You and Your Pets</label>
         <br />
         <textarea
           required
