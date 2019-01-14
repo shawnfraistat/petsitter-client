@@ -69,7 +69,6 @@ class EditProfile extends Component {
 
         <label htmlFor="email">Change Email</label>
         <input
-          required
           name="email"
           value={email}
           type="email"
@@ -78,31 +77,27 @@ class EditProfile extends Component {
         />
         <label htmlFor="password">Change Password</label>
         <input
-          required
           name="password"
-          value={password}
           type="password"
           placeholder="Password"
           onChange={this.handleChange}
         />
         <label htmlFor="passwordConfirmation">Confirm New Password</label>
         <input
-          required
           name="passwordConfirmation"
-          value={passwordConfirmation}
           type="password"
           placeholder="Confirm Password"
           onChange={this.handleChange}
         />
         <label htmlFor="zip_code">Enter Zip Code</label>
         <input
-          required
           name="zip_code"
           value={zip_code}
           type="text"
           placeholder="Zip Code"
           onChange={this.handleChange}
         />
+        {/* By commenting this out, user can only edit whichever account they're currently on
         <label htmlFor="accountType">Choose Account to Edit</label>
         <div onChange={this.handleChange}>
           <input
@@ -118,10 +113,10 @@ class EditProfile extends Component {
             value="sitter"
             type="radio"
           />Sitter
-        </div>
+        </div> */}
         { accountType === 'client'
-          ? <CreateClientForm handleChange={this.handleChange} />
-          : <CreateSitterForm handleChange={this.handleChange} handleCheckBoxChange={this.handleCheckBoxChange} /> }
+          ? <CreateClientForm handleChange={this.handleChange} user={this.state} />
+          : <CreateSitterForm handleChange={this.handleChange} handleCheckBoxChange={this.handleCheckBoxChange} user={this.state} /> }
         <button type="submit">Submit Changes</button>
       </form>
 

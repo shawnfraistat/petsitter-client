@@ -31,8 +31,6 @@ class SignIn extends Component {
       .then(res => res.json())
       .then(res => {
         console.log('inside signIn, res is', res)
-        this.translateRailsUser(res)
-        console.log('after translateRailsResponse, res is', res)
         return res
       })
       .then(res => {
@@ -44,8 +42,6 @@ class SignIn extends Component {
         this.state.accountType === 'client' ? history.push('/client') : history.push('/sitter')
         return null
       })
-      //previous line used to be:
-      // history.push('/'))
       .catch(() => flash(messages.signInFailure, 'flash-error'))
   }
 

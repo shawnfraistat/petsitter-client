@@ -90,7 +90,6 @@ class App extends Component {
           <Route path='/sitter' render={() => (
             <SitterLanding flash={this.flash} setUser={this.setUser} />
           )} />
-          {/* For some reason, changing CreateClientAcc and CreateSitterAccount Route to AuthenticatedRoute currently breaks them */}
           <AuthenticatedRoute user={user} path='/create-client-account' render={() => (
             <CreateClientAcc flash={this.flash} token={this.state.user.token} setUser={this.setUser} getUser={this.getUser} />
           )} />
