@@ -43,9 +43,8 @@ class SearchBar extends Component {
           <label htmlFor="favorites_only">Show Favorited Sitters Only:</label>
           <input
             name="favorites_only"
-            value={true}
             type="checkbox"
-            onChange={this.props.handleOptsChange}
+            onChange={this.props.handleOptsFavoritesChange}
           />
           <br />
           <label htmlFor="animal_types">Search By Pet Types:</label>

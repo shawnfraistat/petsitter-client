@@ -82,6 +82,14 @@ class ClientLanding extends Component {
     })
   }
 
+  handleOptsFavoritesChange = event => {
+    const opts = this.state.searchOpts
+    event.target.checked ? opts.favorites_only = true : opts.favorites_only = false
+    this.setState({
+      searchOpts: opts
+    })
+  }
+
   // mapSitters() attempts to add distanceFromUser to each sitter by comparing
   // their zip code to the client's via a third party API
   // if it can't reach the third party API, it triggers this.cannotReachApi()
@@ -126,7 +134,7 @@ class ClientLanding extends Component {
 
     return (
       <div className='client-view-main'>
-        <SearchBar handleOptsChange={this.handleOptsChange} handleOptsCheckBoxChange={this.handleOptsCheckBoxChange} searchOpts={this.state.searchOpts}/>
+        <SearchBar handleOptsChange={this.handleOptsChange} handleOptsCheckBoxChange={this.handleOptsCheckBoxChange} handleOptsFavoritesChange={this.handleOptsFavoritesChange} searchOpts={this.state.searchOpts}/>
         <div className='client-sitter-list'>
           <h3>Sitter List</h3>
           {filteredList && filteredList.map((sitter, index) => (

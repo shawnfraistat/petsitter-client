@@ -26,7 +26,7 @@ class SitterPreview extends Component {
     console.log('inside onUnFavoriteClick, id is', id)
     deleteFavorite(this.props, id)
       .then(() => {
-        console.log('after deleitng favorite, id is', id)
+        console.log('after deleting favorite, id is', id)
         this.removeFavoriteFromFavoriteList(id)
       })
       .catch(console.error)
