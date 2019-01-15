@@ -16,3 +16,31 @@ export const getZipDistance = (zip1, zip2) => {
     method: 'GET'
   })
 }
+
+export const createFavorite = (user, sitterID) => {
+  console.log('inside createFavorite, user is', user)
+  console.log('inside createFavorite, sitterID is', sitterID)
+  return fetch(apiUrl + '/favorites', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization':`Token token=${user.token}`
+    },
+    body: JSON.stringify({
+      favorite: {
+        client_id: user.client.id,
+        sitter_id: sitterID
+      }
+    })
+  })
+}
+
+export const getFavorites = user => {
+  return fetch(apiUrl + '/favorites', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization':`Token token=${user.token}`
+    }
+  })
+}

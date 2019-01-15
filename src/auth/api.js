@@ -68,8 +68,8 @@ export const changePassword = (passwords, user) => {
 }
 
 export const createClientAccount = data => {
-  // console.log('made it inside createClientAcc')
-  // console.log('data is', data)
+  console.log('made it inside createClientAcc')
+  console.log('data is', data)
   return fetch(apiUrl + '/clients', {
     method: 'POST',
     headers: {
@@ -78,7 +78,8 @@ export const createClientAccount = data => {
     },
     body: JSON.stringify({
       client: {
-        about: data.about
+        about: data.about,
+        favorites: []
       }
     })
   })

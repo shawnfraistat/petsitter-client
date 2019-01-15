@@ -12,9 +12,10 @@ class ClientLanding extends Component {
     this.state = props.user
     this.state.searchOpts = {
       canReachApi: true,
-      service_range: 80,
-      price: 80,
-      animal_types: 'cats dogs rabbits reptiles birds rodents plants equines'
+      service_range: 40,
+      price: 40,
+      animal_types: 'cats dogs rabbits reptiles birds rodents plants equines',
+      favorites_only: false
     }
     index(this.state)
       .then(res => res.json())
@@ -94,7 +95,7 @@ class ClientLanding extends Component {
         <div className='client-sitter-list'>
           <h3>Sitter List</h3>
           {filteredList && filteredList.map((sitter, index) => (
-            <SitterPreview key={index} sitter={sitter} canReachApi={this.state.searchOpts.canReachApi}/>
+            <SitterPreview key={index} sitter={sitter} user={this.state} canReachApi={this.state.searchOpts.canReachApi}/>
           ))}
         </div>
       </div>

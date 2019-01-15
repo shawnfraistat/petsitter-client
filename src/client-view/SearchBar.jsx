@@ -15,7 +15,7 @@ class SearchBar extends Component {
       <div>
         <h3>Search Bar</h3>
         <form>
-          <label htmlFor="price">Max Price</label>
+          <label htmlFor="price">Max Price:</label>
           <br />
           <input
             required
@@ -27,7 +27,7 @@ class SearchBar extends Component {
           /> dollars per day
           {this.state.searchOpts.canReachApi && (
             <div>
-              <label htmlFor="service_range">Max Distance</label>
+              <label htmlFor="service_range">Max Distance:</label>
               <br />
               <input
                 required
@@ -40,8 +40,15 @@ class SearchBar extends Component {
               <br />
             </div>
           )}
-          <label htmlFor="animal_types">Search By Pet Types</label>
+          <label htmlFor="favorites_only">Show Favorited Sitters Only:</label>
+          <input
+            name="favorites_only"
+            value={true}
+            type="checkbox"
+            onChange={this.props.handleOptsChange}
+          />
           <br />
+          <label htmlFor="animal_types">Search By Pet Types:</label>
           <div onChange={this.props.handleOptsCheckBoxChange}>
             <input
               defaultChecked
