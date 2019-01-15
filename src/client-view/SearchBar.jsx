@@ -25,17 +25,21 @@ class SearchBar extends Component {
             placeholder="Price"
             onChange={this.props.handleOptsChange}
           /> dollars per day
-          <label htmlFor="service_range">Max Distance</label>
-          <br />
-          <input
-            required
-            name="service_range"
-            value={this.state.searchOpts.service_range}
-            type="number"
-            placeholder="Distance"
-            onChange={this.props.handleOptsChange}
-          /> miles
-          <br />
+          {this.state.searchOpts.canReachApi && (
+            <div>
+              <label htmlFor="service_range">Max Distance</label>
+              <br />
+              <input
+                required
+                name="service_range"
+                value={this.state.searchOpts.service_range}
+                type="number"
+                placeholder="Distance"
+                onChange={this.props.handleOptsChange}
+              /> miles
+              <br />
+            </div>
+          )}
           <label htmlFor="animal_types">Search By Pet Types</label>
           <br />
           <div onChange={this.props.handleOptsCheckBoxChange}>

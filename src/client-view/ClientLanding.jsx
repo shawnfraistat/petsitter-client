@@ -11,6 +11,7 @@ class ClientLanding extends Component {
     super(props)
     this.state = props.user
     this.state.searchOpts = {
+      canReachApi: true,
       service_range: 80,
       price: 80,
       animal_types: 'cats dogs rabbits reptiles birds rodents plants equines'
@@ -28,12 +29,20 @@ class ClientLanding extends Component {
     res.sitters.forEach(sitter => {
       getZipDistance(this.state.zip_code, sitter.user.zip_code)
         .then(res => res.json())
-        .then(res => sitter.distanceFromUser = Math.ceil(res.distance))
+        .then(res => {
+          res.distance >= 0 ? sitter.distanceFromUser = Math.ceil(res.distance) : this.cannotReachApi()
+        })
+        .catch(console.error)
     })
-    // res.sitters = res.sitters.map(sitter => {
-    //   sitter.distanceFromUser = getZipDistance(this.state.zip_code, sitter.user.zip_code)
-    // })
     return res.sitters
+  }
+
+  cannotReachApi = () => {
+    const opts = this.state.searchOpts
+    opts.canReachApi = false
+    this.setState({
+      searchOpts: opts
+    })
   }
 
   handleOptsChange = event => {
@@ -85,7 +94,7 @@ class ClientLanding extends Component {
         <div className='client-sitter-list'>
           <h3>Sitter List</h3>
           {filteredList && filteredList.map((sitter, index) => (
-            <SitterPreview key={index} sitter={sitter} />
+            <SitterPreview key={index} sitter={sitter} canReachApi={this.state.searchOpts.canReachApi}/>
           ))}
         </div>
       </div>
