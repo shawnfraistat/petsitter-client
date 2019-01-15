@@ -61,7 +61,7 @@ class ClientLanding extends Component {
   petsCheck = (sitterPets) => {
     const searchArray = this.state.searchOpts.animal_types.split(' ')
     const sitterPetsArray = sitterPets.split(' ')
-    return sitterPetsArray.any(pet => searchArray.includes(pet))
+    return sitterPetsArray.some(pet => searchArray.includes(pet))
   }
 
   render () {
