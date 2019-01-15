@@ -35,6 +35,16 @@ export const createFavorite = (user, sitterID) => {
   })
 }
 
+export const deleteFavorite = (user, favoriteID) => {
+  return fetch(apiUrl + '/favorites/' + favoriteID, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization':`Token token=${user.token}`
+    }
+  })
+}
+
 export const getFavorites = user => {
   return fetch(apiUrl + '/favorites', {
     method: 'GET',
