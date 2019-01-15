@@ -43,9 +43,20 @@ class ClientLanding extends Component {
 
   // distanceCheck() checks to see whether the sitter is within the user's allowable distance search params
   // right now it also returns true if the sitter's distance is undefined for some reason (like the third party API isn't working, for example)
-  distanceCheck = (sitter) => sitter.distanceFromUser !== undefined ? (sitter.distanceFromUser <= this.state.searchOpts.service_range && sitter.distanceFromUser <= sitter.service_range) : true
+  distanceCheck = (sitter) => (sitter.distanceFromUser !== undefined
+    ? (sitter.distanceFromUser <= this.state.searchOpts.service_range && sitter.distanceFromUser <= sitter.service_range)
+    : true)
 
-  favoriteCheck = (sitter) => this.state.searchOpts.favorites_only && this.state.favoritesList.some(favorite => favorite.client_id === this.state.client.id && favorite.sitter_id === sitter.id) ? false : true
+  favoriteCheck = (sitter) => {
+    if (this.state.searchOpts.favorites_only) {
+      if (this.state.favoritesList.some(favorite => favorite.client.id === this.state.client.id && favorite.sitter.id === sitter.id)) {
+        return true
+      } else {
+        return false
+      }
+    }
+    return true
+  }
 
   handleOptsChange = event => {
     const opts = this.state.searchOpts
