@@ -17,16 +17,23 @@ class ClientLanding extends Component {
     }
     index(this.state)
       .then(res => res.json())
-      .then(res => {
-        res.sitters.map(sitter => {
-          sitter.distanceFromUser = getZipDistance(this.state.zip_code, sitter.user.zip_code).distance
-          return sitter
-        })
-        return res
-      })
-      .then(res => this.setState({ sitterList: res.sitters }))
+      .then(res => this.mapSitters(res))
+      .then(sitters => this.setState({ sitterList: sitters }))
       .then(() => console.log('this.state.sitterList is', this.state.sitterList))
       .catch(console.error)
+  }
+
+  mapSitters = (res) => {
+    console.log('inside mapSitters, res is', res)
+    res.sitters.forEach(sitter => {
+      getZipDistance(this.state.zip_code, sitter.user.zip_code)
+        .then(res => res.json())
+        .then(res => sitter.distanceFromUser = Math.ceil(res.distance))
+    })
+    // res.sitters = res.sitters.map(sitter => {
+    //   sitter.distanceFromUser = getZipDistance(this.state.zip_code, sitter.user.zip_code)
+    // })
+    return res.sitters
   }
 
   handleOptsChange = event => {
@@ -55,7 +62,7 @@ class ClientLanding extends Component {
 
   // distanceCheck() checks to see whether the sitter is within the user's allowable distance search params
   // right now it also returns true if the sitter's distance is undefined for some reason (like the third party API isn't working, for example)
-  distanceCheck = (distanceFromUser) => distanceFromUser !== undefined ?  distanceFromUser <= this.state.searchOpts.service_range : true
+  distanceCheck = (sitter) => sitter.distanceFromUser !== undefined ? (sitter.distanceFromUser <= this.state.searchOpts.service_range && sitter.distanceFromUser <= sitter.service_range) : true
 
   // petsCheck() checks to see whether the sitter sits for at least one of the pet types the user has enabled
   petsCheck = (sitterPets) => {
@@ -68,7 +75,7 @@ class ClientLanding extends Component {
     let filteredList
     if (this.state.sitterList) {
       filteredList = this.state.sitterList.filter(sitter => (
-        sitter.price <= this.state.searchOpts.price && this.distanceCheck(sitter.distanceFromUser) && this.petsCheck(sitter.animal_types)
+        sitter.price <= this.state.searchOpts.price && this.distanceCheck(sitter) && this.petsCheck(sitter.animal_types)
       ))
     }
 

@@ -10,12 +10,9 @@ export const index = (user) => {
   })
 }
 
+// Third party zipcode api courtest of: https://www.zipcodeapi.com/
 export const getZipDistance = (zip1, zip2) => {
-  return fetch(`https://www.zipcodeapi.com/rest/Q21t36AEGKgknJa5LqGxsinWu2lONlmfvGnDuu7xrdjKCGUbnRX56osogDNHO1Ph/distance.json/${zip1}/${zip2}/mile`, {
-    method: 'GET',
-    mode: 'no-cors',
-    headers: {
-      'Content-Type': 'application/json'
-    }
+  return fetch(`https://www.zipcodeapi.com/rest/js-LwOvCoX9fs3x0a6kimttDH2H21GecGI5eV33pSLfdd9SiLurBZbTuoKv0wFDTAHg/distance.json/${zip1}/${zip2}/mile`, {
+    method: 'GET'
   })
 }
