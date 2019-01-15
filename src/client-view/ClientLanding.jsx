@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { index } from './api'
+import { index, getZipDistance } from './api'
 
 import SitterPreview from './SitterPreview'
 import SearchBar from './SearchBar'
@@ -17,7 +17,16 @@ class ClientLanding extends Component {
     }
     index(this.state)
       .then(res => res.json())
+      .then(res => {
+        res.sitters.map(sitter => {
+          sitter.distanceFromUser = getZipDistance(this.state.zip_code, sitter.user.zip_code).distance
+          return sitter
+        })
+        return res
+      })
       .then(res => this.setState({ sitterList: res.sitters }))
+      .then(() => console.log('this.state.sitterList is', this.state.sitterList))
+      .catch(console.error)
   }
 
   handleOptsChange = event => {
@@ -44,11 +53,22 @@ class ClientLanding extends Component {
     })
   }
 
+  // distanceCheck() checks to see whether the sitter is within the user's allowable distance search params
+  // right now it also returns true if the sitter's distance is undefined for some reason (like the third party API isn't working, for example)
+  distanceCheck = (distanceFromUser) => distanceFromUser !== undefined ?  distanceFromUser <= this.state.searchOpts.service_range : true
+
+  // petsCheck() checks to see whether the sitter sits for at least one of the pet types the user has enabled
+  petsCheck = (sitterPets) => {
+    const searchArray = this.state.searchOpts.animal_types.split(' ')
+    const sitterPetsArray = sitterPets.split(' ')
+    return sitterPetsArray.any(pet => searchArray.includes(pet))
+  }
+
   render () {
     let filteredList
     if (this.state.sitterList) {
       filteredList = this.state.sitterList.filter(sitter => (
-        sitter.price <= this.state.searchOpts.price && sitter.service_range <= this.state.searchOpts.service_range
+        sitter.price <= this.state.searchOpts.price && this.distanceCheck(sitter.distanceFromUser) && this.petsCheck(sitter.animal_types)
       ))
     }
 

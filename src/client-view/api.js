@@ -9,3 +9,13 @@ export const index = (user) => {
     }
   })
 }
+
+export const getZipDistance = (zip1, zip2) => {
+  return fetch(`https://www.zipcodeapi.com/rest/Q21t36AEGKgknJa5LqGxsinWu2lONlmfvGnDuu7xrdjKCGUbnRX56osogDNHO1Ph/distance.json/${zip1}/${zip2}/mile`, {
+    method: 'GET',
+    mode: 'no-cors',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+}
