@@ -81,8 +81,17 @@ class EditProfile extends Component {
     const { flash, history, setUser } = this.props
     console.log(this.state)
 
+    // zip code validation -- regexp courtesy of https://stackoverflow.com/questions/160550/zip-code-us-postal-code-validation
+    if (this.state.zip_code) {
+      const isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.state.zip_code)
+      if (!(isValidZip)) {
+        flash(messages.badZipCode, 'flash-error')
+        return null
+      }
+    }
+
     if ((this.state.password || this.state.passwordConfirmation) && (this.state.password !== this.state.passwordConfirmation)) {
-      flash(messages.editProfileFailure, 'flash-error')
+      flash(messages.mismatchingPasswords, 'flash-error')
       return null
     }
 
@@ -145,6 +154,7 @@ class EditProfile extends Component {
           name="zip_code"
           value={zip_code}
           type="text"
+          maxLength="5"
           placeholder="Zip Code"
           onChange={this.handleChange}
         />

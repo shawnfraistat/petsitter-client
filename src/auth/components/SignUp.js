@@ -54,6 +54,19 @@ class SignUp extends Component {
     const { flash, history, setUser, getUser } = this.props
     console.log(this.state)
 
+    if (this.state.zip_code) {
+      const isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.state.zip_code)
+      if (!(isValidZip)) {
+        flash(messages.badZipCode, 'flash-error')
+        return null
+      }
+    }
+
+    if ((this.state.password || this.state.passwordConfirmation) && (this.state.password !== this.state.passwordConfirmation)) {
+      flash(messages.mismatchingPasswords, 'flash-error')
+      return null
+    }
+    
     signUp(this.state)
       .then(handleErrors)
       // after signing up, sign in
@@ -123,6 +136,7 @@ class SignUp extends Component {
         <input
           required
           name="zip_code"
+          maxLength="5"
           value={zip_code}
           type="text"
           placeholder="Zip Code"

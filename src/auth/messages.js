@@ -11,6 +11,7 @@ export default {
   changePasswordFailure: 'Failed to change passwords. Check your old password' +
                          ' and try again.',
   editProfileSuccess: 'Succesfully updated profile!',
-  editProfileFailure: 'Update failed. Data may be invalid or Passwords may not' +
-                      ' match.'
+  editProfileFailure: 'Update failed. Data may be invalid.',
+  mismatchingPasswords: 'Error. Passwords do not match.',
+  badZipCode: 'Invalid zip code. Zip code must be a valid five digit number.'
 }
