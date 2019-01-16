@@ -31,6 +31,13 @@ class EditProfile extends Component {
     return obj
   }
 
+  cleanFormData = formData => {
+    for(const pair of formData.entries()) {
+      !(pair[1]) && formData.delete(pair[0])
+    }
+    return formData
+  }
+
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
@@ -55,6 +62,13 @@ class EditProfile extends Component {
     })
   }
 
+  handleFile = event => {
+    // this.encodeImageFileAsURL(event.target.files[0])
+    this.setState({
+      file: event.target.files[0]
+    })
+  }
+
   editProfile = event => {
     event.preventDefault()
 
@@ -74,19 +88,29 @@ class EditProfile extends Component {
       return null
     }
 
-    const data = this.cleanObject(this.state)
-    console.log('inside editProfile, clean data is', data)
+    const formData = new FormData(event.target)
+    if (this.state.file) {
+      formData.append('image', this.state.file)
+    }
 
-    editUserProfile(data)
+    const purgedFormData = this.cleanFormData(formData)
+    console.log('inside editProfile, clean data is:')
+    for (const pair of purgedFormData.entries()) {
+      console.log(pair[0]+ ', '+ pair[1])
+    }
+
+    editUserProfile(this.state, purgedFormData)
       .then(handleErrors)
       .then(res => res.json())
-      .then(() => this.state.account_type === 'client' ? updateClientAccount(data) : updateSitterAccount(data))
+      .then(() => this.state.account_type === 'client' ? updateClientAccount(this.state) : updateSitterAccount(this.state))
       .then(handleErrors)
       .then(res => res.json())
       .then(res => {
-        res.user.token = this.state.token
-        res.user.account_type = this.state.account_type
-        setUser(res.user)
+        console.log('inside editUserProfile, res is', res)
+        this.setState({ image: res.user.image })
+        this.setState({ client: res.user.client })
+        this.setState({ sitter: res.user.sitter })
+        setUser(this.state)
       })
       .then(() => {
         this.props.user.account_type === 'client' ? history.push('/client') : history.push('/sitter')
@@ -132,6 +156,12 @@ class EditProfile extends Component {
           maxLength="5"
           placeholder="Zip Code"
           onChange={this.handleChange}
+        />
+        <label htmlFor="file">Upload Profile Picture</label>
+        <input
+          type="file"
+          placeholder="File"
+          onChange={this.handleFile}
         />
         {/* Since I've commented this out, user can only edit whichever account they're currently on
         <label htmlFor="account_type">Choose Account to Edit</label>

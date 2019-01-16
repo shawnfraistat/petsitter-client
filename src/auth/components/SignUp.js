@@ -96,15 +96,12 @@ class SignUp extends Component {
       return null
     }
 
-    const fileForUpload = new FormData(event.target)
+    const formData = new FormData(event.target)
     if (this.state.file) {
-      fileForUpload.append('image', this.state.file)
-      for(const pair of fileForUpload.entries()) {
-        console.log(pair[0]+ ', '+ pair[1])
-      }
+      formData.append('image', this.state.file)
     }
 
-    signUp(this.state, fileForUpload)
+    signUp(formData)
       .then(handleErrors)
       // after signing up, sign in
       .then(() => signIn(this.state))

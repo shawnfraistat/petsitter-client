@@ -7,7 +7,7 @@ import Header from './header/Header'
 import SignUp from './auth/components/SignUp'
 import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
-import ChangePassword from './auth/components/ChangePassword'
+// import ChangePassword from './auth/components/ChangePassword'
 import EditProfile from './auth/components/EditProfile'
 
 import CreateClientAcc from './auth/components/CreateClientAcc'
@@ -142,9 +142,6 @@ class App extends Component {
           )} />
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
             <SignOut flash={this.flash} clearUser={this.clearUser} getUser={this.getUser} user={user} />
-          )} />
-          <AuthenticatedRoute user={user} path='/change-password' render={() => (
-            <ChangePassword flash={this.flash} user={user} />
           )} />
         </main>
       </React.Fragment>

@@ -8,27 +8,24 @@ export const handleErrors = res => {
   }
 }
 
-export const signUp = (credentials, fileForUpload) => {
-  console.log('inside signUp, credentials are', credentials)
-  console.log('inside signUp, fileForUpload is', fileForUpload)
-  return fetch(apiUrl + '/sign-up', {
-    method: 'POST',
-    body: fileForUpload
-    // headers: {
-    //   'Content-Type': 'application/json'
-    // },
-    // body: JSON.stringify({
-    //   credentials: {
-    //     email: credentials.email,
-    //     password: credentials.password,
-    //     password_confirmation: credentials.password_confirmation,
-    //     name: credentials.name,
-    //     zip_code: credentials.zip_code,
-    //     formData: fileForUpload
-    //   }
-    // })
+export const editUserProfile = (user, formData) => {
+  return fetch(apiUrl + '/edit-profile', {
+    method: 'PATCH',
+    body: formData,
+    headers: {
+      'Authorization':`Token token=${user.token}`
+    }
   })
 }
+
+export const signUp = (formData) => {
+  console.log('inside signUp, formData are', formData)
+  return fetch(apiUrl + '/sign-up', {
+    method: 'POST',
+    body: formData
+  })
+}
+
 
 export const signIn = credentials => {
   return fetch(apiUrl + '/sign-in', {
@@ -54,22 +51,22 @@ export const signOut = user => {
     }
   })
 }
-
-export const changePassword = (passwords, user) => {
-  return fetch(apiUrl + '/change-password', {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization':`Token token=${user.token}`
-    },
-    body: JSON.stringify({
-      passwords: {
-        old: passwords.oldPassword,
-        new: passwords.newPassword
-      }
-    })
-  })
-}
+// 
+// export const changePassword = (passwords, user) => {
+//   return fetch(apiUrl + '/change-password', {
+//     method: 'PATCH',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       'Authorization':`Token token=${user.token}`
+//     },
+//     body: JSON.stringify({
+//       passwords: {
+//         old: passwords.oldPassword,
+//         new: passwords.newPassword
+//       }
+//     })
+//   })
+// }
 
 export const createClientAccount = data => {
   console.log('made it inside createClientAcc')
@@ -140,25 +137,6 @@ export const updateSitterAccount = data => {
         price: data.price,
         service_range: data.service_range,
         animal_types: data.animal_types
-      }
-    })
-  })
-}
-
-export const editUserProfile = data => {
-  return fetch(apiUrl + '/edit-profile', {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization':`Token token=${data.token}`
-    },
-    body: JSON.stringify({
-      data: {
-        email: data.email,
-        password: data.password,
-        name: data.name,
-        file: data.file,
-        zip_code: data.zip_code,
       }
     })
   })
