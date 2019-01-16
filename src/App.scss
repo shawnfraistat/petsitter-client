@@ -3,6 +3,26 @@ $warning: #f1e681;
 $error: #f08181;
 $charcoal: #ccc;
 
+// PuppyBellies font courtesy of http://bythebutterfly.com
+@font-face {
+  font-family: 'PuppyBellies';
+  src: url('./fonts/PuppyBellies.ttf') format('truetype');
+}
+
+.petsitter-name {
+  font-family: 'PuppyBellies';
+}
+
+h3 {
+  font-family: 'Caveat', cursive;
+  font-size: 3em;
+}
+
+body {
+  font-family: 'Cabin', sans-serif;
+  font-size: 1.1em;
+}
+
 .flash-success,
 .flash-warning,
 .flash-error {

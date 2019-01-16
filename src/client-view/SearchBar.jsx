@@ -12,13 +12,14 @@ class SearchBar extends Component {
 
   render () {
     return (
-      <div>
+      <div className='col-3 search-bar'>
         <h3>Search Bar</h3>
         <form>
           <label htmlFor="price">Max Price:</label>
           <br />
           <input
             required
+            className="search-text-field"
             name="price"
             value={this.state.searchOpts.price}
             type="number"
@@ -31,6 +32,7 @@ class SearchBar extends Component {
               <br />
               <input
                 required
+                className="search-text-field"
                 name="service_range"
                 value={this.state.searchOpts.service_range}
                 type="number"
@@ -63,6 +65,7 @@ class SearchBar extends Component {
               value="dogs"
               type="checkbox"
             />Dogs
+            <br />
             <input
               defaultChecked
               className="animal-checkbox"
@@ -77,6 +80,7 @@ class SearchBar extends Component {
               value="birds"
               type="checkbox"
             />Birds
+            <br />
             <input
               defaultChecked
               className="animal-checkbox"
@@ -91,6 +95,7 @@ class SearchBar extends Component {
               value="rabbits"
               type="checkbox"
             />Rabbits
+            <br />
             <input
               defaultChecked
               className="animal-checkbox"
@@ -105,6 +110,7 @@ class SearchBar extends Component {
               value="equines"
               type="checkbox"
             />Equines
+            <br />
             <input
               defaultChecked
               className="animal-checkbox"
