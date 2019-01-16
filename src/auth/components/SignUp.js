@@ -112,8 +112,10 @@ class SignUp extends Component {
       .then(res => res.json())
       // after signing in, save the returned token and create a client or sitter account
       .then((res) => {
+        console.log('inside signUp; just signed in and got res back', res)
         console.log('inside signUp, about to try to create a client or sitter account')
         this.setState({ token: res.user.token })
+        this.setState({ image: res.user.image })
         return this.state.account_type === 'client' ? createClientAccount(this.state) : createSitterAccount(this.state)
       })
       // after creating a new sitter or client account, update the user so that they're on the right view

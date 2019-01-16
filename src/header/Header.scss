@@ -21,6 +21,14 @@ $charcoal: #bbb;
   justify-content: flex-end;
 }
 
+img {
+  &.header-profile-pic {
+    border-radius: 50px;
+    height: 75px;
+    width: 75px;
+  }
+}
+
 @media (max-width: 600px) {
   .main-header {
     flex-direction: column;

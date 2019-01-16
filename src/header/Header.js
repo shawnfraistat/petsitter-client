@@ -41,7 +41,8 @@ const Header = ({ user, setUser, getUser }) => (
   <header className="main-header">
     <h1>petsitter.io</h1>
     <nav>
-      { user && <span>Welcome, {user.email}</span>}
+      { user && <span>Welcome, {user.email} </span>}
+      { user && <img className="header-profile-pic" src={'http://localhost:4741/' + user.image.url} />}
       { user ? authenticatedOptions : unauthenticatedOptions }
       {/* if user has both a client and sitter account, let user switch between them */}
       { (user && user.isSitter && user.hasClientAcc) && <Link to="/client" onClick={() => switchToClient(setUser, getUser)}>Switch to Client View </Link>  }
