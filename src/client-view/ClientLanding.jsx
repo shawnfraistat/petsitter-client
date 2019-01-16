@@ -34,6 +34,7 @@ class ClientLanding extends Component {
   // cannotReachApi() is triggered if the app can't reach the third party zip code API
   // it hides the ability for clients to search by distance
   cannotReachApi = () => {
+    console.log('cannotReachApi!')
     const opts = this.state.searchOpts
     opts.canReachApi = false
     this.setState({
@@ -98,10 +99,8 @@ class ClientLanding extends Component {
     res.sitters.forEach(sitter => {
       getZipDistance(this.state.zip_code, sitter.user.zip_code)
         .then(res => res.json())
-        .then(res => {
-          res.distance >= 0 ? sitter.distanceFromUser = Math.ceil(res.distance) : this.cannotReachApi()
-        })
-        .catch(console.error)
+        .then(res => sitter.distanceFromUser = Math.ceil(res.distance))
+        .catch(this.cannotReachApi)
     })
     return res.sitters
   }
