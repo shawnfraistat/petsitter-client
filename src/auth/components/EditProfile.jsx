@@ -69,7 +69,7 @@ class EditProfile extends Component {
       }
     }
 
-    if ((this.state.password || this.state.passwordConfirmation) && (this.state.password !== this.state.passwordConfirmation)) {
+    if ((this.state.password || this.state.password_confirmation) && (this.state.password !== this.state.password_confirmation)) {
       flash(messages.mismatchingPasswords, 'flash-error')
       return null
     }
@@ -80,23 +80,23 @@ class EditProfile extends Component {
     editUserProfile(data)
       .then(handleErrors)
       .then(res => res.json())
-      .then(() => this.state.accountType === 'client' ? updateClientAccount(data) : updateSitterAccount(data))
+      .then(() => this.state.account_type === 'client' ? updateClientAccount(data) : updateSitterAccount(data))
       .then(handleErrors)
       .then(res => res.json())
       .then(res => {
         res.user.token = this.state.token
-        res.user.accountType = this.state.accountType
+        res.user.account_type = this.state.account_type
         setUser(res.user)
       })
       .then(() => {
-        this.props.user.accountType === 'client' ? history.push('/client') : history.push('/sitter')
+        this.props.user.account_type === 'client' ? history.push('/client') : history.push('/sitter')
       })
       .then(() => flash(messages.editProfileSuccess, 'flash-success'))
       .catch(() => flash(messages.editProfileFailure, 'flash-error'))
   }
 
   render () {
-    const { email, password, passwordConfirmation, accountType, zip_code } = this.state
+    const { email, password, password_confirmation, account_type, zip_code } = this.state
 
     return (
       <form className='auth-form' onSubmit={this.editProfile}>
@@ -117,9 +117,9 @@ class EditProfile extends Component {
           placeholder="Password"
           onChange={this.handleChange}
         />
-        <label htmlFor="passwordConfirmation">Confirm New Password</label>
+        <label htmlFor="password_confirmation">Confirm New Password</label>
         <input
-          name="passwordConfirmation"
+          name="password_confirmation"
           type="password"
           placeholder="Confirm Password"
           onChange={this.handleChange}
@@ -134,23 +134,23 @@ class EditProfile extends Component {
           onChange={this.handleChange}
         />
         {/* Since I've commented this out, user can only edit whichever account they're currently on
-        <label htmlFor="accountType">Choose Account to Edit</label>
+        <label htmlFor="account_type">Choose Account to Edit</label>
         <div onChange={this.handleChange}>
           <input
             defaultChecked
             className="account-radio"
-            name="accountType"
+            name="account_type"
             value="client"
             type="radio"
           />Client
           <input
             className="account-radio"
-            name="accountType"
+            name="account_type"
             value="sitter"
             type="radio"
           />Sitter
         </div> */}
-        { accountType === 'client'
+        { account_type === 'client'
           ? <CreateClientForm handleChange={this.handleChange} user={this.state} />
           : <CreateSitterForm handleChange={this.handleChange} handleCheckBoxChange={this.handleCheckBoxChange} user={this.state} /> }
         <button type="submit">Submit Changes</button>

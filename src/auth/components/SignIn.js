@@ -12,7 +12,7 @@ class SignIn extends Component {
     this.state = {
       email: '',
       password: '',
-      accountType: 'client'
+      account_type: 'client'
     }
   }
 
@@ -34,10 +34,10 @@ class SignIn extends Component {
         return res
       })
       .then(res => {
-        if (this.state.accountType === 'client' && res.user.client) {
-          res.user.accountType = 'client'
-        } else if (this.state.accountType === 'sitter' && res.user.sitter) {
-          res.user.accountType = 'sitter'
+        if (this.state.account_type === 'client' && res.user.client) {
+          res.user.account_type = 'client'
+        } else if (this.state.account_type === 'sitter' && res.user.sitter) {
+          res.user.account_type = 'sitter'
         } else {
           throw err
         }
@@ -45,7 +45,7 @@ class SignIn extends Component {
       })
       .then(() => flash(messages.signInSuccess, 'flash-success'))
       .then(() => {
-        this.state.accountType === 'client' ? history.push('/client') : history.push('/sitter')
+        this.state.account_type === 'client' ? history.push('/client') : history.push('/sitter')
       })
       .catch(() => flash(messages.signInFailure, 'flash-error'))
   }
@@ -74,18 +74,18 @@ class SignIn extends Component {
           placeholder="Password"
           onChange={this.handleChange}
         />
-        <label htmlFor="accountType">Sign In As</label>
+        <label htmlFor="account_type">Sign In As</label>
         <div onChange={this.handleChange}>
           <input
             defaultChecked
             className="account-radio"
-            name="accountType"
+            name="account_type"
             value="client"
             type="radio"
           />Client
           <input
             className="account-radio"
-            name="accountType"
+            name="account_type"
             value="sitter"
             type="radio"
           />Sitter

@@ -8,21 +8,25 @@ export const handleErrors = res => {
   }
 }
 
-export const signUp = credentials => {
+export const signUp = (credentials, fileForUpload) => {
+  console.log('inside signUp, credentials are', credentials)
+  console.log('inside signUp, fileForUpload is', fileForUpload)
   return fetch(apiUrl + '/sign-up', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      credentials: {
-        email: credentials.email,
-        password: credentials.password,
-        password_confirmation: credentials.passwordConfirmation,
-        name: credentials.name,
-        zip_code: credentials.zip_code
-      }
-    })
+    body: fileForUpload
+    // headers: {
+    //   'Content-Type': 'application/json'
+    // },
+    // body: JSON.stringify({
+    //   credentials: {
+    //     email: credentials.email,
+    //     password: credentials.password,
+    //     password_confirmation: credentials.password_confirmation,
+    //     name: credentials.name,
+    //     zip_code: credentials.zip_code,
+    //     formData: fileForUpload
+    //   }
+    // })
   })
 }
 
@@ -78,8 +82,7 @@ export const createClientAccount = data => {
     },
     body: JSON.stringify({
       client: {
-        about: data.about,
-        favorites: []
+        about: data.about
       }
     })
   })
@@ -154,8 +157,8 @@ export const editUserProfile = data => {
         email: data.email,
         password: data.password,
         name: data.name,
-        pic_url: data.pic_url,
-        zip_code: data.zip_code
+        file: data.file,
+        zip_code: data.zip_code,
       }
     })
   })

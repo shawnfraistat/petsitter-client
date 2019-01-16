@@ -57,7 +57,7 @@ class CreateSitterAcc extends Component {
       .then(res => res.json())
       .then(res => {
         const user = getUser()
-        user.accountType = 'sitter'
+        user.account_type = 'sitter'
         user.sitter = res.sitter
         console.log('inside createSitterAccount, user is', user)
         setUser(user)

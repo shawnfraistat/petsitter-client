@@ -36,7 +36,7 @@ class CreateClientAcc extends Component {
       .then(res => res.json())
       .then(res => {
         const user = getUser()
-        user.accountType = 'client'
+        user.account_type = 'client'
         user.client = res.client
         console.log('inside createClientAccount, user is', user)
         setUser(user)

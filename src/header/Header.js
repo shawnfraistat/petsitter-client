@@ -27,13 +27,13 @@ const alwaysOptions = (
 
 const switchToClient = (setUser, getUser) => {
   const user = getUser()
-  user.accountType = 'client'
+  user.account_type = 'client'
   setUser(user)
 }
 
 const switchToSitter = (setUser, getUser) => {
   const user = getUser()
-  user.accountType = 'sitter'
+  user.account_type = 'sitter'
   setUser(user)
 }
 

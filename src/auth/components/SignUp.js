@@ -17,8 +17,8 @@ class SignUp extends Component {
     this.state = {
       email: '',
       password: '',
-      passwordConfirmation: '',
-      accountType: 'client',
+      password_confirmation: '',
+      account_type: 'client',
       animal_types: '',
       zip_code: ''
     }
@@ -28,6 +28,20 @@ class SignUp extends Component {
     this.setState({
       [event.target.name]: event.target.value
     })
+  }
+
+  handleFile = event => {
+    // this.encodeImageFileAsURL(event.target.files[0])
+    this.setState({
+      file: event.target.files[0]
+    })
+
+    // let fileForUpload
+    // if (this.state.file) {
+    //   console.log('inside signUp, this.state.file is', this.state.file)
+    //   fileForUpload = this.encodeImageFileAsURL(this.state.file)
+    // }
+    // console.log('fileForUpload is', fileForUpload)
   }
 
   // handleCheckBoxChange() is called when checkboxes are checked or unchecked
@@ -48,6 +62,21 @@ class SignUp extends Component {
     })
   }
 
+  // encodeImageFileAsURL = (element) => {
+  //   console.log('inside encodeImageFileAsURL')
+  //   const reader = new FileReader()
+  //   reader.onloadend = function() {
+  //     console.log('RESULT', reader.result)
+  //
+  //     // return reader.result
+  //   }
+  //   console.log('reader result is', reader.result)
+  //   reader.readAsDataURL(element)
+  //   // return reader.readAsDataURL(element)
+  //   //this.setState({ fileData: reader.readAsDataURL(element) })
+  // }
+
+
   signUp = event => {
     event.preventDefault()
 
@@ -62,12 +91,20 @@ class SignUp extends Component {
       }
     }
 
-    if ((this.state.password || this.state.passwordConfirmation) && (this.state.password !== this.state.passwordConfirmation)) {
+    if ((this.state.password || this.state.password_confirmation) && (this.state.password !== this.state.password_confirmation)) {
       flash(messages.mismatchingPasswords, 'flash-error')
       return null
     }
-    
-    signUp(this.state)
+
+    const fileForUpload = new FormData(event.target)
+    if (this.state.file) {
+      fileForUpload.append('image', this.state.file)
+      for(const pair of fileForUpload.entries()) {
+        console.log(pair[0]+ ', '+ pair[1])
+      }
+    }
+
+    signUp(this.state, fileForUpload)
       .then(handleErrors)
       // after signing up, sign in
       .then(() => signIn(this.state))
@@ -77,7 +114,7 @@ class SignUp extends Component {
       .then((res) => {
         console.log('inside signUp, about to try to create a client or sitter account')
         this.setState({ token: res.user.token })
-        return this.state.accountType === 'client' ? createClientAccount(this.state) : createSitterAccount(this.state)
+        return this.state.account_type === 'client' ? createClientAccount(this.state) : createSitterAccount(this.state)
       })
       // after creating a new sitter or client account, update the user so that they're on the right view
       .then(handleErrors)
@@ -85,21 +122,21 @@ class SignUp extends Component {
       .then(res => {
         console.log('inside signup, after creating an account, this.state is', this.state)
         const user = this.state
-        user.accountType === 'client' ? user.client = res.client : user.sitter = res.sitter
+        user.account_type === 'client' ? user.client = res.client : user.sitter = res.sitter
         console.log('after trying to user.client to res, user is', user)
         return user
       })
       // now actually send the user to the right view
       .then((user) => {
         setUser(user)
-        this.state.accountType === 'client' ? history.push('/client') : history.push('/sitter')
+        this.state.account_type === 'client' ? history.push('/client') : history.push('/sitter')
       })
       .then(() => flash(messages.signUpSuccess, 'flash-success'))
       .catch(() => flash(messages.signUpFailure, 'flash-error'))
   }
 
   render () {
-    const { email, password, passwordConfirmation, accountType, zip_code, about } = this.state
+    const { email, password, password_confirmation, account_type, zip_code, about } = this.state
 
     return (
       <form className='auth-form' onSubmit={this.signUp}>
@@ -123,11 +160,11 @@ class SignUp extends Component {
           placeholder="Password"
           onChange={this.handleChange}
         />
-        <label htmlFor="passwordConfirmation">Confirm Password</label>
+        <label htmlFor="password_confirmation">Confirm Password</label>
         <input
           required
-          name="passwordConfirmation"
-          value={passwordConfirmation}
+          name="password_confirmation"
+          value={password_confirmation}
           type="password"
           placeholder="Confirm Password"
           onChange={this.handleChange}
@@ -142,23 +179,29 @@ class SignUp extends Component {
           placeholder="Zip Code"
           onChange={this.handleChange}
         />
-        <label htmlFor="accountType">Choose Account Type</label>
+        <label htmlFor="file">Upload Profile Picture</label>
+        <input
+          type="file"
+          placeholder="File"
+          onChange={this.handleFile}
+        />
+        <label htmlFor="account_type">Choose Account Type</label>
         <div onChange={this.handleChange}>
           <input
             defaultChecked
             className="account-radio"
-            name="accountType"
+            name="account_type"
             value="client"
             type="radio"
           />Client
           <input
             className="account-radio"
-            name="accountType"
+            name="account_type"
             value="sitter"
             type="radio"
           />Sitter
         </div>
-        { accountType === 'client'
+        { account_type === 'client'
           ? <CreateClientForm handleChange={this.handleChange} />
           : <CreateSitterForm handleChange={this.handleChange} handleCheckBoxChange={this.handleCheckBoxChange} /> }
         <button type="submit">Sign Up</button>

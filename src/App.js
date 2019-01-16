@@ -37,12 +37,12 @@ class App extends Component {
     this.setState({ user })
   }
 
-  // parseAccountTypeForState = (data) => {
-  //   console.log('inside parseAccountTypeForState -- data is', data)
+  // parseaccount_typeForState = (data) => {
+  //   console.log('inside parseaccount_typeForState -- data is', data)
   //   const { client, sitter } = data
-  //   if (res.accountType === 'client') {
+  //   if (res.account_type === 'client') {
   //     setState({ about: client.about })
-  //   } else if (res.accountType === 'sitter') {
+  //   } else if (res.account_type === 'sitter') {
   //     setState({ about: sitter.about })
   //     setState({ price: sitter.price })
   //     setState({ service_range: sitter.service_range })
@@ -57,7 +57,7 @@ class App extends Component {
   //     setState({ equines: sitter.animal_types.search('equines') !== -1 })
   //     setState({ plants: sitter.animal_types.search('plants') !== -1 })
   //   }
-  //   console.log('finished parseAccountTypeForState -- this.state is', this.state)
+  //   console.log('finished parseaccount_typeForState -- this.state is', this.state)
   // }
 
   // addUserVirtuals() determines what user is logged in as
@@ -68,11 +68,11 @@ class App extends Component {
     // console.log('inside add virtuals, user is', user)
     user.client ? user.hasClientAcc = true : user.hasClientAcc = false
     user.sitter ? user.hasSitterAcc = true : user.hasSitterAcc = false
-    if (user.accountType === 'client') {
+    if (user.account_type === 'client') {
       user.isClient = true
       user.isSitter = false
     }
-    if (user.accountType === 'sitter') {
+    if (user.account_type === 'sitter') {
       user.isSitter = true
       user.isClient = false
     }

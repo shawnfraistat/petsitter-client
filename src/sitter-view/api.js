@@ -18,7 +18,7 @@ const apiUrl = 'http://localhost:4741'
 //       credentials: {
 //         email: credentials.email,
 //         password: credentials.password,
-//         password_confirmation: credentials.passwordConfirmation
+//         password_confirmation: credentials.password_confirmation
 //       }
 //     })
 //   })
