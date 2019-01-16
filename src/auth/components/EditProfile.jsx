@@ -19,19 +19,31 @@ class EditProfile extends Component {
     const { user, setUser } = props
     const { client, sitter } = props.user
 
+    const zipCodePath = require('../../zip_code_database.csv')
+
     this.state = user
+    
+    papaParse.parse(zipCodePath, {
+      download: true,
+      complete: (results) => {
+        console.log('trying to papaParse--results are', results)
+        this.setState({ zipList: results.data })
+        console.log('immediately after completing papaParse, this.state is', this.state)
+      }
+    })
+
   }
 
-  // cleanObject() is a quick method for purging empty keys from objects,
-  // courtesy of https://stackoverflow.com/questions/286141/remove-blank-attributes-from-an-object-in-javascript
-  cleanObject = obj => {
-    for (const propName in obj) {
-      if (obj[propName] === '' || obj[propName] === undefined || obj[propName] === null) {
-        delete obj[propName]
-      }
-    }
-    return obj
-  }
+  // // cleanObject() is a quick method for purging empty keys from objects,
+  // // courtesy of https://stackoverflow.com/questions/286141/remove-blank-attributes-from-an-object-in-javascript
+  // cleanObject = obj => {
+  //   for (const propName in obj) {
+  //     if (obj[propName] === '' || obj[propName] === undefined || obj[propName] === null) {
+  //       delete obj[propName]
+  //     }
+  //   }
+  //   return obj
+  // }
 
   cleanFormData = formData => {
     for(const pair of formData.entries()) {
@@ -77,21 +89,29 @@ class EditProfile extends Component {
     const { flash, history, setUser } = this.props
 
     // zip code validation -- regexp courtesy of https://stackoverflow.com/questions/160550/zip-code-us-postal-code-validation
+    // if (this.state.zip_code) {
+    //   const isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.state.zip_code)
+    //   if (!(isValidZip)) {
+    //     flash(messages.badZipCode, 'flash-error')
+    //     return null
+    //   }
+    // }
+
+    // zip code validation
     if (this.state.zip_code) {
-      const isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.state.zip_code)
+      let isValidZip = false
+      for (let i = 0; i < this.state.zipList.length; i++) {
+        if (this.state.zipList[i][0] === this.state.zip_code) {
+          isValidZip = true
+        }
+      }
       if (!(isValidZip)) {
         flash(messages.badZipCode, 'flash-error')
         return null
       }
     }
 
-    // zip_code_database.csv
-    papaParse.parse('http://federalgovernmentzipcodes.us/free-zipcode-database.csv', {
-	      download: true,
-	      complete: function(results) {
-      		  console.log('trying to papaParse--results are', results)
-    	   }
-    })
+
 
     if ((this.state.password || this.state.password_confirmation) && (this.state.password !== this.state.password_confirmation)) {
       flash(messages.mismatchingPasswords, 'flash-error')

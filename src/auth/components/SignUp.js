@@ -10,7 +10,7 @@ import apiUrl from '../../apiConfig'
 
 import '../auth.scss'
 
-import postalCodes from 'postal-codes-js'
+import papaParse from 'papaparse'
 
 class SignUp extends Component {
   constructor () {
@@ -24,6 +24,17 @@ class SignUp extends Component {
       animal_types: '',
       zip_code: ''
     }
+    
+    const zipCodePath = require('../../zip_code_database.csv')
+
+    papaParse.parse(zipCodePath, {
+      download: true,
+      complete: (results) => {
+        console.log('trying to papaParse--results are', results)
+        this.setState({ zipList: results.data })
+        console.log('immediately after completing papaParse, this.state is', this.state)
+      }
+    })
   }
 
   handleChange = event => {
@@ -70,8 +81,14 @@ class SignUp extends Component {
     const { flash, history, setUser, getUser } = this.props
     console.log(this.state)
 
+    // zip code validation
     if (this.state.zip_code) {
-      const isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.state.zip_code)
+      let isValidZip = false
+      for (let i = 0; i < this.state.zipList.length; i++) {
+        if (this.state.zipList[i][0] === this.state.zip_code) {
+          isValidZip = true
+        }
+      }
       if (!(isValidZip)) {
         flash(messages.badZipCode, 'flash-error')
         return null

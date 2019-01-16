@@ -13,5 +13,6 @@ export default {
   editProfileSuccess: 'Succesfully updated profile!',
   editProfileFailure: 'Update failed. Data may be invalid.',
   mismatchingPasswords: 'Error. Passwords do not match.',
-  badZipCode: 'Invalid zip code. Zip code must be a valid five digit number.'
+  badZipCode: 'Invalid zip code. Zip code must be a five digit number and' +
+              ' correspond to a valid US postal code.'
 }
