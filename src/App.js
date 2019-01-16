@@ -92,7 +92,7 @@ class App extends Component {
         <Header user={user} getUser={this.getUser} setUser={this.setUser}/>
         {flashMessage && <h3 className={flashType}>{flashMessage}</h3>}
 
-        <main>
+        <main className="container">
           {/* Routes */}
           <Route exact path='/' component={LandingPage} />
           <Route path='/sign-up' render={() => (

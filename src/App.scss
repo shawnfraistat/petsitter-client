@@ -29,6 +29,10 @@ $charcoal: #ccc;
   background-color: $error;
 }
 
+.main-container {
+  // margin: 0 auto;
+}
+
 .auth-form {
   display: flex;
   flex-direction: column;

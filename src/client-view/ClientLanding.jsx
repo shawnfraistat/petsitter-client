@@ -132,9 +132,11 @@ class ClientLanding extends Component {
     }
 
     return (
-      <div className='client-view-main'>
-        <SearchBar handleOptsChange={this.handleOptsChange} handleOptsCheckBoxChange={this.handleOptsCheckBoxChange} handleOptsFavoritesChange={this.handleOptsFavoritesChange} searchOpts={this.state.searchOpts}/>
-        <div className='client-sitter-list'>
+      <div className='row client-view-main'>
+        <div className='col-3 search-bar'>
+          <SearchBar handleOptsChange={this.handleOptsChange} handleOptsCheckBoxChange={this.handleOptsCheckBoxChange} handleOptsFavoritesChange={this.handleOptsFavoritesChange} searchOpts={this.state.searchOpts}/>
+        </div>
+        <div className='col-9 client-sitter-list'>
           <h3>Sitter List</h3>
           {filteredList && filteredList.map((sitter, index) => (
             <SitterPreview key={index} sitter={sitter} user={this.state} addFavoriteToFavoriteList={this.addFavoriteToFavoriteList} removeFavoriteFromFavoriteList={this.removeFavoriteFromFavoriteList} canReachApi={this.state.searchOpts.canReachApi}/>

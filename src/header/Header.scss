@@ -25,6 +25,7 @@ img {
   &.header-profile-pic {
     border-radius: 50px;
     height: 75px;
+    object-fit: cover;
     width: 75px;
   }
 }
