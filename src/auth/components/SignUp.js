@@ -10,6 +10,8 @@ import apiUrl from '../../apiConfig'
 
 import '../auth.scss'
 
+import postalCodes from 'postal-codes-js'
+
 class SignUp extends Component {
   constructor () {
     super()
@@ -61,21 +63,6 @@ class SignUp extends Component {
       [event.target.name]: animalArray.join(' ').trim()
     })
   }
-
-  // encodeImageFileAsURL = (element) => {
-  //   console.log('inside encodeImageFileAsURL')
-  //   const reader = new FileReader()
-  //   reader.onloadend = function() {
-  //     console.log('RESULT', reader.result)
-  //
-  //     // return reader.result
-  //   }
-  //   console.log('reader result is', reader.result)
-  //   reader.readAsDataURL(element)
-  //   // return reader.readAsDataURL(element)
-  //   //this.setState({ fileData: reader.readAsDataURL(element) })
-  // }
-
 
   signUp = event => {
     event.preventDefault()

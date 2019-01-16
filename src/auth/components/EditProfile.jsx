@@ -8,6 +8,8 @@ import { handleErrors, editUserProfile, updateClientAccount, updateSitterAccount
 import messages from '../messages'
 import apiUrl from '../../apiConfig'
 
+import papaParse from 'papaparse'
+
 import '../auth.scss'
 
 class EditProfile extends Component {
@@ -82,6 +84,14 @@ class EditProfile extends Component {
         return null
       }
     }
+
+    // zip_code_database.csv
+    papaParse.parse('http://federalgovernmentzipcodes.us/free-zipcode-database.csv', {
+	      download: true,
+	      complete: function(results) {
+      		  console.log('trying to papaParse--results are', results)
+    	   }
+    })
 
     if ((this.state.password || this.state.password_confirmation) && (this.state.password !== this.state.password_confirmation)) {
       flash(messages.mismatchingPasswords, 'flash-error')

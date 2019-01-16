@@ -7,7 +7,6 @@ import Header from './header/Header'
 import SignUp from './auth/components/SignUp'
 import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
-// import ChangePassword from './auth/components/ChangePassword'
 import EditProfile from './auth/components/EditProfile'
 
 import CreateClientAcc from './auth/components/CreateClientAcc'
@@ -36,29 +35,6 @@ class App extends Component {
     console.log('inside setUser--after adding virtuals, user is', user)
     this.setState({ user })
   }
-
-  // parseaccount_typeForState = (data) => {
-  //   console.log('inside parseaccount_typeForState -- data is', data)
-  //   const { client, sitter } = data
-  //   if (res.account_type === 'client') {
-  //     setState({ about: client.about })
-  //   } else if (res.account_type === 'sitter') {
-  //     setState({ about: sitter.about })
-  //     setState({ price: sitter.price })
-  //     setState({ service_range: sitter.service_range })
-  //     setState({ animal_types: sitter.animal_types})
-  //     setState({ cats: sitter.animal_types.search('cats') !== -1 })
-  //     setState({ dogs: sitter.animal_types.search('dogs') !== -1 })
-  //     setState({ reptiles: sitter.animal_types.search('reptiles') !== -1 })
-  //     setState({ birds: sitter.animal_types.search('birds') !== -1 })
-  //     setState({ fish: sitter.animal_types.search('fish') !== -1 })
-  //     setState({ rabbits: sitter.animal_types.search('rabbits') !== -1 })
-  //     setState({ rodents: sitter.animal_types.search('rodents') !== -1 })
-  //     setState({ equines: sitter.animal_types.search('equines') !== -1 })
-  //     setState({ plants: sitter.animal_types.search('plants') !== -1 })
-  //   }
-  //   console.log('finished parseaccount_typeForState -- this.state is', this.state)
-  // }
 
   // addUserVirtuals() determines what user is logged in as
   // and whether user has client/sitter accounts
