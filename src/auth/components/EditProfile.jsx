@@ -22,7 +22,7 @@ class EditProfile extends Component {
     const zipCodePath = require('../../zip_code_database.csv')
 
     this.state = user
-    
+
     papaParse.parse(zipCodePath, {
       download: true,
       complete: (results) => {
@@ -111,8 +111,7 @@ class EditProfile extends Component {
       }
     }
 
-
-
+    // if new password is entered, make sure it matches password confirmation
     if ((this.state.password || this.state.password_confirmation) && (this.state.password !== this.state.password_confirmation)) {
       flash(messages.mismatchingPasswords, 'flash-error')
       return null

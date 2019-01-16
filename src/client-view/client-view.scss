@@ -14,13 +14,17 @@ div {
   &.sitter-preview-div {
     border: 1px solid black;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     width: 50vw;
     height: 200px;
     margin: 10px;
+  }
 
+  &.sitter-preview-info {
+    display: flex;
+    flex-direction: column;
   }
 }
 
@@ -28,5 +32,10 @@ img {
   &.favorite-button {
     width: 25px;
     height: 25px;
+  }
+
+  &.sitter-preview-image {
+    width: 100px;
+    height: 100px;
   }
 }

@@ -51,7 +51,7 @@ export const signOut = user => {
     }
   })
 }
-// 
+//
 // export const changePassword = (passwords, user) => {
 //   return fetch(apiUrl + '/change-password', {
 //     method: 'PATCH',
@@ -113,6 +113,7 @@ export const createSitterAccount = data => {
     },
     body: JSON.stringify({
       sitter: {
+        name: data.name,
         about: data.about,
         price: data.price,
         service_range: data.service_range,
@@ -133,6 +134,7 @@ export const updateSitterAccount = data => {
     },
     body: JSON.stringify({
       sitter: {
+        name: data.name,
         about: data.about,
         price: data.price,
         service_range: data.service_range,

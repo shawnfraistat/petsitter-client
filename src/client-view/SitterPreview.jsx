@@ -45,11 +45,15 @@ class SitterPreview extends Component {
     }
     return (
       <div className='sitter-preview-div'>
-        <p>Email: {this.props.sitter.user.email}</p>
-        <p>Typical Price Per Day: ${this.props.sitter.price}</p>
-        {this.props.canReachApi ? (<p>Distance From You: ~{this.props.sitter.distanceFromUser} miles</p>) : null}
-        <p>Pets Sat: {this.props.sitter.animal_types}</p>
-        {favoriteButton}
+        <img className='sitter-preview-image' src={this.props.sitter.user.image.url} />
+        <div className='sitter-preview-info'>
+          <p>Name: {this.props.sitter.name}</p>
+          <p>Email: {this.props.sitter.user.email}</p>
+          <p>Typical Price Per Day: ${this.props.sitter.price}</p>
+          {this.props.canReachApi ? (<p>Distance From You: ~{this.props.sitter.distanceFromUser} miles</p>) : null}
+          <p>Pets Sat: {this.props.sitter.animal_types}</p>
+          {favoriteButton}
+        </div>
       </div>
     )
   }

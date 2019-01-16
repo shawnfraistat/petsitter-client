@@ -8,8 +8,6 @@ import './Header.scss'
 const authenticatedOptions = (
   <React.Fragment>
     <Link to="/edit-profile">Edit Profile</Link>
-    {/* Change password is obsolete and should be moved to edit profile
-    {/*<Link to="/change-password">Change Password</Link>*/}
     <Link to="/sign-out">Sign Out</Link>
   </React.Fragment>
 )
