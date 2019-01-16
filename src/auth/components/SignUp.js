@@ -24,7 +24,7 @@ class SignUp extends Component {
       animal_types: '',
       zip_code: ''
     }
-    
+
     const zipCodePath = require('../../zip_code_database.csv')
 
     papaParse.parse(zipCodePath, {
@@ -104,6 +104,15 @@ class SignUp extends Component {
     if (this.state.file) {
       formData.append('image', this.state.file)
     }
+
+    // else {
+    //   const file = require('../../images/profile-icon.png')
+    //   console.log('did not find file, so uploading', file)
+    //   formData.append('image', file)
+    // }
+    // for(const pair of formData.entries()) {
+    //   console.log(pair[0]+ ', '+ pair[1])
+    // }
 
     signUp(formData)
       .then(handleErrors)
