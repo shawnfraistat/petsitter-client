@@ -11,11 +11,11 @@ estimate how many miles they are away from each other. If clients find sitters t
 
 *Deployed Client*
 
-
+<https://shawnfraistat.github.io/petsitter-client>
 
 *Deployed Server*
 
-
+<https://fast-springs-94214.herokuapp.com/>
 
 *Frontend Repo*
 
