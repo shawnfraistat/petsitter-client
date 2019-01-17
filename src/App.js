@@ -34,7 +34,6 @@ class App extends Component {
 
   setUser = user => {
     user = this.addUserVirtuals(user)
-    console.log('inside setUser--after adding virtuals, user is', user)
     this.setState({ user })
   }
 
@@ -43,7 +42,6 @@ class App extends Component {
   // specifically, sets booleans isSitter/isClient
   // and hasSitterAcc/hasClientAcc
   addUserVirtuals = user => {
-    // console.log('inside add virtuals, user is', user)
     user.client ? user.hasClientAcc = true : user.hasClientAcc = false
     user.sitter ? user.hasSitterAcc = true : user.hasSitterAcc = false
     if (user.account_type === 'client') {
@@ -88,7 +86,6 @@ class App extends Component {
 
   render () {
     const { flashMessage, flashType, user } = this.state
-    console.log('user is', user)
     return (
       <React.Fragment>
         <Header user={user} getUser={this.getUser} setUser={this.setUser}/>

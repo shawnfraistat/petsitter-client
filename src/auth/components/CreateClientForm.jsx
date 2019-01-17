@@ -8,9 +8,8 @@ class CreateClientAcc extends Component {
 
   render () {
     return (
-      <div>
+      <div className="auth-form client-form">
         <label htmlFor="about">About You and Your Pets</label>
-        <br />
         <textarea
           required
           name="about"

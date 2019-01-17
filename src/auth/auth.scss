@@ -1,3 +1,13 @@
+div {
+  &.client-form {
+    margin-top: 0;
+  }
+
+  &.sitter-form {
+    margin-top: 0;
+  }
+}
+
 input {
   &.account-radio {
     margin: 10px;
@@ -10,4 +20,23 @@ input {
 
 label {
   margin: 10px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 5vh auto;
+  max-width: 600px;
+
+  h3,
+  input,
+  textarea {
+    margin-bottom: 5%;
+  }
+
+  button {
+    align-self: flex-end;
+    max-width: 200px;
+  }
 }

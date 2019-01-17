@@ -10,20 +10,18 @@ class CreateSitterAcc extends Component {
 
   render () {
     return (
-      <div>
+      <div className="auth-form sitter-form">
         <label htmlFor="name">Your Name</label>
-        <br />
         <input
           required
           name="name"
           value={this.props.user && this.props.user.name}
-          placeholder="name"
+          placeholder="Name"
           onChange={this.handleChange}
           cols="65"
           rows="3"
         />
         <label htmlFor="about">About You as a Pet Sitter</label>
-        <br />
         <textarea
           required
           name="about"
@@ -34,28 +32,26 @@ class CreateSitterAcc extends Component {
           rows="3"
         />
         <label htmlFor="price">Your Typical Petsitting Price Per Day</label>
-        <br />
         <input
           required
+          className="price"
           name="price"
           value={this.props.user && this.props.user.price}
           type="number"
           placeholder="Price"
           onChange={this.handleChange}
-        /> dollars per day
-        <label htmlFor="service_range">Maximum Distance You Will Travel</label>
-        <br />
+        />
+        <label htmlFor="service_range">Maximum Distance You Will Travel (In Miles)</label>
         <input
           required
+          className="distance"
           name="service_range"
           value={this.props.user && this.props.user.service_range}
           type="number"
           placeholder="Distance"
           onChange={this.handleChange}
-        /> miles
-        <br />
+        />
         <label htmlFor="animal_types">The Types of Pets You Will Pet Sit</label>
-        <br />
         <div onChange={this.handleCheckBoxChange}>
           <input
             defaultChecked={this.props.user && this.props.user.cats}

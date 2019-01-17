@@ -62,21 +62,3 @@ body {
 .main-container {
   min-height: 73.4vh;
 }
-
-.auth-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 5vh auto;
-  max-width: 600px;
-
-  h3,
-  input {
-    margin-bottom: 5%;
-  }
-
-  button {
-    align-self: flex-end;
-    max-width: 200px;
-  }
-}
