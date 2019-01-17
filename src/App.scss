@@ -3,11 +3,10 @@ $warning: #f1e681;
 $error: #f08181;
 $charcoal: #ccc;
 
-
-$feather: #77c9d4;
-$marine: #57bc90;
-$forest: #015249;
-$sleek-grey: #a5a5af;
+// $feather: #77c9d4;
+// $marine: #57bc90;
+// $forest: #015249;
+// $sleek-grey: #a5a5af;
 
 // PuppyBellies font courtesy of http://bythebutterfly.com
 @font-face {
@@ -22,10 +21,6 @@ $sleek-grey: #a5a5af;
 h3 {
   font-family: 'Caveat', cursive;
   font-size: 3em;
-}
-
-header {
-  // background-color: ;
 }
 
 body {
