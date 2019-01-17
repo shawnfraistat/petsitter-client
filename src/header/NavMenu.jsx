@@ -20,25 +20,13 @@ const styles = theme => ({
   },
   menu: {
     top: '82px',
-    width: '300px'
+    margin: '0'
   },
+  menuItem: {
+    width: '200px'
+  }
 })
 
-const authenticatedOptions = [
-  (<MenuItem key="edit-profile" onClick={this.handleClose}><Link to="/edit-profile">Edit Profile</Link></MenuItem>),
-  (<MenuItem key="sign-out" onClick={this.handleClose}><Link to="/sign-out">Sign Out</Link></MenuItem>)
-]
-
-
-const unauthenticatedOptions = [
-  (<MenuItem key="sign-up" onClick={this.handleClose}><Link to="/sign-up">Sign Up</Link></MenuItem>),
-  (<MenuItem key="sign-in" onClick={this.handleClose}><Link to="/sign-in">Sign In</Link></MenuItem>)
-]
-
-
-const alwaysOptions = (
-  <MenuItem onClick={this.handleClose}><Link to="/">Home</Link></MenuItem>
-)
 
 class NavMenu extends Component {
   constructor(props) {
@@ -73,6 +61,22 @@ class NavMenu extends Component {
       setUser(user)
     }
 
+    const authenticatedOptions = [
+      (<MenuItem className={classes.menuItem} key="edit-profile" onClick={this.handleClose}><Link to="/edit-profile">Edit Profile</Link></MenuItem>),
+      (<MenuItem className={classes.menuItem} key="sign-out" onClick={this.handleClose}><Link to="/sign-out">Sign Out</Link></MenuItem>)
+    ]
+
+
+    const unauthenticatedOptions = [
+      (<MenuItem className={classes.menuItem} key="sign-up" onClick={this.handleClose}><Link to="/sign-up">Sign Up</Link></MenuItem>),
+      (<MenuItem className={classes.menuItem} key="sign-in" onClick={this.handleClose}><Link to="/sign-in">Sign In</Link></MenuItem>)
+    ]
+
+
+    const alwaysOptions = (
+      <MenuItem className={classes.menuItem} onClick={this.handleClose}><Link to="/">Home</Link></MenuItem>
+    )
+
     return (
       <div>
         <IconButton
@@ -90,13 +94,13 @@ class NavMenu extends Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
-          { (user && user.isClient) && (<MenuItem onClick={this.handleClose}><Link to="/client">Search Sitters</Link></MenuItem>)}
+          { (user && user.isClient) && (<MenuItem className={classes.menuItem} onClick={this.handleClose}><Link to="/client">Search Sitters</Link></MenuItem>)}
           {/* if user has both a client and sitter account, let user switch between them */}
-          { (user && user.isSitter && user.hasClientAcc) && (<MenuItem onClick={this.handleClose}><Link to="/client" onClick={() => switchToClient(setUser, getUser)}>Switch to Client View</Link></MenuItem>) }
-          { (user && user.isClient && user.hasSitterAcc) && (<MenuItem onClick={this.handleClose}><Link to="/sitter" onClick={() => switchToSitter(setUser, getUser)}>Switch to Sitter View</Link></MenuItem>) }
+          { (user && user.isSitter && user.hasClientAcc) && (<MenuItem className={classes.menuItem} onClick={this.handleClose}><Link to="/client" onClick={() => switchToClient(setUser, getUser)}>Switch to Client View</Link></MenuItem>) }
+          { (user && user.isClient && user.hasSitterAcc) && (<MenuItem  className={classes.menuItem}onClick={this.handleClose}><Link to="/sitter" onClick={() => switchToSitter(setUser, getUser)}>Switch to Sitter View</Link></MenuItem>) }
           {/* if user doesn't have a client or sitter account, let user create it */}
-          { (user && !(user.hasClientAcc)) && (<MenuItem onClick={this.handleClose}><Link to="/create-client-account">Create Client Account</Link></MenuItem>) }
-          { (user && !(user.hasSitterAcc)) && (<MenuItem onClick={this.handleClose}><Link to="/create-sitter-account">Create Sitter Account</Link></MenuItem>) }
+          { (user && !(user.hasClientAcc)) && (<MenuItem className={classes.menuItem} onClick={this.handleClose}><Link to="/create-client-account">Create Client Account</Link></MenuItem>) }
+          { (user && !(user.hasSitterAcc)) && (<MenuItem className={classes.menuItem} onClick={this.handleClose}><Link to="/create-sitter-account">Create Sitter Account</Link></MenuItem>) }
           { user ? authenticatedOptions : unauthenticatedOptions }
           { alwaysOptions }
         </Menu>
