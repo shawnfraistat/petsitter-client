@@ -46,7 +46,7 @@ class NavMenu extends Component {
 
   render() {
     const { anchorEl } = this.state
-    const { user, classes, history } = this.props
+    const { user, classes, history, getUser, setUser } = this.props
 
     console.log('this.props is', this.props)
     const switchToClient = (setUser, getUser) => {
