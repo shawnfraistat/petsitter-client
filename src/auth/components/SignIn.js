@@ -38,8 +38,6 @@ class SignIn extends Component {
           res.user.account_type = 'client'
         } else if (this.state.account_type === 'sitter' && res.user.sitter) {
           res.user.account_type = 'sitter'
-        } else {
-          throw err
         }
         setUser(res.user)
       })
