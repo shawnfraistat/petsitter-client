@@ -6,7 +6,6 @@ import CreateSitterForm from './CreateSitterForm'
 
 import { handleErrors, editUserProfile, updateClientAccount, updateSitterAccount } from '../api'
 import messages from '../messages'
-import apiUrl from '../../apiConfig'
 
 import papaParse from 'papaparse'
 
@@ -16,8 +15,7 @@ class EditProfile extends Component {
   constructor (props) {
     super(props)
 
-    const { user, setUser } = props
-    const { client, sitter } = props.user
+    const { user } = props
 
     const zipCodePath = require('../../zip_code_database.csv')
 
@@ -88,15 +86,6 @@ class EditProfile extends Component {
 
     const { flash, history, setUser } = this.props
 
-    // zip code validation -- regexp courtesy of https://stackoverflow.com/questions/160550/zip-code-us-postal-code-validation
-    // if (this.state.zip_code) {
-    //   const isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(this.state.zip_code)
-    //   if (!(isValidZip)) {
-    //     flash(messages.badZipCode, 'flash-error')
-    //     return null
-    //   }
-    // }
-
     // zip code validation
     if (this.state.zip_code) {
       let isValidZip = false
@@ -166,6 +155,7 @@ class EditProfile extends Component {
         <label htmlFor="password">Change Password</label>
         <input
           name="password"
+          value={password}
           type="password"
           placeholder="Password"
           onChange={this.handleChange}
@@ -173,6 +163,7 @@ class EditProfile extends Component {
         <label htmlFor="password_confirmation">Confirm New Password</label>
         <input
           name="password_confirmation"
+          value={password_confirmation}
           type="password"
           placeholder="Confirm Password"
           onChange={this.handleChange}
@@ -192,23 +183,6 @@ class EditProfile extends Component {
           placeholder="File"
           onChange={this.handleFile}
         />
-        {/* Since I've commented this out, user can only edit whichever account they're currently on
-        <label htmlFor="account_type">Choose Account to Edit</label>
-        <div onChange={this.handleChange}>
-          <input
-            defaultChecked
-            className="account-radio"
-            name="account_type"
-            value="client"
-            type="radio"
-          />Client
-          <input
-            className="account-radio"
-            name="account_type"
-            value="sitter"
-            type="radio"
-          />Sitter
-        </div> */}
         { account_type === 'client'
           ? <CreateClientForm handleChange={this.handleChange} user={this.state} />
           : <CreateSitterForm handleChange={this.handleChange} handleCheckBoxChange={this.handleCheckBoxChange} user={this.state} /> }

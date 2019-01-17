@@ -5,7 +5,6 @@ import CreateSitterForm from './CreateSitterForm'
 import { handleErrors, createSitterAccount } from '../api'
 
 import messages from '../messages'
-import apiUrl from '../../apiConfig'
 
 import '../auth.scss'
 

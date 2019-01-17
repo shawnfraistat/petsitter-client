@@ -38,15 +38,15 @@ class SitterPreview extends Component {
     if (this.props.user.favoritesList) {
       if (this.props.user.favoritesList.some(favorite => favorite.client.id === this.props.user.client.id && favorite.sitter.id === this.props.sitter.id)) {
         console.log('found a favorite!')
-        favoriteButton = (<img className="favorite-button" src={require('../images/favorited.png')} onClick={this.onUnFavoriteClick} />)
+        favoriteButton = (<img className="favorite-button" alt="favorite" src={require('../images/favorited.png')} onClick={this.onUnFavoriteClick} />)
       } else {
-        favoriteButton = (<img className="favorite-button" src={require('../images/favorite.png')} onClick={this.onFavoriteClick} />)
+        favoriteButton = (<img className="favorite-button" alt="favorite" src={require('../images/favorite.png')} onClick={this.onFavoriteClick} />)
       }
     }
     const imageSrc = this.props.sitter.user.image.url ? this.props.sitter.user.image.url : require('../images/profile-icon.png')
     return (
       <div className='sitter-preview-div'>
-        <img className='sitter-preview-image' src={imageSrc} />
+        <img className='sitter-preview-image' alt="sitter pic" src={imageSrc} />
         <div className='sitter-preview-info'>
           <h3 className='sitter-name-h3'>{this.props.sitter.name}</h3>
           <p>Email: {this.props.sitter.user.email}</p>

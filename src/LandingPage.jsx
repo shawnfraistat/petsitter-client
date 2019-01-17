@@ -14,7 +14,7 @@ const LandingPage = () => {
         </div>
       </div>
       <div className="row second-question-div">
-        <img className="cat-and-dog" src={require('./images/cat-and-dog.jpg')} />
+        <img className="cat-and-dog" alt="cat and dog" src={require('./images/cat-and-dog.jpg')} />
         <div className="cat-and-dog-text">
           <h3 className="cared-for landing-h3">Will My Pets Be Well Cared-For?</h3>
           <p className="landing-page-text">If this were a real site, absolutely.</p>
@@ -29,7 +29,7 @@ const LandingPage = () => {
             <br />
             &#42; No. This isn&apos;t real. If any of our sitters actually respond to your emails, run.
           </div>
-          <img className="high-five-kitten" src={require('./images/high-five-kitten.jpg')} />
+          <img className="high-five-kitten" alt="kitten high-fiving" src={require('./images/high-five-kitten.jpg')} />
         </div>
       </div>
     </div>

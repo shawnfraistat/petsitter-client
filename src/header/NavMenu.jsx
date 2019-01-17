@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
-import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import { withStyles } from '@material-ui/core/styles'
-import PropTypes from 'prop-types'
 
 import TouchRipple from '@material-ui/core/ButtonBase/TouchRipple'
 

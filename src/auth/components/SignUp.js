@@ -6,7 +6,6 @@ import CreateSitterForm from './CreateSitterForm'
 
 import { handleErrors, signUp, signIn, createClientAccount, createSitterAccount } from '../api'
 import messages from '../messages'
-import apiUrl from '../../apiConfig'
 
 import '../auth.scss'
 
@@ -78,7 +77,7 @@ class SignUp extends Component {
   signUp = event => {
     event.preventDefault()
 
-    const { flash, history, setUser, getUser } = this.props
+    const { flash, history, setUser } = this.props
     console.log(this.state)
 
     // zip code validation
@@ -104,15 +103,6 @@ class SignUp extends Component {
     if (this.state.file) {
       formData.append('image', this.state.file)
     }
-
-    // else {
-    //   const file = require('../../images/profile-icon.png')
-    //   console.log('did not find file, so uploading', file)
-    //   formData.append('image', file)
-    // }
-    // for(const pair of formData.entries()) {
-    //   console.log(pair[0]+ ', '+ pair[1])
-    // }
 
     signUp(formData)
       .then(handleErrors)
@@ -148,7 +138,7 @@ class SignUp extends Component {
   }
 
   render () {
-    const { email, password, password_confirmation, account_type, zip_code, about } = this.state
+    const { email, password, password_confirmation, account_type, zip_code } = this.state
 
     return (
       <form className='auth-form' onSubmit={this.signUp}>
