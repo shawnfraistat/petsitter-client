@@ -1,4 +1,4 @@
-const apiUrl = 'http://localhost:4741'
+import apiUrl from '../apiConfig.js'
 
 export const index = (user) => {
   return fetch(apiUrl + '/sitters', {
