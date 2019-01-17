@@ -3,6 +3,12 @@ $warning: #f1e681;
 $error: #f08181;
 $charcoal: #ccc;
 
+
+$feather: #77c9d4;
+$marine: #57bc90;
+$forest: #015249;
+$sleek-grey: #a5a5af;
+
 // PuppyBellies font courtesy of http://bythebutterfly.com
 @font-face {
   font-family: 'PuppyBellies';
@@ -18,9 +24,14 @@ h3 {
   font-size: 3em;
 }
 
+header {
+  // background-color: ;
+}
+
 body {
   font-family: 'Cabin', sans-serif;
   font-size: 1.1em;
+  background: white;
 }
 
 .flash-success,

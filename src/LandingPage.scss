@@ -1,5 +1,40 @@
 div {
   &.landing-div {
-    text-align: center;
+  }
+
+  &.man-and-dog {
+    background-image: url('./images/man-and-dog.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 200px;
+ }
+}
+
+// &.man-and-dog {
+//   height: 200px;
+//   width: 100%;
+//   object-fit: cover;
+// }
+//
+//
+// img {
+//   &.man-and-dog {
+//     height: 200px;
+//     width: 100%;
+//     object-fit: cover;
+//   }
+// }
+
+h1 {
+  &.welcome-text {
+    color: white;
+    text-shadow: 2px 2px black;
   }
 }
+
+//
