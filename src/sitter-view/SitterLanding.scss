@@ -12,9 +12,9 @@ div {
     flex-direction: column;
   }
 
-  &.man-and-dog {
+  &.cat-and-dog-cuddling {
     align-items: center;
-    background-image: url('../images/man-and-dog.jpg');
+    background-image: url('../images/cat-and-dog-cuddling.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -24,11 +24,12 @@ div {
     width: 100%;
  }
 
- &.first-question-div {
+ &.first-div {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin: 20px 30px;
+    background: white;
  }
 
   &.third-question-div {
