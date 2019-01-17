@@ -1,5 +1,10 @@
 $charcoal: #bbb;
 
+header {
+  background: white;
+  z-index: 1;
+}
+
 .main-header {
   align-items: center;
   border-bottom: 1px solid $charcoal;
