@@ -1,3 +1,11 @@
+$feather: #77c9d4;
+$marine: #57bc90;
+$forest: #015249;
+$sleek-grey: #a5a5af;
+
+$mustard: #e9b000;
+$aqua: #008f95;
+
 div {
   &.landing-div {
     display: flex;
@@ -75,7 +83,7 @@ div {
 img {
   &.cat-and-dog {
     align-self: flex-end;
-    box-shadow: 40px 40px orange;
+    box-shadow: 40px 40px $mustard;
     height: 300px;
     margin: 50px;
     object-fit: cover;
@@ -84,8 +92,8 @@ img {
 
   &.high-five-kitten {
     align-self: flex-end;
-    box-shadow: -40px 40px orange;
-    height: 300px;
+    box-shadow: -40px 40px $aqua;
+    height: 299px;
     margin: 50px 0;
     object-fit: cover;
     width: 300px;

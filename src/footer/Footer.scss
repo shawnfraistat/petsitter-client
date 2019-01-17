@@ -1,0 +1,14 @@
+footer {
+  background: black;
+  position: static;
+  left:0;
+  bottom:0;
+  right:0;
+  display: flex;
+  // width: 100%;
+  flex-direction: row;
+  color: white;
+  justify-content: space-between;
+  padding: 10px 20px;
+  margin-top: 50px;
+}

@@ -4,6 +4,7 @@ import { Route, Link } from 'react-router-dom'
 
 import AuthenticatedRoute from './auth/components/AuthenticatedRoute'
 import Header from './header/Header'
+import Footer from './footer/Footer'
 import SignUp from './auth/components/SignUp'
 import SignIn from './auth/components/SignIn'
 import SignOut from './auth/components/SignOut'
@@ -14,6 +15,7 @@ import CreateSitterAcc from './auth/components/CreateSitterAcc'
 
 import ClientLanding from './client-view/ClientLanding'
 import SitterLanding from './sitter-view/SitterLanding'
+
 
 import LandingPage from './LandingPage'
 
@@ -92,7 +94,7 @@ class App extends Component {
         <Header user={user} getUser={this.getUser} setUser={this.setUser}/>
         {flashMessage && <h3 className={flashType}>{flashMessage}</h3>}
 
-        <main className="container">
+        <main className="container main-container">
           {/* Routes */}
           <Route exact path='/' component={LandingPage} />
           <Route path='/sign-up' render={() => (
@@ -120,6 +122,7 @@ class App extends Component {
             <SignOut flash={this.flash} clearUser={this.clearUser} getUser={this.getUser} user={user} />
           )} />
         </main>
+        <Footer />
       </React.Fragment>
     )
   }
