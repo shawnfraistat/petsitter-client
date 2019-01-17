@@ -8,7 +8,6 @@ div {
     align-items: center;
     display: flex;
     flex-flow: column;
-    // width: 65%;
   }
 
   &.favorite-button-div {
@@ -29,7 +28,9 @@ div {
     display: flex;
     flex-direction: row;
     height: 200px;
+    margin: 10px 0 0 0;
     width: 50vw;
+
   }
 
   &.sitter-preview-info {
@@ -58,12 +59,6 @@ img {
 
 input {
   &.search-text-field {
-    width: 50px;
+    width: 80px;
   }
 }
-
-// h3 {
-//   &.sitter-name-h3 {
-//     // padding-bottom: 15px;
-//   }
-// }

@@ -119,7 +119,9 @@ class ClientLanding extends Component {
   }
 
   removeFavoriteFromFavoriteList = (favoriteID) => {
-    const newFavoritesList = this.state.favoritesList.splice(favoriteID, 1)
+    const newFavoritesList = this.state.favoritesList
+    const index = newFavoritesList.findIndex(favorite => favorite.id === favoriteID)
+    newFavoritesList.splice(index, 1)
     this.setState({ favoritesList: newFavoritesList })
   }
 
