@@ -6,8 +6,6 @@ class SearchBar extends Component {
     this.state = {
       searchOpts: props.searchOpts
     }
-    console.log('inside searchbar, this.state is', this.state)
-    console.log('props are', props)
   }
 
   render () {

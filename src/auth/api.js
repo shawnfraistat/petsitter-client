@@ -19,7 +19,6 @@ export const editUserProfile = (user, formData) => {
 }
 
 export const signUp = (formData) => {
-  console.log('inside signUp, formData are', formData)
   return fetch(apiUrl + '/sign-up', {
     method: 'POST',
     body: formData
@@ -51,26 +50,8 @@ export const signOut = user => {
     }
   })
 }
-//
-// export const changePassword = (passwords, user) => {
-//   return fetch(apiUrl + '/change-password', {
-//     method: 'PATCH',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'Authorization':`Token token=${user.token}`
-//     },
-//     body: JSON.stringify({
-//       passwords: {
-//         old: passwords.oldPassword,
-//         new: passwords.newPassword
-//       }
-//     })
-//   })
-// }
 
 export const createClientAccount = data => {
-  console.log('made it inside createClientAcc')
-  console.log('data is', data)
   return fetch(apiUrl + '/clients', {
     method: 'POST',
     headers: {
@@ -86,8 +67,6 @@ export const createClientAccount = data => {
 }
 
 export const updateClientAccount = data => {
-  console.log('made it inside updateClientAcc')
-  console.log('data is', data)
   return fetch(apiUrl + '/clients/' + data.client.id, {
     method: 'PATCH',
     headers: {
@@ -103,8 +82,6 @@ export const updateClientAccount = data => {
 }
 
 export const createSitterAccount = data => {
-  console.log('made it inside createSitterAcc')
-  console.log('data is', data)
   return fetch(apiUrl + '/sitters', {
     method: 'POST',
     headers: {
@@ -124,8 +101,6 @@ export const createSitterAccount = data => {
 }
 
 export const updateSitterAccount = data => {
-  console.log('made it inside updateSitterAcc')
-  console.log('data is', data)
   return fetch(apiUrl + '/sitters/' + data.sitter.id, {
     method: 'PATCH',
     headers: {

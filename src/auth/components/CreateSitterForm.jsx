@@ -5,7 +5,6 @@ class CreateSitterAcc extends Component {
     super(props)
     this.handleChange = props.handleChange
     this.handleCheckBoxChange = props.handleCheckBoxChange
-    console.log('inside CreateSitterAcc, this.props is', this.props)
   }
 
   render () {

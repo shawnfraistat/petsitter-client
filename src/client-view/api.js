@@ -18,8 +18,6 @@ export const getZipDistance = (zip1, zip2) => {
 }
 
 export const createFavorite = (user, sitterID) => {
-  console.log('inside createFavorite, user is', user)
-  console.log('inside createFavorite, sitterID is', sitterID)
   return fetch(apiUrl + '/favorites', {
     method: 'POST',
     headers: {

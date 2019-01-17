@@ -24,14 +24,9 @@ class SignIn extends Component {
 
     const { flash, history, setUser } = this.props
 
-    console.log('inside signIn, this.state is', this.state)
     signIn(this.state)
       .then(res => res.ok ? res : new Error())
       .then(res => res.json())
-      .then(res => {
-        console.log('inside signIn, res is', res)
-        return res
-      })
       .then(res => {
         if (this.state.account_type === 'client' && res.user.client) {
           res.user.account_type = 'client'

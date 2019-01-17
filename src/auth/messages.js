@@ -14,5 +14,6 @@ export default {
   editProfileFailure: 'Update failed. Data may be invalid.',
   mismatchingPasswords: 'Error. Passwords do not match.',
   badZipCode: 'Invalid zip code. Zip code must be a five digit number and' +
-              ' correspond to a valid US postal code.'
+              ' correspond to a valid US postal code.',
+  cannotReachServer: 'Error. Cannot reach server.'
 }

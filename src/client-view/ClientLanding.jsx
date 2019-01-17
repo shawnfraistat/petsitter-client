@@ -4,6 +4,7 @@ import { index, getZipDistance, getFavorites } from './api'
 import SitterPreview from './SitterPreview'
 import SearchBar from './SearchBar'
 
+import messages from '../auth/messages.js'
 import './client-view.scss'
 
 class ClientLanding extends Component {
@@ -17,24 +18,21 @@ class ClientLanding extends Component {
       animal_types: 'cats dogs rabbits reptiles birds rodents plants equines',
       favorites_only: false
     }
+    const { flash } = this.props
     index(this.state)
       .then(res => res.json())
       .then(res => this.mapSitters(res))
       .then(sitters => this.setState({ sitterList: sitters }))
-      .then(() => console.log('this.state.sitterList is', this.state.sitterList))
-      .catch(console.error)
+      .catch(() => flash(messages.cannotReachServer, 'flash-error'))
     getFavorites(this.state)
       .then(res => res.json())
       .then(res => this.setState({ favoritesList: res.favorites }))
-      .then(() => console.log('after getting favorites, this.state is', this.state))
-      .then(() => console.log('this.state.favoritesList is', this.state.favoritesList))
-      .catch(console.error)
+      .catch(() => flash(messages.cannotReachServer, 'flash-error'))
   }
 
   // cannotReachApi() is triggered if the app can't reach the third party zip code API
   // it hides the ability for clients to search by distance
   cannotReachApi = () => {
-    console.log('cannotReachApi!')
     const opts = this.state.searchOpts
     opts.canReachApi = false
     this.setState({
@@ -95,7 +93,6 @@ class ClientLanding extends Component {
   // their zip code to the client's via a third party API
   // if it can't reach the third party API, it triggers this.cannotReachApi()
   mapSitters = (res) => {
-    console.log('inside mapSitters, res is', res)
     res.sitters.forEach(sitter => {
       getZipDistance(this.state.zip_code, sitter.user.zip_code)
         .then(res => res.json())

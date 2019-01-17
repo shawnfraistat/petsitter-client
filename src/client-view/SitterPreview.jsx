@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import './client-view.scss'
+import messages from '../auth/messages.js'
 
 import { createFavorite, deleteFavorite }  from './api'
 
@@ -10,34 +11,29 @@ class SitterPreview extends Component {
 
     this.addFavoriteToFavoriteList = props.addFavoriteToFavoriteList
     this.removeFavoriteFromFavoriteList = props.removeFavoriteFromFavoriteList
+    this.flash = props.flash
   }
 
   onFavoriteClick = () => {
-    console.log('inside onFavoriteClick, props is', this.props)
     createFavorite(this.props.user, this.props.sitter.id)
       .then(res => res.json())
       .then(res => this.addFavoriteToFavoriteList(res.favorite))
-      .catch(console.error)
+      .catch(() => this.flash(messages.cannotReachServer, 'flash-error'))
   }
 
   onUnFavoriteClick = () => {
-    console.log('inside onUnFavoriteClick, props is', this.props)
     const id = this.props.user.favoritesList.find(favorite => favorite.client.id === this.props.user.client.id && favorite.sitter.id === this.props.sitter.id).id
-    console.log('inside onUnFavoriteClick, id is', id)
     deleteFavorite(this.props, id)
       .then(() => {
-        console.log('after deleting favorite, id is', id)
         this.removeFavoriteFromFavoriteList(id)
       })
-      .catch(console.error)
+      .catch(() => this.flash(messages.cannotReachServer, 'flash-error'))
   }
 
   render() {
-    console.log('inside render function of SitterPreview, this.props is', this.props)
     let favoriteButton
     if (this.props.user.favoritesList) {
       if (this.props.user.favoritesList.some(favorite => favorite.client.id === this.props.user.client.id && favorite.sitter.id === this.props.sitter.id)) {
-        console.log('found a favorite!')
         favoriteButton = (<img className="favorite-button" alt="favorite" src={require('../images/favorited.png')} onClick={this.onUnFavoriteClick} />)
       } else {
         favoriteButton = (<img className="favorite-button" alt="favorite" src={require('../images/favorite.png')} onClick={this.onFavoriteClick} />)

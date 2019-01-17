@@ -49,7 +49,6 @@ class CreateSitterAcc extends Component {
     event.preventDefault()
 
     const { flash, history, setUser, getUser } = this.props
-    console.log(this.state)
 
     createSitterAccount(this.state)
       .then(handleErrors)
@@ -58,7 +57,6 @@ class CreateSitterAcc extends Component {
         const user = getUser()
         user.account_type = 'sitter'
         user.sitter = res.sitter
-        console.log('inside createSitterAccount, user is', user)
         setUser(user)
       })
       .then(() => history.push('/sitter'))

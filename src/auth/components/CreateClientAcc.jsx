@@ -5,7 +5,6 @@ import CreateClientForm from './CreateClientForm'
 import { handleErrors, createClientAccount } from '../api'
 
 import messages from '../messages'
-import apiUrl from '../../apiConfig'
 
 import '../auth.scss'
 
@@ -29,7 +28,6 @@ class CreateClientAcc extends Component {
     event.preventDefault()
 
     const { flash, history, setUser, getUser } = this.props
-    console.log(this.state)
 
     createClientAccount(this.state)
       .then(handleErrors)
@@ -38,7 +36,6 @@ class CreateClientAcc extends Component {
         const user = getUser()
         user.account_type = 'client'
         user.client = res.client
-        console.log('inside createClientAccount, user is', user)
         setUser(user)
       })
       .then(() => history.push('/client'))

@@ -29,9 +29,7 @@ class SignUp extends Component {
     papaParse.parse(zipCodePath, {
       download: true,
       complete: (results) => {
-        console.log('trying to papaParse--results are', results)
         this.setState({ zipList: results.data })
-        console.log('immediately after completing papaParse, this.state is', this.state)
       }
     })
   }
@@ -43,17 +41,9 @@ class SignUp extends Component {
   }
 
   handleFile = event => {
-    // this.encodeImageFileAsURL(event.target.files[0])
     this.setState({
       file: event.target.files[0]
     })
-
-    // let fileForUpload
-    // if (this.state.file) {
-    //   console.log('inside signUp, this.state.file is', this.state.file)
-    //   fileForUpload = this.encodeImageFileAsURL(this.state.file)
-    // }
-    // console.log('fileForUpload is', fileForUpload)
   }
 
   // handleCheckBoxChange() is called when checkboxes are checked or unchecked
@@ -78,7 +68,6 @@ class SignUp extends Component {
     event.preventDefault()
 
     const { flash, history, setUser } = this.props
-    console.log(this.state)
 
     // zip code validation
     if (this.state.zip_code) {
@@ -112,8 +101,6 @@ class SignUp extends Component {
       .then(res => res.json())
       // after signing in, save the returned token and create a client or sitter account
       .then((res) => {
-        console.log('inside signUp; just signed in and got res back', res)
-        console.log('inside signUp, about to try to create a client or sitter account')
         this.setState({ token: res.user.token })
         this.setState({ image: res.user.image })
         return this.state.account_type === 'client' ? createClientAccount(this.state) : createSitterAccount(this.state)
@@ -122,10 +109,8 @@ class SignUp extends Component {
       .then(handleErrors)
       .then(res => res.json())
       .then(res => {
-        console.log('inside signup, after creating an account, this.state is', this.state)
         const user = this.state
         user.account_type === 'client' ? user.client = res.client : user.sitter = res.sitter
-        console.log('after trying to user.client to res, user is', user)
         return user
       })
       // now actually send the user to the right view
