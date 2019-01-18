@@ -28,7 +28,9 @@ class SignIn extends Component {
       .then(res => res.ok ? res : new Error())
       .then(res => res.json())
       .then(res => {
-        if (this.state.account_type === 'client' && res.user.client) {
+        if ((this.state.account_type === 'client' && !(res.user.client)) || (this.state.account_type === 'sitter' && !(res.user.sitter))) {
+          throw new Error()
+        } else if (this.state.account_type === 'client' && res.user.client) {
           res.user.account_type = 'client'
         } else if (this.state.account_type === 'sitter' && res.user.sitter) {
           res.user.account_type = 'sitter'
