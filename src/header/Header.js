@@ -11,7 +11,7 @@ const Header = ({ user, setUser, getUser }) => {
       <nav>
         { user && <span className="nav-item">hello, {user.email} </span>}
         { user && <img className="nav-item header-profile-pic" alt="profile pic" src={imageSrc} />}
-        <NavMenu className="nav-item" getUser={this.getUser} setUser={this.setUser} user={user} />
+        <NavMenu className="nav-item" getUser={getUser} setUser={setUser} user={user} />
       </nav>
     </header>
   )

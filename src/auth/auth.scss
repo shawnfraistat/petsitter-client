@@ -1,4 +1,14 @@
 div {
+  &.animal-checkbox-div {
+    display: flex;
+    height: 40px;
+    justify-content: center;
+  }
+
+  &.animal-checkbox-div-wrapper {
+    margin-top: 10px;
+  }
+
   &.client-form {
     margin-top: 0;
   }

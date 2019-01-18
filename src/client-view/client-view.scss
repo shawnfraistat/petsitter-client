@@ -1,4 +1,9 @@
 div {
+  &.animal-checkbox-column {
+    display: flex;
+    flex-direction: column;
+  }
+
   &.client-view-main {
     display: flex;
     flex-flow: row;
