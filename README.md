@@ -11,7 +11,6 @@ estimate how many miles they are away from each other. If clients find sitters t
 
 ![Alt text](./src/images/petsitter-screen-static.png)
 
-
 ### Links ###
 
 *Deployed Client*
