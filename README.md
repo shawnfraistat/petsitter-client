@@ -7,6 +7,11 @@ pet type, location, and price. The distance between client and sitter is
 determined by a third party zip code API, enabling the app to accurately
 estimate how many miles they are away from each other. If clients find sitters they are interested in, they may contact them via e-mail.
 
+### Screenshot ###
+
+![Alt text](./src/images/petsitter-screen-static.png)
+
+
 ### Links ###
 
 *Deployed Client*
