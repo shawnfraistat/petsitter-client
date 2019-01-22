@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { index, getZipDistance, getFavorites } from './api'
 
 import SitterPreview from './SitterPreview'
 import SearchBar from './SearchBar'
 
-import messages from '../auth/messages.js'
+// import messages from '../auth/messages.js'
 import './client-view.scss'
 
 class ClientLanding extends Component {
@@ -18,34 +17,27 @@ class ClientLanding extends Component {
       animal_types: 'cats dogs rabbits reptiles birds rodents plants equines',
       favorites_only: false
     }
-    const { flash } = this.props
-    index(this.state)
-      .then(res => res.json())
-      .then(res => this.mapSitters(res))
-      .then(sitters => this.setState({ sitterList: sitters }))
-      .catch(() => flash(messages.cannotReachServer, 'flash-error'))
-    getFavorites(this.state)
-      .then(res => res.json())
-      .then(res => this.setState({ favoritesList: res.favorites }))
-      .catch(() => flash(messages.cannotReachServer, 'flash-error'))
   }
 
-  // cannotReachApi() is triggered if the app can't reach the third party zip code API
-  // it hides the ability for clients to search by distance
-  cannotReachApi = () => {
-    const opts = this.state.searchOpts
-    opts.canReachApi = false
-    this.setState({
-      searchOpts: opts
-    })
+  // addFavoriteToFavoriteList() updates ClientLanding's state by adding a new
+  // favorite to the favorites list--that way if the user favorites a sitter, it
+  // will display immediately
+  addFavoriteToFavoriteList = (newFavorite) => {
+    const newFavoritesList =  this.state.favoritesList
+    newFavoritesList.push(newFavorite)
+    this.setState({ favoritesList: newFavoritesList })
   }
 
-  // distanceCheck() checks to see whether the sitter is within the user's allowable distance search params
-  // right now it also returns true if the sitter's distance is undefined for some reason (like the third party API isn't working, for example)
+  // distanceCheck() checks to see whether the sitter is within the user's
+  // allowable distance search params;
+  // right now it also returns true if the sitter's distance is undefined for
+  // some reason (like the third party API isn't working, for example)
   distanceCheck = (sitter) => (sitter.distanceFromUser !== undefined
     ? (sitter.distanceFromUser <= this.state.searchOpts.service_range && sitter.distanceFromUser <= sitter.service_range)
     : true)
 
+  // favoriteCheck() checks to see whether a sitter has been favorited by the
+  // current user
   favoriteCheck = (sitter) => {
     if (this.state.searchOpts.favorites_only) {
       if (this.state.favoritesList.some(favorite => favorite.client.id === this.state.client.id && favorite.sitter.id === sitter.id)) {
@@ -57,6 +49,8 @@ class ClientLanding extends Component {
     return true
   }
 
+  // handleOptsChange() updates ClientLanding's state with new search options if
+  // the user changes their search options
   handleOptsChange = event => {
     const opts = this.state.searchOpts
     opts[event.target.name] = event.target.value
@@ -65,6 +59,8 @@ class ClientLanding extends Component {
     })
   }
 
+  // handleOptsChange() updates ClientLanding's state with new search options if
+  // the user changes their search options via pet name checkboxes
   handleOptsCheckBoxChange = event => {
     const animalArray = this.state.searchOpts.animal_types.split(' ')
     const animalName = event.target.value
@@ -81,6 +77,8 @@ class ClientLanding extends Component {
     })
   }
 
+  // handleOptsFavoritesChange() updates ClientLanding's state with new search
+  // options if the user checks or unchecks the "favorites_only" checkbox
   handleOptsFavoritesChange = event => {
     const opts = this.state.searchOpts
     event.target.checked ? opts.favorites_only = true : opts.favorites_only = false
@@ -89,32 +87,17 @@ class ClientLanding extends Component {
     })
   }
 
-  // mapSitters() attempts to add distanceFromUser to each sitter by comparing
-  // their zip code to the client's via a third party API
-  // if it can't reach the third party API, it triggers this.cannotReachApi()
-  mapSitters = (res) => {
-    res.sitters.forEach(sitter => {
-      getZipDistance(this.state.zip_code, sitter.user.zip_code)
-        .then(res => res.json())
-        .then(res => sitter.distanceFromUser = Math.ceil(res.distance))
-        .catch(this.cannotReachApi)
-    })
-    return res.sitters
-  }
-
-  // petsCheck() checks to see whether the sitter sits for at least one of the pet types the user has enabled
+  // petsCheck() checks to see whether the sitter sits for at least one of the
+  // pet types the user has enabled
   petsCheck = (sitterPets) => {
     const searchArray = this.state.searchOpts.animal_types.split(' ')
     const sitterPetsArray = sitterPets.split(' ')
     return sitterPetsArray.some(pet => searchArray.includes(pet))
   }
 
-  addFavoriteToFavoriteList = (newFavorite) => {
-    const newFavoritesList =  this.state.favoritesList
-    newFavoritesList.push(newFavorite)
-    this.setState({ favoritesList: newFavoritesList })
-  }
-
+  // removeFavoriteFromFavoriteList() updates ClientLanding's state by removing
+  // a favorite from the favorites list--that way if the user unfavorites a
+  // sitter, it will display immediately
   removeFavoriteFromFavoriteList = (favoriteID) => {
     const newFavoritesList = this.state.favoritesList
     const index = newFavoritesList.findIndex(favorite => favorite.id === favoriteID)
@@ -123,6 +106,7 @@ class ClientLanding extends Component {
   }
 
   render () {
+    // when the component renders, first filters all of the sitters based on search options
     let filteredList
     if (this.state.sitterList) {
       filteredList = this.state.sitterList.filter(sitter => (

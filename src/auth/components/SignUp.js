@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import CreateClientForm from './CreateClientForm'
 import CreateSitterForm from './CreateSitterForm'
 
-import { handleErrors, signUp, signIn, createClientAccount, createSitterAccount } from '../api'
+import { createClientAccount, createSitterAccount, getFavorites, getSitters, getZipDistance, handleErrors, signIn, signUp } from '../api'
 import messages from '../messages'
 
 import '../auth.scss'
@@ -40,12 +40,6 @@ class SignUp extends Component {
     })
   }
 
-  handleFile = event => {
-    this.setState({
-      file: event.target.files[0]
-    })
-  }
-
   // handleCheckBoxChange() is called when checkboxes are checked or unchecked
   // for the animal_types in the CreateSitterAcc component
   // it keeps them stored as a space-separated string,
@@ -64,10 +58,31 @@ class SignUp extends Component {
     })
   }
 
+  handleFile = event => {
+    this.setState({
+      file: event.target.files[0]
+    })
+  }
+
+  // mapSitters() attempts to add distanceFromUser to each sitter by comparing
+  // their zip code to the client's via a third party API
+  // if it can't reach the third party API, it triggers this.cannotReachApi()
+  mapSitters = async (res) => {
+    const finishedSitters = await res
+    finishedSitters.sitters.forEach(sitter => {
+        getZipDistance(this.state.zip_code, sitter.user.zip_code)
+          .then(res => res.json())
+          .then(res => sitter.distanceFromUser = Math.ceil(res.distance))
+          .catch(this.cannotReachApi)
+    })
+    return finishedSitters
+  }
+
+
   signUp = event => {
     event.preventDefault()
 
-    const { flash, history, setUser } = this.props
+    const { flash, history, getUser, setUser } = this.props
 
     // zip code validation
     if (this.state.zip_code) {
@@ -111,11 +126,32 @@ class SignUp extends Component {
       .then(res => {
         const user = this.state
         user.account_type === 'client' ? user.client = res.client : user.sitter = res.sitter
-        return user
+        setUser(user)
+      })
+      // now get sitters and favorites from API
+      .then(async () => {
+        const promisesArr = [getSitters(this.state), getFavorites(this.state)]
+        const promiseResponses = await Promise.all(promisesArr)
+        return promiseResponses
+      })
+      // convert the two-part API response to JSON
+      .then(async (res) => await res.map(x => x.json()))
+      // get the distance from the user for each sitter in the response data
+      .then(res => {
+        res[0] = this.mapSitters(res[0])
+        return res
+      })
+      // resolve promises and update the user with sitters and favorites
+      .then(async (res) => {
+        const sitterList = await res[0]
+        const favoritesList = await res[1]
+        const currentUser = getUser()
+        currentUser.sitterList = sitterList.sitters
+        currentUser.favoritesList = favoritesList.favorites
+        setUser(currentUser)
       })
       // now actually send the user to the right view
-      .then((user) => {
-        setUser(user)
+      .then(() => {
         this.state.account_type === 'client' ? history.push('/client') : history.push('/sitter')
       })
       .then(() => flash(messages.signUpSuccess, 'flash-success'))

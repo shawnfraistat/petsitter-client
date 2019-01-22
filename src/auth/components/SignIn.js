@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
-import { signIn } from '../api'
+import { signIn, getSitters, getFavorites, getZipDistance } from '../api'
+
 import messages from '../messages'
 
 class SignIn extends Component {
@@ -15,18 +16,44 @@ class SignIn extends Component {
     }
   }
 
+  // cannotReachApi() is triggered if the app can't reach the third party zip code API
+  // it hides the ability for clients to search by distance
+  cannotReachApi = () => {
+    const opts = this.state.searchOpts
+    opts.canReachApi = false
+    this.setState({
+      searchOpts: opts
+    })
+  }
+
   handleChange = event => this.setState({
     [event.target.name]: event.target.value
   })
 
+  // mapSitters() attempts to add distanceFromUser to each sitter by comparing
+  // their zip code to the client's via a third party API
+  // if it can't reach the third party API, it triggers this.cannotReachApi()
+  mapSitters = async (res) => {
+    const finishedSitters = await res
+    finishedSitters.sitters.forEach(sitter => {
+        getZipDistance(this.state.zip_code, sitter.user.zip_code)
+          .then(res => res.json())
+          .then(res => sitter.distanceFromUser = Math.ceil(res.distance))
+          .catch(this.cannotReachApi)
+    })
+    return finishedSitters
+  }
+
   signIn = event => {
     event.preventDefault()
 
-    const { flash, history, setUser } = this.props
+    const { flash, history, setUser, getUser } = this.props
 
     signIn(this.state)
       .then(res => res.ok ? res : new Error())
       .then(res => res.json())
+      // check to see if the user tried to sign into an account they don't have
+      // if so, throw an error
       .then(res => {
         if ((this.state.account_type === 'client' && !(res.user.client)) || (this.state.account_type === 'sitter' && !(res.user.sitter))) {
           throw new Error()
@@ -36,8 +63,32 @@ class SignIn extends Component {
           res.user.account_type = 'sitter'
         }
         setUser(res.user)
+        this.setState(res.user)
       })
       .then(() => flash(messages.signInSuccess, 'flash-success'))
+      // now get sitters and favorites from API
+      .then(async () => {
+        const promisesArr = [getSitters(this.state), getFavorites(this.state)]
+        const promiseResponses = await Promise.all(promisesArr)
+        return promiseResponses
+      })
+      // convert the two-part API response to JSON
+      .then(async (res) => await res.map(x => x.json()))
+      // get the distance from the user for each sitter in the response data
+      .then(res => {
+        res[0] = this.mapSitters(res[0])
+        return res
+      })
+      // resolve promises and update the user with sitters and favorites
+      .then(async (res) => {
+        const sitterList = await res[0]
+        const favoritesList = await res[1]
+        const currentUser = getUser()
+        currentUser.sitterList = sitterList.sitters
+        currentUser.favoritesList = favoritesList.favorites
+        setUser(currentUser)
+      })
+      // now actually send the user to the right view
       .then(() => {
         this.state.account_type === 'client' ? history.push('/client') : history.push('/sitter')
       })

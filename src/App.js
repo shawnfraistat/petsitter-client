@@ -95,10 +95,10 @@ class App extends Component {
           {/* Routes */}
           <Route exact path='/' component={LandingPage} />
           <Route path='/sign-up' render={() => (
-            <SignUp flash={this.flash} setUser={this.setUser} />
+            <SignUp flash={this.flash} setUser={this.setUser} getUser={this.getUser} />
           )} />
           <Route path='/sign-in' render={() => (
-            <SignIn flash={this.flash} setUser={this.setUser} />
+            <SignIn flash={this.flash} setUser={this.setUser} getUser={this.getUser} />
           )} />
           <Route path='/client' render={() => (
             <ClientLanding flash={this.flash} setUser={this.setUser} user={user} />
