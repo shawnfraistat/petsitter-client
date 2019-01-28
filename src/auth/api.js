@@ -1,12 +1,5 @@
 import apiUrl from '../apiConfig.js'
 
-export const handleErrors = res => {
-  if (res.ok) {
-    return res
-  } else  {
-    throw new Error('Received status in 400 or 500 range.')
-  }
-}
 
 export const editUserProfile = (user, formData) => {
   return fetch(apiUrl + '/edit-profile', {
@@ -17,6 +10,15 @@ export const editUserProfile = (user, formData) => {
     }
   })
 }
+
+export const handleErrors = res => {
+  if (res.ok) {
+    return res
+  } else  {
+    throw new Error('Received status in 400 or 500 range.')
+  }
+}
+
 
 export const signUp = (formData) => {
   return fetch(apiUrl + '/sign-up', {
@@ -118,6 +120,8 @@ export const updateSitterAccount = data => {
     })
   })
 }
+
+
 export const getSitters = (user) => {
   return fetch(apiUrl + '/sitters', {
     method: 'GET',
@@ -163,6 +167,16 @@ export const deleteFavorite = (user, favoriteID) => {
 
 export const getFavorites = user => {
   return fetch(apiUrl + '/favorites', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization':`Token token=${user.token}`
+    }
+  })
+}
+
+export const getExchanges = user => {
+  return fetch(apiUrl + '/exchanges', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

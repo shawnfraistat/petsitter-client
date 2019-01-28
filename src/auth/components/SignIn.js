@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
-import { signIn, getSitters, getFavorites, getZipDistance } from '../api'
+import { signIn, getSitters, getZipDistance } from '../api'
 
 import messages from '../messages'
 
@@ -67,27 +67,40 @@ class SignIn extends Component {
       })
       .then(() => flash(messages.signInSuccess, 'flash-success'))
       // now get sitters and favorites from API
-      .then(async () => {
-        const promisesArr = [getSitters(this.state), getFavorites(this.state)]
-        const promiseResponses = await Promise.all(promisesArr)
-        return promiseResponses
-      })
-      // convert the two-part API response to JSON
-      .then(async (res) => await res.map(x => x.json()))
-      // get the distance from the user for each sitter in the response data
+      .then(() => getSitters(this.state))
+      .then(res => res.json())
       .then(res => {
-        res[0] = this.mapSitters(res[0])
+        res = this.mapSitters(res)
         return res
       })
-      // resolve promises and update the user with sitters and favorites
       .then(async (res) => {
-        const sitterList = await res[0]
-        const favoritesList = await res[1]
+        const sitterList = await res
         const currentUser = getUser()
-        currentUser.sitterList = sitterList.sitters
-        currentUser.favoritesList = favoritesList.favorites
-        setUser(currentUser)
+         currentUser.sitterList = sitterList.sitters
+         setUser(currentUser)
       })
+      // //
+      // .then(async () => {
+      //   const promisesArr = [getSitters(this.state), getFavorites(this.state)]
+      //   const promiseResponses = await Promise.all(promisesArr)
+      //   return promiseResponses
+      // })
+      // // convert the two-part API response to JSON
+      // .then(async (res) => await res.map(x => x.json()))
+      // // get the distance from the user for each sitter in the response data
+      // .then(res => {
+      //   res[0] = this.mapSitters(res[0])
+      //   return res
+      // })
+      // // resolve promises and update the user with sitters and favorites
+      // .then(async (res) => {
+      //   const sitterList = await res[0]
+      //   const favoritesList = await res[1]
+      //   const currentUser = getUser()
+      //   currentUser.sitterList = sitterList.sitters
+      //   currentUser.favoritesList = favoritesList.favorites
+      //   setUser(currentUser)
+      // })
       // now actually send the user to the right view
       .then(() => {
         this.state.account_type === 'client' ? history.push('/client') : history.push('/sitter')

@@ -20,12 +20,12 @@ class ClientLanding extends Component {
   }
 
   // addFavoriteToFavoriteList() updates ClientLanding's state by adding a new
-  // favorite to the favorites list--that way if the user favorites a sitter, it
-  // will display immediately
+  // favorite to the favorites list on the client--that way if the user
+  // favorites a sitter, it will display immediately
   addFavoriteToFavoriteList = (newFavorite) => {
-    const newFavoritesList =  this.state.favoritesList
-    newFavoritesList.push(newFavorite)
-    this.setState({ favoritesList: newFavoritesList })
+    const newClient =  this.state.client
+    newClient.favorites.push(newFavorite)
+    this.setState({ client: newClient })
   }
 
   // distanceCheck() checks to see whether the sitter is within the user's
@@ -40,7 +40,7 @@ class ClientLanding extends Component {
   // current user
   favoriteCheck = (sitter) => {
     if (this.state.searchOpts.favorites_only) {
-      if (this.state.favoritesList.some(favorite => favorite.client.id === this.state.client.id && favorite.sitter.id === sitter.id)) {
+      if (this.state.client.favorites.some(favorite => favorite.client_id === this.state.client.id && favorite.sitter_id === sitter.id)) {
         return true
       } else {
         return false
@@ -99,10 +99,10 @@ class ClientLanding extends Component {
   // a favorite from the favorites list--that way if the user unfavorites a
   // sitter, it will display immediately
   removeFavoriteFromFavoriteList = (favoriteID) => {
-    const newFavoritesList = this.state.favoritesList
-    const index = newFavoritesList.findIndex(favorite => favorite.id === favoriteID)
-    newFavoritesList.splice(index, 1)
-    this.setState({ favoritesList: newFavoritesList })
+    const newClient =  this.state.client
+    const index = newClient.favorites.findIndex(favorite => favorite.id === favoriteID)
+    newClient.favorites.splice(index, 1)
+    this.setState({ client: newClient })
   }
 
   render () {

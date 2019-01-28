@@ -22,7 +22,7 @@ class SitterPreview extends Component {
   }
 
   onUnFavoriteClick = () => {
-    const id = this.props.user.favoritesList.find(favorite => favorite.client.id === this.props.user.client.id && favorite.sitter.id === this.props.sitter.id).id
+    const id = this.props.user.client.favorites.find(favorite => favorite.client_id === this.props.user.client.id && favorite.sitter_id === this.props.sitter.id).id
     deleteFavorite(this.props, id)
       .then(() => {
         this.removeFavoriteFromFavoriteList(id)
@@ -32,8 +32,9 @@ class SitterPreview extends Component {
 
   render() {
     let favoriteButton
-    if (this.props.user.favoritesList) {
-      if (this.props.user.favoritesList.some(favorite => favorite.client.id === this.props.user.client.id && favorite.sitter.id === this.props.sitter.id)) {
+    console.log(this.props.user)
+    if (this.props.user.client.favorites) {
+      if (this.props.user.client.favorites.some(favorite => favorite.client_id === this.props.user.client.id && favorite.sitter_id === this.props.sitter.id)) {
         favoriteButton = (<img className="favorite-button" alt="favorite" src={require('../images/favorited.png')} onClick={this.onUnFavoriteClick} />)
       } else {
         favoriteButton = (<img className="favorite-button" alt="favorite" src={require('../images/favorite.png')} onClick={this.onFavoriteClick} />)
