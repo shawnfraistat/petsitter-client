@@ -128,27 +128,21 @@ class SignUp extends Component {
         user.account_type === 'client' ? user.client = res.client : user.sitter = res.sitter
         setUser(user)
       })
-      // now get sitters and favorites from API
-      .then(async () => {
-        const promisesArr = [getSitters(this.state), getFavorites(this.state)]
-        const promiseResponses = await Promise.all(promisesArr)
-        return promiseResponses
-      })
-      // convert the two-part API response to JSON
-      .then(async (res) => await res.map(x => x.json()))
+      // now get sitters from the API
+      .then(() => getSitters(this.state))
+      // convert the API response to JSON
+      .then(res => res.json())
       // get the distance from the user for each sitter in the response data
       .then(res => {
-        res[0] = this.mapSitters(res[0])
+        res = this.mapSitters(res)
         return res
       })
-      // resolve promises and update the user with sitters and favorites
+      //  update the user with sitters list
       .then(async (res) => {
-        const sitterList = await res[0]
-        const favoritesList = await res[1]
+        const sitterList = await res
         const currentUser = getUser()
-        currentUser.sitterList = sitterList.sitters
-        currentUser.favoritesList = favoritesList.favorites
-        setUser(currentUser)
+         currentUser.sitterList = sitterList.sitters
+         setUser(currentUser)
       })
       // now actually send the user to the right view
       .then(() => {
