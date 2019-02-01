@@ -42,9 +42,16 @@ class SignIn extends Component {
     finishedSitters.sitters.forEach(sitter => {
         getZipDistance(this.state.zip_code, sitter.user.zip_code)
           .then(res => res.json())
+          .then(res => {
+            console.log(res)
+            return res
+          })
           .then(res => sitter.distanceFromUser = Math.ceil(res.distance))
-          .then(this.canReachApi)
-          .catch(this.cannotReachApi)
+          .then(() => this.canReachApi())
+          .catch(() => {
+            console.error('oh snap!')
+            this.cannotReachApi()
+          })
     })
     return finishedSitters
   }
