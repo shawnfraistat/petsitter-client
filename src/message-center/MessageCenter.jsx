@@ -79,7 +79,7 @@ class MessageCenter extends Component {
             <thead className="thead-dark">
               <tr className="d-flex">
                 <th className="col-2">Name</th>
-                <th className="col-8">Message</th>
+                <th className="col-8">Last Message</th>
                 <th className="col-2">Time</th>
               </tr>
             </thead>

@@ -37,3 +37,18 @@ export const getExchanges = user => {
     }
   })
 }
+
+export const markMessageAsRead = (user, messageId) => {
+  return fetch(apiUrl + '/messages/' + messageId, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization':`Token token=${user.token}`
+    },
+    body: JSON.stringify({
+      message: {
+        read: true
+      }
+    })
+  })
+}

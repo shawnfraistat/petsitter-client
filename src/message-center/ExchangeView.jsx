@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import './MessageCenter.scss'
 import messages from '../auth/messages.js'
 
-import { createMessage, getCurrentExchange  } from './api'
+import { createMessage, getCurrentExchange, markMessageAsRead  } from './api'
 
 const Message = props => {
   console.log('inside Message, props is', props)
@@ -57,6 +57,7 @@ class ExchangeView extends Component {
     return getCurrentExchange(this.state.user)
       .then(res => res.json())
       .then(res => this.setState({ exchange: res.exchange }))
+      .then(this.markAsRead)
       .catch(() => this.flash(messages.cannotReachServer, 'flash-error'))
   }
 
@@ -71,6 +72,16 @@ class ExchangeView extends Component {
     this.setState({ conversationPartner })
   }
 
+  markAsRead = () => {
+    console.log(this.state.exchange.messages)
+    const messagesNowRead = this.state.exchange.messages.filter(message => !message.read && message.user.id !== this.state.user.id)
+    console.log('inside markAsRead', messagesNowRead)
+    messagesNowRead.forEach(message => {
+      markMessageAsRead(this.state.user, message.id)
+        .then(console.log('message marked as read'))
+        .catch(() => this.flash(messages.cannotReachServer, 'flash-error'))
+    })
+  }
 
   render() {
 
