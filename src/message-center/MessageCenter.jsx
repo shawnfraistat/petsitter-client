@@ -29,13 +29,14 @@ class MessageCenter extends Component {
     getExchanges(this.state.user)
       .then(res => res.json())
       .then(res => {
-        res.exchanges = res.exchanges.filter(exchange => (this.state.user.client && exchange.client.id === this.state.user.client.id)
-           || (this.state.user.sitter && exchange.sitter.id === this.state.user.sitter.id))
-        return res
+        const exchanges = res.exchanges.filter(exchange => exchange.messages.length > 0 && ((this.state.user.client && exchange.client.id === this.state.user.client.id)
+           || (this.state.user.sitter && exchange.sitter.id === this.state.user.sitter.id)))
+        return exchanges
       })
-      .then(res => {
-        this.setState({ currentUserExchanges: res.exchanges })
-        console.log(this.state.currentUserExchanges)
+      .then(exchanges => {
+        const currentUserExchanges = exchanges
+        currentUserExchanges.sort((a, b) => new Date(b.messages[b.messages.length - 1].created_at) - new Date(a.messages[a.messages.length - 1].created_at))
+        this.setState({ currentUserExchanges: currentUserExchanges })
       })
       .then(() => this.mapRows())
   }
@@ -48,10 +49,8 @@ class MessageCenter extends Component {
     const rows = this.state.currentUserExchanges.map((exchange, index) => {
       const lastMessage = exchange.messages[exchange.messages.length - 1]
       if (lastMessage) {
-        const colorClass = lastMessage.read ? 'table-secondary d-flex' : 'table-light d-flex'
+        const colorClass = lastMessage.read || lastMessage.user_id === this.state.user.id ? 'table-info d-flex' : 'd-flex'
         let datetime = new Date(lastMessage.created_at)
-        console.log(datetime.toDateString())
-        console.log(new Date().toDateString())
         datetime.toDateString() === new Date().toDateString()
           ? datetime = datetime.toLocaleTimeString('en-US')
           : datetime = `${new Intl.DateTimeFormat('en-US', { month: 'long' }).format(datetime)} ${datetime.getDate()}, ${datetime.getFullYear()}`
@@ -76,7 +75,7 @@ class MessageCenter extends Component {
 
         {this.state.rows
           ? (<table className="table table-hover table-bordered">
-            <thead className="thead-dark">
+            <thead className="thead-inverse">
               <tr className="d-flex">
                 <th className="col-2">Name</th>
                 <th className="col-8">Last Message</th>
@@ -88,7 +87,6 @@ class MessageCenter extends Component {
             </tbody>
           </table>)
           : (<p>No messages yet</p>)
-
         }
 
       </div>
