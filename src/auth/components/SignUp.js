@@ -87,6 +87,10 @@ class SignUp extends Component {
     finishedSitters.sitters.forEach(sitter => {
         getZipDistance(this.state.zip_code, sitter.user.zip_code)
           .then(res => res.json())
+          .then(res => {
+            if (res.error_code) throw res.error_msg
+            return res
+          })
           .then(res => sitter.distanceFromUser = Math.ceil(res.distance))
           .then(this.canReachApi)
           .catch(this.cannotReachApi)
