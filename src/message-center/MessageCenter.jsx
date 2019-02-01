@@ -73,7 +73,7 @@ class MessageCenter extends Component {
       <div className="auth-form">
         <h3>Message Center</h3>
 
-        {this.state.rows
+        {this.state.rows && this.state.rows.length > 0
           ? (<table className="table table-hover table-bordered message-table">
             <thead className="thead-inverse">
               <tr className="d-flex">
@@ -86,7 +86,7 @@ class MessageCenter extends Component {
               {this.state.rows}
             </tbody>
           </table>)
-          : (<p>No messages yet</p>)
+          : (<div className="no-messages">No messages yet</div>)
         }
 
       </div>

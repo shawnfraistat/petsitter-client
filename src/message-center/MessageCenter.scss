@@ -18,6 +18,14 @@ div {
     }
   }
 
+  &.no-messages {
+    align-items: center;
+    display: flex;
+    height: 10vh;
+    justify-content: center;
+    width: 100%;
+  }
+
   &.message-history-div {
     display: flex;
     border: 1px solid grey;
