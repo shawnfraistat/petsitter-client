@@ -6,9 +6,8 @@ import messages from '../auth/messages.js'
 import { createMessage, getCurrentExchange, markMessageAsRead  } from './api'
 
 const Message = props => {
-  console.log('inside Message, props is', props)
-
   let thisClass
+
   if (props.message.user_id === props.user.id) {
     thisClass = 'user-message'
   } else {
@@ -50,6 +49,7 @@ class ExchangeView extends Component {
     }
     createMessage(this.state.user, data)
       .then(() => this.getCurrentExchange())
+      .then(() => this.setState({ newMessageText: '' }))
       .catch(() => this.flash(messages.cannotReachServer, 'flash-error'))
   }
 
@@ -62,7 +62,6 @@ class ExchangeView extends Component {
   }
 
   determineConversationPartner = () => {
-    console.log('inside determineConversationPartner, this.state.exchange is', this.state.exchange)
     let conversationPartner
     if (this.state.exchange.client.id === this.state.user.client.id) {
       conversationPartner = this.state.exchange.sitter.user.name
@@ -73,12 +72,9 @@ class ExchangeView extends Component {
   }
 
   markAsRead = () => {
-    console.log(this.state.exchange.messages)
     const messagesNowRead = this.state.exchange.messages.filter(message => !message.read && message.user.id !== this.state.user.id)
-    console.log('inside markAsRead', messagesNowRead)
     messagesNowRead.forEach(message => {
       markMessageAsRead(this.state.user, message.id)
-        .then(console.log('message marked as read'))
         .catch(() => this.flash(messages.cannotReachServer, 'flash-error'))
     })
   }
@@ -96,7 +92,6 @@ class ExchangeView extends Component {
   }
 
   render() {
-
     let messageHistory
 
     if (this.state.exchange) {
@@ -105,7 +100,6 @@ class ExchangeView extends Component {
         messageHistory = (<h1>No message history</h1>)
       } else {
         console.log('in the else branch')
-        console.log(this.state.exchange.messages)
         messageHistory = (<div className="message-history-div">{this.state.exchange.messages.map((message, index) => <Message key={index} user={this.state.user} message={message}/>)}<div ref={(el) => { this.messagesEnd = el }}></div></div>)
       }
     }
@@ -119,6 +113,7 @@ class ExchangeView extends Component {
                    name="newMessageText"
                    value={this.state.newMessageText}
                    onChange={this.handleChange}
+                   placeholder="Send a message"
                    required
              />
            <button type="submit">Send Message</button>
