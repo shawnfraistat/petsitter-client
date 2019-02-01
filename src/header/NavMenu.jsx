@@ -59,6 +59,7 @@ class NavMenu extends Component {
     }
 
     const authenticatedOptions = [
+      (<MenuItem className={classes.menuItem} key="message-center" onClick={() => history.push('/message-center')}><Link to="/sign-out">Messages</Link></MenuItem>),
       (<MenuItem className={classes.menuItem} key="edit-profile" onClick={() => history.push('/edit-profile')}><Link to="/edit-profile">Edit Profile</Link></MenuItem>),
       (<MenuItem className={classes.menuItem} key="sign-out" onClick={() => history.push('/sign-out')}><Link to="/sign-out">Sign Out</Link></MenuItem>)
     ]

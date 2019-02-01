@@ -1,0 +1,70 @@
+div {
+  &.exchange-view-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 5vh auto;
+    max-width: 600px;
+
+    h3,
+    input,
+    textarea {
+      margin-bottom: 5%;
+    }
+
+    button {
+      align-self: flex-end;
+      max-width: 200px;
+    }
+  }
+
+  &.message-history-div {
+    display: flex;
+    border: 1px solid grey;
+    flex-direction: column;
+    height: 50vh;
+    width: 100%;
+  }
+
+  &.user-message {
+    align-self: flex-end;
+    border-radius: 30px;
+    background-color: blue;
+    color: white;
+    margin: 5px;
+    padding: 10px 15px;
+    max-width: 75%;
+  }
+
+  &.correspondent-message {
+    align-self: flex-start;
+    border-radius: 30px;
+    background-color: grey;
+    margin: 5px;
+    padding: 10px 15px;
+    max-width: 45%;
+  }
+}
+
+form {
+  &.new-message-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    textarea {
+      margin-top: 40px;
+      width: 100%;
+    }
+
+    button {
+      align-self: right;
+    }
+  }
+}
+
+th {
+  &.message-column {
+    text-overflow: clip;
+  }
+}

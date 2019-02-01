@@ -1,6 +1,5 @@
 import apiUrl from '../apiConfig.js'
 
-
 export const editUserProfile = (user, formData) => {
   return fetch(apiUrl + '/edit-profile', {
     method: 'PATCH',
@@ -92,7 +91,6 @@ export const createSitterAccount = data => {
     },
     body: JSON.stringify({
       sitter: {
-        name: data.name,
         about: data.about,
         price: data.price,
         service_range: data.service_range,
@@ -111,7 +109,6 @@ export const updateSitterAccount = data => {
     },
     body: JSON.stringify({
       sitter: {
-        name: data.name,
         about: data.about,
         price: data.price,
         service_range: data.service_range,
@@ -165,22 +162,13 @@ export const deleteFavorite = (user, favoriteID) => {
   })
 }
 
-export const getFavorites = user => {
-  return fetch(apiUrl + '/favorites', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization':`Token token=${user.token}`
-    }
-  })
-}
-
-export const getExchanges = user => {
-  return fetch(apiUrl + '/exchanges', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization':`Token token=${user.token}`
-    }
-  })
-}
+// now obsolete
+// export const getFavorites = user => {
+//   return fetch(apiUrl + '/favorites', {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       'Authorization':`Token token=${user.token}`
+//     }
+//   })
+// }

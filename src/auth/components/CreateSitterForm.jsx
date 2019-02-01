@@ -10,16 +10,6 @@ class CreateSitterAcc extends Component {
   render () {
     return (
       <div className="auth-form sitter-form">
-        <label htmlFor="name">Your Name</label>
-        <input
-          required
-          name="name"
-          value={this.props.user && this.props.user.name}
-          placeholder="Name"
-          onChange={this.handleChange}
-          cols="65"
-          rows="3"
-        />
         <label htmlFor="about">About You as a Pet Sitter</label>
         <textarea
           required

@@ -15,11 +15,9 @@ class EditProfile extends Component {
   constructor (props) {
     super(props)
 
-    const { user } = props
-
     const zipCodePath = require('../../zip_code_database.csv')
 
-    this.state = user
+    this.state = props.getUser()
 
     papaParse.parse(zipCodePath, {
       download: true,
@@ -62,7 +60,6 @@ class EditProfile extends Component {
   }
 
   handleFile = event => {
-    // this.encodeImageFileAsURL(event.target.files[0])
     this.setState({
       file: event.target.files[0]
     })
@@ -103,14 +100,20 @@ class EditProfile extends Component {
     editUserProfile(this.state, purgedFormData)
       .then(handleErrors)
       .then(res => res.json())
+      .then(res => {
+        res.user.token = this.state.token
+        setUser(res.user)
+        this.setState(res.user)
+      })
       .then(() => this.state.account_type === 'client' ? updateClientAccount(this.state) : updateSitterAccount(this.state))
       .then(handleErrors)
       .then(res => res.json())
       .then(res => {
-        this.setState({ image: res.user.image })
-        this.setState({ client: res.user.client })
-        this.setState({ sitter: res.user.sitter })
-        setUser(this.state)
+        const user = this.state
+        user.client = res.user.client
+        user.sitter = res.user.sitter
+        setUser(user)
+        this.setState(user)
       })
       .then(() => {
         this.props.user.account_type === 'client' ? history.push('/client') : history.push('/sitter')
@@ -120,7 +123,7 @@ class EditProfile extends Component {
   }
 
   render () {
-    const { email, password, password_confirmation, account_type, zip_code } = this.state
+    const { email, name, password, password_confirmation, account_type, zip_code } = this.state
 
     return (
       <form className='auth-form' onSubmit={this.editProfile}>
@@ -132,6 +135,14 @@ class EditProfile extends Component {
           value={email}
           type="email"
           placeholder="Email"
+          onChange={this.handleChange}
+        />
+        <label htmlFor="name">Change Your Name</label>
+        <input
+          name="name"
+          value={name}
+          type="text"
+          placeholder="Name"
           onChange={this.handleChange}
         />
         <label htmlFor="password">Change Password</label>

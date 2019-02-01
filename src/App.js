@@ -15,7 +15,8 @@ import CreateSitterAcc from './auth/components/CreateSitterAcc'
 
 import ClientLanding from './client-view/ClientLanding'
 import SitterLanding from './sitter-view/SitterLanding'
-
+import MessageCenter from './message-center/MessageCenter'
+import ExchangeView from './message-center/ExchangeView'
 
 import LandingPage from './LandingPage'
 
@@ -101,10 +102,16 @@ class App extends Component {
             <SignIn flash={this.flash} setUser={this.setUser} getUser={this.getUser} />
           )} />
           <Route path='/client' render={() => (
-            <ClientLanding flash={this.flash} setUser={this.setUser} user={user} />
+            <ClientLanding flash={this.flash} getUser={this.getUser} setUser={this.setUser} user={user} />
           )} />
           <Route path='/sitter' render={() => (
             <SitterLanding flash={this.flash} setUser={this.setUser} user={user} />
+          )} />
+          <Route path='/message-center' render={() => (
+            <MessageCenter flash={this.flash} setUser={this.setUser} getUser={this.getUser} user={user} />
+          )} />
+          <Route path='/exchange' render={() => (
+            <ExchangeView flash={this.flash} setUser={this.setUser} getUser={this.getUser} user={user} />
           )} />
           <AuthenticatedRoute user={user} path='/create-client-account' render={() => (
             <CreateClientAcc flash={this.flash} token={this.state.user.token} setUser={this.setUser} getUser={this.getUser} />
@@ -113,7 +120,7 @@ class App extends Component {
             <CreateSitterAcc flash={this.flash} token={this.state.user.token} setUser={this.setUser} getUser={this.getUser} />
           )} />
           <AuthenticatedRoute user={user} path='/edit-profile' render={() => (
-            <EditProfile flash={this.flash} clearUser={this.clearUser} setUser={this.setUser} user={user} />
+            <EditProfile flash={this.flash} clearUser={this.clearUser} getUser={this.getUser} setUser={this.setUser} user={user} />
           )} />
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
             <SignOut flash={this.flash} clearUser={this.clearUser} getUser={this.getUser} user={user} />

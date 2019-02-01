@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import CreateClientForm from './CreateClientForm'
 import CreateSitterForm from './CreateSitterForm'
 
-import { createClientAccount, createSitterAccount, getFavorites, getSitters, getZipDistance, handleErrors, signIn, signUp } from '../api'
+import { createClientAccount, createSitterAccount, getSitters, getZipDistance, handleErrors, signIn, signUp } from '../api'
 import messages from '../messages'
 
 import '../auth.scss'
@@ -21,6 +21,7 @@ class SignUp extends Component {
       password_confirmation: '',
       account_type: 'client',
       animal_types: '',
+      name: '',
       zip_code: ''
     }
 
@@ -103,7 +104,13 @@ class SignUp extends Component {
       return null
     }
 
-    const formData = new FormData(event.target)
+    const formData = new FormData()
+    formData.append('email', this.state.email)
+    formData.append('name', this.state.name)
+    formData.append('password', this.state.password)
+    formData.append('password_confirmation', this.state.password_confirmation)
+    formData.append('zip_code', this.state.zip_code)
+
     if (this.state.file) {
       formData.append('image', this.state.file)
     }
@@ -153,7 +160,7 @@ class SignUp extends Component {
   }
 
   render () {
-    const { email, password, password_confirmation, account_type, zip_code } = this.state
+    const { email, name, password, password_confirmation, account_type, zip_code } = this.state
 
     return (
       <form className='auth-form' onSubmit={this.signUp}>
@@ -166,6 +173,14 @@ class SignUp extends Component {
           value={email}
           type="email"
           placeholder="Email"
+          onChange={this.handleChange}
+        />
+        <label htmlFor="name">Your Name</label>
+        <input
+          required
+          name="name"
+          value={name}
+          placeholder="Name"
           onChange={this.handleChange}
         />
         <label htmlFor="password">Password</label>

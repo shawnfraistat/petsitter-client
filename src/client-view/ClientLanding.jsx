@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import SitterPreview from './SitterPreview'
 import SearchBar from './SearchBar'
 
-// import messages from '../auth/messages.js'
 import './client-view.scss'
 
 class ClientLanding extends Component {
@@ -110,16 +109,18 @@ class ClientLanding extends Component {
     let filteredList
     if (this.state.sitterList) {
       filteredList = this.state.sitterList.filter(sitter => (
-        sitter.price <= this.state.searchOpts.price && this.distanceCheck(sitter) && this.petsCheck(sitter.animal_types) && this.favoriteCheck(sitter)
+        sitter.price <= this.state.searchOpts.price && this.distanceCheck(sitter) && this.petsCheck(sitter.animal_types) && this.favoriteCheck(sitter) && sitter.id !== this.state.sitter.id
       ))
     }
+
+    const { getUser, setUser } = this.props
 
     return (
       <div className='row client-view-main'>
         <SearchBar handleOptsChange={this.handleOptsChange} handleOptsCheckBoxChange={this.handleOptsCheckBoxChange} handleOptsFavoritesChange={this.handleOptsFavoritesChange} searchOpts={this.state.searchOpts}/>
         <div className='col-9 client-sitter-list'>
           {filteredList && filteredList.map((sitter, index) => (
-            <SitterPreview key={index} sitter={sitter} user={this.state} addFavoriteToFavoriteList={this.addFavoriteToFavoriteList} removeFavoriteFromFavoriteList={this.removeFavoriteFromFavoriteList} canReachApi={this.state.searchOpts.canReachApi}/>
+            <SitterPreview key={index} sitter={sitter} user={this.state} getUser={getUser} setUser={setUser} addFavoriteToFavoriteList={this.addFavoriteToFavoriteList} removeFavoriteFromFavoriteList={this.removeFavoriteFromFavoriteList} canReachApi={this.state.searchOpts.canReachApi}/>
           ))}
         </div>
       </div>

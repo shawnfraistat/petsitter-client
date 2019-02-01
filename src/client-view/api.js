@@ -25,3 +25,19 @@ export const deleteFavorite = (user, favoriteID) => {
     }
   })
 }
+
+export const createExchange = (user, sitterID) => {
+  return fetch(apiUrl + '/exchanges', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization':`Token token=${user.token}`
+    },
+    body: JSON.stringify({
+      exchange: {
+        client_id: user.client.id,
+        sitter_id: sitterID
+      }
+    })
+  })
+}
