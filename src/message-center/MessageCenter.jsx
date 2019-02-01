@@ -70,7 +70,7 @@ class MessageCenter extends Component {
 
   render() {
     return (
-      <div>
+      <div className="auth-form">
         <h3>Message Center</h3>
 
         {this.state.rows

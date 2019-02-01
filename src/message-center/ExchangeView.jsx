@@ -83,6 +83,18 @@ class ExchangeView extends Component {
     })
   }
 
+  componentDidMount() {
+    this.scrollToBottom()
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom()
+  }
+
+  scrollToBottom = () => {
+    if (this.messagesEnd) this.messagesEnd.scrollIntoView({ behavior: "auto" });
+  }
+
   render() {
 
     let messageHistory
@@ -94,7 +106,7 @@ class ExchangeView extends Component {
       } else {
         console.log('in the else branch')
         console.log(this.state.exchange.messages)
-        messageHistory = (<div className="message-history-div">{this.state.exchange.messages.map((message, index) => <Message key={index} user={this.state.user} message={message}/>)}</div>)
+        messageHistory = (<div className="message-history-div">{this.state.exchange.messages.map((message, index) => <Message key={index} user={this.state.user} message={message}/>)}<div ref={(el) => { this.messagesEnd = el }}></div></div>)
       }
     }
 
