@@ -64,8 +64,12 @@ form {
   }
 }
 
-th {
-  &.message-column {
-    text-overflow: clip;
+th,
+td {
+  &.last-message {
+    max-width: 35ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }

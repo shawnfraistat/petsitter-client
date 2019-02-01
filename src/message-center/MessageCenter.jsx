@@ -57,7 +57,7 @@ class MessageCenter extends Component {
         return (
           <tr key={index} className={colorClass} onClick={this.handleClick} exchangeid={exchange.id}>
             <td className="col-2">{this.state.user.client.id === exchange.client.id ? exchange.sitter.user.name : exchange.client.user.name}</td>
-            <td className="col-8">{lastMessage.content}</td>
+            <td className="col-8 last-message">{lastMessage.content}</td>
             <td className="col-2">{datetime}</td>
           </tr>
         )
@@ -74,11 +74,11 @@ class MessageCenter extends Component {
         <h3>Message Center</h3>
 
         {this.state.rows
-          ? (<table className="table table-hover table-bordered">
+          ? (<table className="table table-hover table-bordered message-table">
             <thead className="thead-inverse">
               <tr className="d-flex">
                 <th className="col-2">Name</th>
-                <th className="col-8">Last Message</th>
+                <th className="col-8 last-message">Last Message</th>
                 <th className="col-2">Time</th>
               </tr>
             </thead>
