@@ -24,7 +24,7 @@ class SearchBar extends Component {
             placeholder="Price"
             onChange={this.props.handleOptsChange}
           /> dollars per day
-          {this.state.searchOpts.canReachApi && (
+          {this.props.user.canReachApi && (
             <div>
               <label htmlFor="service_range">Max Distance:</label>
               <br />

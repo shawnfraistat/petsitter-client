@@ -73,7 +73,7 @@ class SitterPreview extends Component {
           <h3 className='sitter-name-h3'>{this.props.sitter.user.name}</h3>
           <p>Email: {this.props.sitter.user.email}</p>
           <p>Typical Price Per Day: ${this.props.sitter.price}</p>
-          {this.props.canReachApi ? (<p>Distance From You: ~{this.props.sitter.distanceFromUser} miles</p>) : null}
+          {this.props.user.canReachApi ? (<p>Distance From You: ~{this.props.sitter.distanceFromUser} miles</p>) : null}
           <p>Pets Sat: {this.props.sitter.animal_types}</p>
         </div>
         <div className='button-div'>

@@ -16,14 +16,19 @@ class SignIn extends Component {
     }
   }
 
+  // canReachApi() is triggered if the app can reach the third party zip code API
+  canReachApi = () => {
+    const user = this.props.getUser()
+    user.canReachApi = true
+    this.props.setUser(user)
+  }
+
   // cannotReachApi() is triggered if the app can't reach the third party zip code API
   // it hides the ability for clients to search by distance
   cannotReachApi = () => {
-    const opts = this.state.searchOpts
-    opts.canReachApi = false
-    this.setState({
-      searchOpts: opts
-    })
+    const user = this.props.getUser()
+    user.canReachApi = false
+    this.props.setUser(user)
   }
 
   handleChange = event => this.setState({
@@ -32,13 +37,13 @@ class SignIn extends Component {
 
   // mapSitters() attempts to add distanceFromUser to each sitter by comparing
   // their zip code to the client's via a third party API
-  // if it can't reach the third party API, it triggers this.cannotReachApi()
   mapSitters = async (res) => {
     const finishedSitters = await res
     finishedSitters.sitters.forEach(sitter => {
         getZipDistance(this.state.zip_code, sitter.user.zip_code)
           .then(res => res.json())
           .then(res => sitter.distanceFromUser = Math.ceil(res.distance))
+          .then(this.canReachApi)
           .catch(this.cannotReachApi)
     })
     return finishedSitters

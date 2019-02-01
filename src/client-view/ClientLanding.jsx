@@ -10,7 +10,6 @@ class ClientLanding extends Component {
     super(props)
     this.state = props.user
     this.state.searchOpts = {
-      canReachApi: true,
       service_range: 40,
       price: 40,
       animal_types: 'cats dogs rabbits reptiles birds rodents plants equines',
@@ -31,9 +30,11 @@ class ClientLanding extends Component {
   // allowable distance search params;
   // right now it also returns true if the sitter's distance is undefined for
   // some reason (like the third party API isn't working, for example)
-  distanceCheck = (sitter) => (sitter.distanceFromUser !== undefined
-    ? (sitter.distanceFromUser <= this.state.searchOpts.service_range && sitter.distanceFromUser <= sitter.service_range)
-    : true)
+  distanceCheck = (sitter) => {
+    return sitter.distanceFromUser !== undefined
+      ? (sitter.distanceFromUser <= this.state.searchOpts.service_range && sitter.distanceFromUser <= sitter.service_range)
+      : true
+  }
 
   // favoriteCheck() checks to see whether a sitter has been favorited by the
   // current user
@@ -113,11 +114,11 @@ class ClientLanding extends Component {
       ))
     }
 
-    const { getUser, setUser } = this.props
+    const { getUser, setUser, user } = this.props
 
     return (
       <div className='row client-view-main'>
-        <SearchBar handleOptsChange={this.handleOptsChange} handleOptsCheckBoxChange={this.handleOptsCheckBoxChange} handleOptsFavoritesChange={this.handleOptsFavoritesChange} searchOpts={this.state.searchOpts}/>
+        <SearchBar handleOptsChange={this.handleOptsChange} handleOptsCheckBoxChange={this.handleOptsCheckBoxChange} handleOptsFavoritesChange={this.handleOptsFavoritesChange} searchOpts={this.state.searchOpts} user={user}/>
         <div className='col-9 client-sitter-list'>
           {filteredList && filteredList.map((sitter, index) => (
             <SitterPreview key={index} sitter={sitter} user={this.state} getUser={getUser} setUser={setUser} addFavoriteToFavoriteList={this.addFavoriteToFavoriteList} removeFavoriteFromFavoriteList={this.removeFavoriteFromFavoriteList} canReachApi={this.state.searchOpts.canReachApi}/>
