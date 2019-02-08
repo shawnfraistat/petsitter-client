@@ -70,7 +70,6 @@ class ExchangeView extends Component {
 
   // getCurrentExchange() loads data for the current exchange from the API
   getCurrentExchange = () => {
-    console.log('getting current exchange')
     return getCurrentExchange(this.state.user)
       .then(res => res.json())
       .then(res => this.setState({ exchange: res.exchange }))
@@ -147,7 +146,7 @@ class ExchangeView extends Component {
         </div>
     )
   }
-  
+
 }
 
 export default ExchangeView
