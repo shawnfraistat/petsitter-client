@@ -37,6 +37,9 @@ class ExchangeView extends Component {
     // get info about this exchange from the API when component loads
     this.getCurrentExchange()
       .then(this.determineConversationPartner)
+
+    // set an interval to refresh current exchange periodically
+    this.interval = setInterval(this.getCurrentExchange, 5000)
   }
 
   componentDidMount() {
@@ -45,6 +48,10 @@ class ExchangeView extends Component {
 
   componentDidUpdate() {
     this.scrollToBottom()
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval) // clear exchange refresh function
   }
 
   // determineConversationPartner() looks at the exchange returned from the API,
@@ -63,6 +70,7 @@ class ExchangeView extends Component {
 
   // getCurrentExchange() loads data for the current exchange from the API
   getCurrentExchange = () => {
+    console.log('getting current exchange')
     return getCurrentExchange(this.state.user)
       .then(res => res.json())
       .then(res => this.setState({ exchange: res.exchange }))
@@ -117,13 +125,9 @@ class ExchangeView extends Component {
     let messageHistory
 
     // check whether these two users have exchanges any messages yet; if so,
-    // display them; if not, display "No message history"
+    // display them
     if (this.state.exchange) {
-      if (!this.state.exchange.messages) {
-        messageHistory = (<h1>No message history</h1>)
-      } else {
         messageHistory = (<div className="message-history-div">{this.state.exchange.messages.map((message, index) => <Message key={index} user={this.state.user} message={message}/>)}<div ref={(el) => { this.messagesEnd = el }}></div></div>)
-      }
     }
 
     return (
@@ -143,7 +147,7 @@ class ExchangeView extends Component {
         </div>
     )
   }
-
+  
 }
 
 export default ExchangeView

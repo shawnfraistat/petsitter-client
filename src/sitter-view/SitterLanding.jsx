@@ -21,5 +21,4 @@ const SitterLanding = (props) => {
   )
 }
 
-
 export default SitterLanding
