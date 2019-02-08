@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
-import './client-view.scss'
-import messages from '../auth/messages.js'
-
 import { createExchange, createFavorite, deleteFavorite }  from './api'
+import messages from '../auth/messages.js'
+import './client-view.scss'
 
 class SitterPreview extends Component {
   constructor (props) {

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+// SearchBar displays a bunch of search options used to filter sitters; when
+// options here are changed, it updates ClientLanding's state
 class SearchBar extends Component {
   constructor(props) {
     super(props)

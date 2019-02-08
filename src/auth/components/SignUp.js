@@ -25,21 +25,16 @@ class SignUp extends Component {
       zip_code: ''
     }
 
+    // load a list of valid U.S. zip codes into this component's state
+    // do so by using papaParse to parse a CSV file containing a list of zip
+    // codes
     const zipCodePath = require('../../zip_code_database.csv')
-
     papaParse.parse(zipCodePath, {
       download: true,
       complete: (results) => {
         this.setState({ zipList: results.data })
       }
     })
-  }
-
-  // canReachApi() is triggered if the app can reach the third party zip code API
-  canReachApi = () => {
-    const user = this.props.getUser()
-    user.canReachApi = true
-    this.props.setUser(user)
   }
 
   // cannotReachApi() is triggered if the app can't reach the third party zip code API
@@ -50,6 +45,14 @@ class SignUp extends Component {
     this.props.setUser(user)
   }
 
+  // canReachApi() is triggered if the app can reach the third party zip code API
+  canReachApi = () => {
+    const user = this.props.getUser()
+    user.canReachApi = true
+    this.props.setUser(user)
+  }
+
+  // handleChange() binds input fields to this.state
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
@@ -74,6 +77,8 @@ class SignUp extends Component {
     })
   }
 
+  // handleFile() stores an uploaded file to this component's state
+  // this makes it easy to append it to the FormData that'll be sent to API
   handleFile = event => {
     this.setState({
       file: event.target.files[0]
@@ -98,13 +103,14 @@ class SignUp extends Component {
     return finishedSitters
   }
 
-
+  // signUp() sends the data to the API and deals with the response
   signUp = event => {
     event.preventDefault()
 
     const { flash, history, getUser, setUser } = this.props
 
-    // zip code validation
+    // validate the zip code the user has entered; compare it against the list
+    // of valid U.S. zip codes loaded into this.state.zipList
     if (this.state.zip_code) {
       let isValidZip = false
       for (let i = 0; i < this.state.zipList.length; i++) {
@@ -118,11 +124,13 @@ class SignUp extends Component {
       }
     }
 
+    // make sure password matches password confirmation
     if ((this.state.password || this.state.password_confirmation) && (this.state.password !== this.state.password_confirmation)) {
       flash(messages.mismatchingPasswords, 'flash-error')
       return null
     }
 
+    // create a FormData object; append values taken from form
     const formData = new FormData()
     formData.append('email', this.state.email)
     formData.append('name', this.state.name)
@@ -130,10 +138,12 @@ class SignUp extends Component {
     formData.append('password_confirmation', this.state.password_confirmation)
     formData.append('zip_code', this.state.zip_code)
 
+    // append a file to formData if the user has uploaded one
     if (this.state.file) {
       formData.append('image', this.state.file)
     }
 
+    // now send data to API and handle response
     signUp(formData)
       .then(handleErrors)
       // after signing up, sign in

@@ -1,8 +1,10 @@
 import React from 'react'
 
 import NavMenu from './NavMenu'
+
 import './Header.scss'
 
+// Header is used to display the site's header; contains a nav menu
 const Header = ({ user, setUser, getUser }) => {
   const imageSrc = user && user.image.url ? user.image.url : require('../images/profile-icon.png')
   return (

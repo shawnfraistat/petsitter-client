@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 
-class CreateClientAcc extends Component {
+// CreateClientForm contains a form that takes in information used to create
+// a sitter account for the current user; it's used by both CreateClientAcc and
+// SignUp
+class CreateClientForm extends Component {
   constructor(props) {
     super(props)
-    this.handleChange = props.handleChange
+    this.handleChange = props.handleChange // used to bind input options to state of parent
   }
 
   render () {
@@ -24,4 +27,4 @@ class CreateClientAcc extends Component {
   }
 }
 
-export default CreateClientAcc
+export default CreateClientForm

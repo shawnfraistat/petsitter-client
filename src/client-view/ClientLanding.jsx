@@ -5,6 +5,8 @@ import SearchBar from './SearchBar'
 
 import './client-view.scss'
 
+// ClientLanding is what a user sees once they log in as a client; it shows a
+// list of sitters for the user to search through
 class ClientLanding extends Component {
   constructor(props) {
     super(props)
@@ -106,7 +108,8 @@ class ClientLanding extends Component {
   }
 
   render () {
-    // when the component renders, first filters all of the sitters based on search options
+    // when the component renders, first filter all of the sitters based on
+    // search options
     let filteredList
     if (this.state.sitterList) {
       filteredList = this.state.sitterList.filter(sitter => (

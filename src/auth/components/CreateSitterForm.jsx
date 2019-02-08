@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 
-class CreateSitterAcc extends Component {
+// CreateSitterForm contains a form that takes in information used to create
+// a sitter account for the current user; it's used by both CreateSitterAcc and
+// SignUp
+class CreateSitterForm extends Component {
   constructor(props) {
     super(props)
-    this.handleChange = props.handleChange
-    this.handleCheckBoxChange = props.handleCheckBoxChange
+    this.handleChange = props.handleChange // used to bind input options to state of parent
+    this.handleCheckBoxChange = props.handleCheckBoxChange // used to bind checkbox options to state of parent
   }
 
   render () {
@@ -108,23 +111,10 @@ class CreateSitterAcc extends Component {
               value="plants"
               type="checkbox"
             />Plants
-            {/* Extra options for giggles.
-            <input
-              className="animal-checkbox"
-              name="animal_types"
-              value="nakedMoleRats"
-              type="checkbox"
-            />Naked Mole Rats
-            <input
-              className="animal-checkbox"
-              name="animal_types"
-              value="petRocks"
-              type="checkbox"
-            />Pet Rocks */}
             </div>
         </div>
       </div>
     )
   }
 }
-export default CreateSitterAcc
+export default CreateSitterForm

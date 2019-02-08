@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import { signIn, getSitters, getZipDistance } from '../api'
-
 import messages from '../messages'
 
+// SignIn collects user sign-in info, and signs them in to their existing
+// account
 class SignIn extends Component {
   constructor () {
     super()
@@ -16,13 +17,6 @@ class SignIn extends Component {
     }
   }
 
-  // canReachApi() is triggered if the app can reach the third party zip code API
-  canReachApi = () => {
-    const user = this.props.getUser()
-    user.canReachApi = true
-    this.props.setUser(user)
-  }
-
   // cannotReachApi() is triggered if the app can't reach the third party zip code API
   // it hides the ability for clients to search by distance
   cannotReachApi = () => {
@@ -31,6 +25,14 @@ class SignIn extends Component {
     this.props.setUser(user)
   }
 
+  // canReachApi() is triggered if the app can reach the third party zip code API
+  canReachApi = () => {
+    const user = this.props.getUser()
+    user.canReachApi = true
+    this.props.setUser(user)
+  }
+
+  // handleChange() binds input fields to this.state
   handleChange = event => this.setState({
     [event.target.name]: event.target.value
   })
@@ -53,6 +55,7 @@ class SignIn extends Component {
     return finishedSitters
   }
 
+  // signIn() sends the data to the API and deals with the response
   signIn = event => {
     event.preventDefault()
 
@@ -84,7 +87,7 @@ class SignIn extends Component {
         res = this.mapSitters(res)
         return res
       })
-      //  update the user with sitters list
+      // update the user with sitters list
       .then(async (res) => {
         const sitterList = await res
         const currentUser = getUser()

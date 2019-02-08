@@ -1,6 +1,9 @@
 import React from 'react'
 import './LandingPage.scss'
 
+// LandingPage() is a simple React component that displays when the user is at
+// the root directory, i.e., when the page first loads--it contains basic info
+// abotu the site
 const LandingPage = () => {
   return (
     <div className="landing-div">

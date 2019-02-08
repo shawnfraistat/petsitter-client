@@ -1,6 +1,9 @@
 import React from 'react'
 import './SitterLanding.scss'
 
+// SitterLanding defines a simple component that's displayed when the user logs
+// in as a sitter; it displays some basic info about how the site works for
+// sitters
 const SitterLanding = (props) => {
   return (
     <div className="landing-div">

@@ -2,23 +2,29 @@ import React, { Component } from 'react'
 import './App.scss'
 import { Route } from 'react-router-dom'
 
-import AuthenticatedRoute from './auth/components/AuthenticatedRoute'
-import Header from './header/Header'
+// display components
 import Footer from './footer/Footer'
-import SignUp from './auth/components/SignUp'
-import SignIn from './auth/components/SignIn'
-import SignOut from './auth/components/SignOut'
-import EditProfile from './auth/components/EditProfile'
+import Header from './header/Header'
+import LandingPage from './LandingPage'
 
+// auth components
+import AuthenticatedRoute from './auth/components/AuthenticatedRoute'
 import CreateClientAcc from './auth/components/CreateClientAcc'
 import CreateSitterAcc from './auth/components/CreateSitterAcc'
+import EditProfile from './auth/components/EditProfile'
+import SignIn from './auth/components/SignIn'
+import SignOut from './auth/components/SignOut'
+import SignUp from './auth/components/SignUp'
 
+// client-view component
 import ClientLanding from './client-view/ClientLanding'
+
+// sitter-view component
 import SitterLanding from './sitter-view/SitterLanding'
+
+// message-center components
 import MessageCenter from './message-center/MessageCenter'
 import ExchangeView from './message-center/ExchangeView'
-
-import LandingPage from './LandingPage'
 
 class App extends Component {
   constructor () {
@@ -31,16 +37,8 @@ class App extends Component {
     }
   }
 
-  getUser = () => this.state.user
-
-  setUser = user => {
-    user = this.addUserVirtuals(user)
-    this.setState({ user })
-  }
-
-  // addUserVirtuals() determines what user is logged in as
-  // and whether user has client/sitter accounts
-  // specifically, sets booleans isSitter/isClient
+  // addUserVirtuals() determines what user is logged in as and whether user has
+  // client/sitter accounts; specifically, sets booleans isSitter/isClient
   // and hasSitterAcc/hasClientAcc
   addUserVirtuals = user => {
     user.client ? user.hasClientAcc = true : user.hasClientAcc = false
@@ -74,8 +72,11 @@ class App extends Component {
     return user
   }
 
+  // clearUser() is used to clear current user data--useful for when the user
+  // signs out
   clearUser = () => this.setState({ user: null })
 
+  // flash() is method for displaying success and error messages to the user
   flash = (message, type) => {
     this.setState({ flashMessage: message, flashType: type })
 
@@ -83,6 +84,17 @@ class App extends Component {
 
     this.messageTimeout = setTimeout(() => this.setState({flashMessage: null
     }), 3000)
+  }
+
+  // getUser() defines a getter method for App's this.state.user; this is passed
+  // down to subordinate components and used to get current user data
+  getUser = () => this.state.user
+
+  // setUser() defines a setter method for App's this.state.user; this is passed
+  // down to subordinate components and used to set current user data
+  setUser = user => {
+    user = this.addUserVirtuals(user)
+    this.setState({ user })
   }
 
   render () {

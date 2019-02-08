@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 
-import './MessageCenter.scss'
-import messages from '../auth/messages.js'
-
 import { createMessage, getCurrentExchange, markMessageAsRead  } from './api'
+import messages from '../auth/messages.js'
+import './MessageCenter.scss'
 
+// Message defines a simplecomponent used by ExchangeView below
 const Message = props => {
   let thisClass
 
+  // checks to see if the message is from current user or to current user;
+  // sets the message's style (color and positioning) accordingly
   if (props.message.user_id === props.user.id) {
     thisClass = 'user-message'
   } else {
@@ -21,6 +23,8 @@ const Message = props => {
   )
 }
 
+// ExchangeView is used to display all the messages exchanged between the
+// current user and some other user
 class ExchangeView extends Component {
   constructor(props) {
     super(props)
@@ -30,53 +34,9 @@ class ExchangeView extends Component {
     }
     this.flash = props.flash
 
+    // get info about this exchange from the API when component loads
     this.getCurrentExchange()
       .then(this.determineConversationPartner)
-  }
-
-  handleChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value
-    })
-  }
-
-  handleSubmit = (event) => {
-    event.preventDefault()
-    const data = {
-      content: this.state.newMessageText,
-      user_id : this.state.user.id,
-      exchange_id : this.state.exchange.id
-    }
-    createMessage(this.state.user, data)
-      .then(() => this.getCurrentExchange())
-      .then(() => this.setState({ newMessageText: '' }))
-      .catch(() => this.flash(messages.cannotReachServer, 'flash-error'))
-  }
-
-  getCurrentExchange = () => {
-    return getCurrentExchange(this.state.user)
-      .then(res => res.json())
-      .then(res => this.setState({ exchange: res.exchange }))
-      .then(this.markAsRead)
-      .catch(() => this.flash(messages.cannotReachServer, 'flash-error'))
-  }
-
-  determineConversationPartner = () => {
-    let conversationPartner
-    if (this.state.exchange.client.id === this.state.user.client.id) {
-      conversationPartner = this.state.exchange.sitter.user.name
-    } else {
-      conversationPartner = this.state.exchange.client.user.name
-    }
-    this.setState({ conversationPartner })
-  }
-
-  markAsRead = () => {
-    const messagesNowRead = this.state.exchange.messages.filter(message => !message.read && message.user.id !== this.state.user.id)
-    messagesNowRead.forEach(message => {
-      markMessageAsRead(this.state.user, message.id)
-        .catch(() => this.flash(messages.cannotReachServer, 'flash-error'))
-    })
   }
 
   componentDidMount() {
@@ -87,6 +47,68 @@ class ExchangeView extends Component {
     this.scrollToBottom()
   }
 
+  // determineConversationPartner() looks at the exchange returned from the API,
+  // which has two user ids associated with it--it figures out which one belongs
+  // to the current user and which one refers to the person the current user
+  // is corresponding with
+  determineConversationPartner = () => {
+    let conversationPartner
+    if (this.state.exchange.client.id === this.state.user.client.id) {
+      conversationPartner = this.state.exchange.sitter.user.name
+    } else {
+      conversationPartner = this.state.exchange.client.user.name
+    }
+    this.setState({ conversationPartner })
+  }
+
+  // getCurrentExchange() loads data for the current exchange from the API
+  getCurrentExchange = () => {
+    return getCurrentExchange(this.state.user)
+      .then(res => res.json())
+      .then(res => this.setState({ exchange: res.exchange }))
+      // any messages that are loaded should be marked as read
+      .then(this.markAsRead)
+      .catch(() => this.flash(messages.cannotReachServer, 'flash-error'))
+  }
+
+  // handleChange() binds input data to this.state
+  handleChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
+  // handleSubmit() fires when a user submits a new message; it creates a new
+  // message on the API
+  handleSubmit = (event) => {
+    event.preventDefault()
+    const data = {
+      content: this.state.newMessageText,
+      user_id : this.state.user.id,
+      exchange_id : this.state.exchange.id
+    }
+    // send message data to API
+    createMessage(this.state.user, data)
+      // the exchange has been updated on the server, so reload it
+      .then(() => this.getCurrentExchange())
+      // clear the message input form
+      .then(() => this.setState({ newMessageText: '' }))
+      .catch(() => this.flash(messages.cannotReachServer, 'flash-error'))
+  }
+
+  // markAsRead() goes through all of the messages associated with the current
+  // exchange and marks them as read
+  markAsRead = () => {
+    const messagesNowRead = this.state.exchange.messages.filter(message => !message.read && message.user.id !== this.state.user.id)
+    messagesNowRead.forEach(message => {
+      markMessageAsRead(this.state.user, message.id)
+        .catch(() => this.flash(messages.cannotReachServer, 'flash-error'))
+    })
+  }
+
+  // scrollToBottom() makes sure the message display scrolls by default to the
+  // bottom of the exchange history (so the users are looking at the most recent
+  // messages by default)
   scrollToBottom = () => {
     if (this.messagesEnd) this.messagesEnd.scrollIntoView({ behavior: "auto" });
   }
@@ -94,12 +116,12 @@ class ExchangeView extends Component {
   render() {
     let messageHistory
 
+    // check whether these two users have exchanges any messages yet; if so,
+    // display them; if not, display "No message history"
     if (this.state.exchange) {
       if (!this.state.exchange.messages) {
-        console.log('I should be setting messageHistory to <h1>No message history </h1>')
         messageHistory = (<h1>No message history</h1>)
       } else {
-        console.log('in the else branch')
         messageHistory = (<div className="message-history-div">{this.state.exchange.messages.map((message, index) => <Message key={index} user={this.state.user} message={message}/>)}<div ref={(el) => { this.messagesEnd = el }}></div></div>)
       }
     }

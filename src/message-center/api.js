@@ -1,5 +1,6 @@
 import apiUrl from '../apiConfig.js'
 
+// createMessage() creates a new message on the server
 export const createMessage = (user, data) => {
   return fetch(apiUrl + '/messages', {
     method: 'POST',
@@ -18,6 +19,7 @@ export const createMessage = (user, data) => {
   })
 }
 
+// getCurrentExchange() fetches the current exchange details from the server
 export const getCurrentExchange = user => {
   return fetch(apiUrl + '/exchanges/' + user.currentExchange, {
     method: 'GET',
@@ -28,6 +30,7 @@ export const getCurrentExchange = user => {
   })
 }
 
+// getExchanges() returns all of the exchanges from the server
 export const getExchanges = user => {
   return fetch(apiUrl + '/exchanges', {
     method: 'GET',
@@ -38,6 +41,8 @@ export const getExchanges = user => {
   })
 }
 
+// markMessageAsRead() updates the current messages to indicate the user has
+// read them
 export const markMessageAsRead = (user, messageId) => {
   return fetch(apiUrl + '/messages/' + messageId, {
     method: 'PATCH',
