@@ -105,6 +105,6 @@ of the stretch goals I set for myself. Finally, I polished the site's styling.
 date range.
 2. Add ability for clients to create substantial profiles. (Pics of pets,  etc.)
 3. Add ability for sitters to view profiles of clients who request them.
-4. As corollary of goal #4, add pets as a separate resource.
+4. As corollary of goal #2, add pets as a separate resource.
 5. Add ability for clients to review sitters.
 6. Refactor React logic.
