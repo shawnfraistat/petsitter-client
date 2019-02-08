@@ -68,6 +68,10 @@ img {
 }
 
 input {
+  &.search-name-field {
+    width: 175px;
+  }
+
   &.search-text-field {
     width: 80px;
   }

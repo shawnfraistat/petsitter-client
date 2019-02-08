@@ -15,7 +15,8 @@ class ClientLanding extends Component {
       service_range: 40,
       price: 40,
       animal_types: 'cats dogs rabbits reptiles birds rodents plants equines',
-      favorites_only: false
+      favorites_only: false,
+      searchName: ''
     }
   }
 
@@ -97,6 +98,16 @@ class ClientLanding extends Component {
     return sitterPetsArray.some(pet => searchArray.includes(pet))
   }
 
+  // nameCheck() checks to see whether the sitter's name includes the string
+  // entered into the name search text
+  nameCheck = (sitter) => {
+    if (this.state.searchOpts.searchName.trim() === '' || sitter.user.name === null) {
+      return true
+    } else {
+      return sitter.user.name.includes(this.state.searchOpts.searchName.trim())
+    }
+  }
+
   // removeFavoriteFromFavoriteList() updates ClientLanding's state by removing
   // a favorite from the favorites list--that way if the user unfavorites a
   // sitter, it will display immediately
@@ -113,7 +124,7 @@ class ClientLanding extends Component {
     let filteredList
     if (this.state.sitterList) {
       filteredList = this.state.sitterList.filter(sitter => (
-        sitter.price <= this.state.searchOpts.price && this.distanceCheck(sitter) && this.petsCheck(sitter.animal_types) && this.favoriteCheck(sitter) && sitter.id !== this.state.sitter.id
+        sitter.price <= this.state.searchOpts.price && this.distanceCheck(sitter) && this.petsCheck(sitter.animal_types) && this.favoriteCheck(sitter) && this.nameCheck(sitter) &&sitter.id !== this.state.sitter.id
       ))
     }
 

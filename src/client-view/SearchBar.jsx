@@ -15,6 +15,18 @@ class SearchBar extends Component {
       <div className='col-3 search-bar'>
         <h3>Search Bar</h3>
         <form>
+          <label htmlFor="searchName">Sitter Name:</label>
+          <br />
+          <input
+            required
+            className="search-name-field"
+            name="searchName"
+            value={this.state.searchOpts.searchName}
+            type="text"
+            placeholder="Name"
+            onChange={this.props.handleOptsChange}
+          />
+          <br />
           <label htmlFor="price">Max Price:</label>
           <br />
           <input

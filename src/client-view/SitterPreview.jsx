@@ -59,9 +59,9 @@ class SitterPreview extends Component {
     let favoriteButton
     if (this.props.user.client.favorites) {
       if (this.props.user.client.favorites.some(favorite => favorite.client_id === this.props.user.client.id && favorite.sitter_id === this.props.sitter.id)) {
-        favoriteButton = (<img className="favorite-button" alt="favorite" src={require('../images/favorited.png')} onClick={this.onUnFavoriteClick} />)
+        favoriteButton = (<img className="favorite-button" alt="favorite" title="Click here to unfavorite" src={require('../images/favorited.png')} onClick={this.onUnFavoriteClick} />)
       } else {
-        favoriteButton = (<img className="favorite-button" alt="favorite" src={require('../images/favorite.png')} onClick={this.onFavoriteClick} />)
+        favoriteButton = (<img className="favorite-button" alt="favorite" title="Click here to favorite" src={require('../images/favorite.png')} onClick={this.onFavoriteClick} />)
       }
     }
     const imageSrc = this.props.sitter.user.image.url ? this.props.sitter.user.image.url : require('../images/profile-icon.png')
@@ -77,7 +77,7 @@ class SitterPreview extends Component {
         </div>
         <div className='button-div'>
           {favoriteButton}
-          <img className="contact-button" alt="contact" src={require('../images/contact.png')} onClick={this.onContactClick} />
+          <img className="contact-button" alt="contact" title="Click here to message this sitter" src={require('../images/contact.png')} onClick={this.onContactClick} />
         </div>
       </div>
     )
