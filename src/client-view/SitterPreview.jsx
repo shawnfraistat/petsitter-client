@@ -14,6 +14,8 @@ class SitterPreview extends Component {
     this.flash = props.flash
   }
 
+  // onContactClick() fires when the user clicks the contact button a sitter
+  // preview--it creates or loads an exchange
   onContactClick = () => {
     const { getUser, history, setUser } = this.props
 
@@ -39,6 +41,8 @@ class SitterPreview extends Component {
     }
   }
 
+  // onFavoriteClick() creates a new favorite when the user clicks the favorite
+  // button on a sitter preview
   onFavoriteClick = () => {
     createFavorite(this.props.user, this.props.sitter.id)
       .then(res => res.json())
@@ -46,6 +50,8 @@ class SitterPreview extends Component {
       .catch(() => this.flash(messages.cannotReachServer, 'flash-error'))
   }
 
+  // onUnFavoriteClick() deletes a favorite when the user clicks the unfavorite
+  // button on a sitter preview
   onUnFavoriteClick = () => {
     const id = this.props.user.client.favorites.find(favorite => favorite.client_id === this.props.user.client.id && favorite.sitter_id === this.props.sitter.id).id
     deleteFavorite(this.props, id)
